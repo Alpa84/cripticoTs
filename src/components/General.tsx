@@ -4,6 +4,7 @@ import Chain from './Chain';
 import PendingTransactions from './PendingTransactions'
 import TransactionToPublish from './TransactionToPublish'
 import KeyPair from './KeyPair'
+import Directory from './Directory';
 
 export interface Props {
   general: GeneralType
@@ -19,9 +20,12 @@ function General({ general, functions }: Props) {
           <div className="col-sm-8">
             <KeyPair keyPair={general.keyPair} functions={functions}/>
             <TransactionToPublish general={general} functions={functions} />
-            <PendingTransactions transactions={general.transaccionesPendientes} />
+            <PendingTransactions general={general} />
             <br />
             <Chain chain={general.cadena} generalChange={functions.generalChange}/>
+          </div>
+          <div className="col-sm-2">
+            <Directory general={general}/>
           </div>
         </div>
       </div>

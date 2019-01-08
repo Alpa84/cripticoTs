@@ -21,7 +21,9 @@ export interface GeneralType {
     cadena: Block[]
     transactionToPublish: Transaccion
     keyPair: KeyPair
+    directorio: Directorio
 }
+export interface Directorio { [id: string]: string }
 export interface KeyPair {
     direccion: string
     clave: string

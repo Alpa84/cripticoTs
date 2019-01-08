@@ -1,19 +1,20 @@
 import * as React from 'react'
-import { Transaccion } from '../Types'
+import { GeneralType } from '../Types'
 export interface Props {
-  transactions: Transaccion[]
+  general: GeneralType
 }
 
-function PendingTransactions({ transactions }: Props) {
+function PendingTransactions({ general }: Props) {
+
   return (
     <div className="PendingTransactions">
       {
-        transactions.map((transaccion, transIndex) => (
+        general.transaccionesPendientes.map((transaccion, transIndex) => (
           <div className="panel panel-default" key={transIndex}>
             <div className="panel-body">
               <div key={transIndex}>
-                <div>da: {transaccion.da}</div>
-                <div>recibe: {transaccion.recibe}</div>
+                <div data-toggle="tooltip" title={`dir: ${transaccion.da}`} >da: {prefferName(transaccion.da, general)}</div>
+                <div data-toggle="tooltip" title={`dir: ${transaccion.recibe}`} >recibe: {prefferName(transaccion.recibe, general)}</div>
                 <div>cuanto: {transaccion.cuanto}</div>
                 <div>firma: {transaccion.firma}</div>
               </div>
@@ -23,6 +24,10 @@ function PendingTransactions({ transactions }: Props) {
       }
     </div>
   )
-}
 
+}
+const prefferName =  (dir: string, general: GeneralType) => {
+  let name = general.directorio[dir]
+  return name ? name : dir
+}
 export default PendingTransactions;
