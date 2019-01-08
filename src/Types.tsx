@@ -1,0 +1,34 @@
+import { BigInteger } from 'big-integer'
+export interface Block  {
+    hashBloqueAnterior: string
+    clave: string
+    transacciones: Transaccion[]
+}
+export interface Functions {
+    generalChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+    publishTransaction: () => void
+    generateKeyPair: () => void
+    firmarTransaccion: () => void
+}
+export interface Transaccion {
+    da: string
+    recibe: string
+    cuanto: number
+    firma?: string
+}
+export interface GeneralType {
+    transaccionesPendientes: Transaccion[]
+    cadena: Block[]
+    transactionToPublish: Transaccion
+    keyPair: KeyPair
+}
+export interface KeyPair {
+    direccion: string
+    clave: string
+}
+
+export interface Keys {
+    d: BigInteger
+    e: BigInteger
+    n: BigInteger
+}

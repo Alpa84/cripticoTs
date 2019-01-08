@@ -1,0 +1,31 @@
+{
+  "name": "criptico",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@types/lodash": "^4.14.119",
+    "axios": "^0.18.0",
+    "big-integer": "^1.6.40",
+    "lodash": "^4.17.11",
+    "md5": "^2.2.1",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-scripts-ts": "3.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/big-integer": "0.0.31",
+    "@types/jest": "^23.3.10",
+    "@types/md5": "^2.1.33",
+    "@types/node": "^10.12.18",
+    "@types/react": "^16.7.18",
+    "@types/react-dom": "^16.0.11",
+    "typescript": "^3.2.2"
+  }
+}
