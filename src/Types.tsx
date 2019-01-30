@@ -5,7 +5,7 @@ export interface Block  {
     transacciones: Transaccion[]
 }
 export interface Functions {
-    generalChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+    generalChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
     publishTransaction: () => void
     generateKeyPair: () => void
     firmarTransaccion: () => void
@@ -14,7 +14,7 @@ export interface Transaccion {
     da: string
     recibe: string
     cuanto: number
-    firma?: string
+    firma: string
 }
 export interface GeneralType {
     transaccionesPendientes: Transaccion[]

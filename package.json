@@ -10,17 +10,17 @@
     "md5": "^2.2.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-scripts-ts": "3.1.0"
+    "react-scripts-ts": "3.1.0",
+    "serve": "^10.1.1"
   },
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "eject": "react-scripts-ts eject",
+    "server_up": "serve -s build"
   },
   "devDependencies": {
-    "@types/axios": "^0.14.0",
-    "@types/big-integer": "0.0.31",
     "@types/jest": "^23.3.10",
     "@types/md5": "^2.1.33",
     "@types/node": "^10.12.18",

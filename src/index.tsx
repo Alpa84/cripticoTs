@@ -19,7 +19,7 @@ let general: GeneralType = {
     direccion: '',
   },
   transaccionesPendientes: [],
-  transactionToPublish: {da: '', recibe:'', cuanto: 0 },
+  transactionToPublish: {da: '', recibe:'', cuanto: 0, firma:'' },
 }
 
 const generateKeyPairAndUpdate = () => {
@@ -62,7 +62,7 @@ setInterval(() => {
   updateChain()
 }, 3000)
 
-const generalChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+const generalChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement >) => {
   let element = event.target
   let path = element.getAttribute('data-key') as string
   let value: string | number = element.value

@@ -5,7 +5,8 @@
     "prefer-const": false,
     "member-access": false,
     "interface-name": false,
-    "jsx-no-lambda": false
+    "jsx-no-lambda": false,
+    "downlevelIteration": true
   },
   "linterOptions": {
     "exclude": [

@@ -4,7 +4,7 @@ import Input from './Input'
 import Transactions from './Transacions';
 export interface Props {
     chain: Block[]
-    generalChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+    generalChange: (event: React.ChangeEvent<HTMLInputElement > ) => void
 }
 
 function Chain({ chain, generalChange }: Props) {
