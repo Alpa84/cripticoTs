@@ -1,5 +1,6 @@
 import { Block, Transaccion } from "src/Types"
 import * as md5 from 'md5'
+// import * as axios from 'axios'
 import * as bigInt from 'big-integer'
 import { RSA } from '../utils/rsa'
 
@@ -117,4 +118,115 @@ function calcularCuantoTieneElQueDa(transacciones: Transaccion[], calcularPara: 
 
 function empiezaConCero(hash: string) {
     return hash.split('')[0] === '0'
+}
+
+
+async function verQueAgregarleParaQueElHashEmpieceConCero(bloqueSinClave: Block, cadenaExistente: Block[], bloqueElement = null, cadena?: Block[]): Promise<string> {
+    let clave = '0'
+    let seguirBuscando = true
+
+    while (seguirBuscando) {
+        if (cadena) {
+            seguirBuscando = bloqueSinClave.hashBloqueAnterior === hashearBloque(cadenaExistente[cadenaExistente.length - 1])
+            if (!seguirBuscando) {
+                alert('alguien agregó un nuevo bloque a la cadena antes que pudiéramos encontrar la clave del bloque para agregarlo nosotros')
+                return 'cancelado'
+            }
+        }
+        bloqueSinClave.clave = clave
+        let resultado = hashearBloque(bloqueSinClave)
+        let empieza = empiezaConCero(resultado) // split e index
+        if (empieza) {
+            return clave
+        } else {
+            clave = clave + 1
+        }
+        await simularDemora(400)
+    }
+    return ''
+}
+
+async function tratarDeAgregarUnBloque(depositoTransaccionesPendientes: Transaccion[], cadenaExistente: Block[]) {
+    let transaccionesPendientes = depositoTransaccionesPendientes
+    let ultimoBloque = cadenaExistente[cadenaExistente.length - 1]
+    let hashBloqueAnterior = hashearBloque(ultimoBloque)
+    let transaccionesPendientesAprobadas = []
+    let transaccionesDeLaCadena = cadenaATransacciones(cadenaExistente)
+    for (let transaccionPendiente of transaccionesPendientes) {
+        let transaccionesPrevias = [...transaccionesDeLaCadena, ...transaccionesPendientesAprobadas]
+        let vale = verSiElQueDaTieneLaPlata(transaccionPendiente, transaccionesPrevias)
+        if (vale) {
+            if (hasValidTransactionSignature(transaccionPendiente, hashBloqueAnterior)) {
+                transaccionesPendientesAprobadas.push(transaccionPendiente)
+            } else {
+                alert(`firma invalida. No vale la transacción de ${transaccionPendiente.da} a ${transaccionPendiente.recibe} por ${transaccionPendiente.cuanto}, la vamos a ignorar`)
+            }
+        } else {
+            alert(`no vale la transacción de ${transaccionPendiente.da} a ${transaccionPendiente.recibe} por ${transaccionPendiente.cuanto}, la vamos a ignorar`)
+        }
+    }
+    transaccionesPendientesAprobadas.unshift({ da: 'nadie', recibe: 'MineroA', cuanto: 1 , firma:''})
+    let nuevoBloque: Block = {
+        clave: '',
+        hashBloqueAnterior,
+        transacciones: transaccionesPendientesAprobadas,
+    }
+
+    let clave = await verQueAgregarleParaQueElHashEmpieceConCero(nuevoBloque,cadenaExistente , null, cadenaExistente)
+    if (clave === 'cancelado') { return }
+    nuevoBloque.clave = clave
+    cadenaExistente.push(nuevoBloque)
+
+    // let cadenaYTransResponse = await axios({
+    //     data: cadenaExistente,
+    //     method: 'post',
+    //     url: '/cadena',
+    // })
+    // cadenaYTransResponse.data
+    // mandarATodosLaCadenaConBloqueNuevo(cadenaExistente)
+
+}
+tratarDeAgregarUnBloque([], [])
+// recibirTransaccion(transaccionEjemplo)
+
+async function agregarATransaccionesPendientes(transaccion: Transaccion, clave: string, cadenaExistente: Block[]) {
+    let ultimoBloque = cadenaExistente[cadenaExistente.length - 1]
+    let hashUltimoBloque = hashearBloque(ultimoBloque)
+    transaccion.firma = createTransactionSignature(transaccion, hashUltimoBloque, clave)
+    // let pendientesResponse = await axios({
+    //     data: transaccion,
+    //     method: 'post',
+    //     url: '/transaccion_pendiente',
+    // })
+}
+agregarATransaccionesPendientes({da:'', recibe:'', cuanto:0, firma: ''},'',[])
+function recibirUnaNuevaCadena(cadenaRecibida: Block[], cadenaExistente: Block[]) {
+    let razon = esUnaCadenaInvalida(cadenaRecibida)
+    if (razon) {
+        alert(razon)
+        return cadenaExistente
+    } else {
+        // pararLaBusquedaSiEstaActiva()
+        if (cadenaRecibida.length > cadenaExistente.length) {
+            alert('la cadena recibida es valida y mas larga que la existente, vamos a usar esa')
+            return cadenaRecibida
+        } else {
+            // alert('la cadena recibida no es mas larga que la que tenemos')
+            return cadenaExistente
+        }
+    }
+}
+recibirUnaNuevaCadena([],[])
+
+function simularDemora(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function createTransactionSignature(transaccion: Transaccion, hashUltimoBloque: string, clave: string) {
+    let privateE = bigInt(clave.split(',')[0])
+    let publicN = bigInt(clave.split(',')[1])
+    let transactionString = transactionToStringToSign(transaccion, hashUltimoBloque)
+    let hash = md5(transactionString)
+    const encodedMessage = RSA.encode(hash);
+    return RSA.encrypt(encodedMessage, publicN, privateE).toString()
 }
