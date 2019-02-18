@@ -9,6 +9,7 @@ export interface Functions {
     publishTransaction: () => void
     generateKeyPair: () => void
     firmarTransaccion: () => void
+    minear: () => void
 }
 export interface Transaccion {
     da: string

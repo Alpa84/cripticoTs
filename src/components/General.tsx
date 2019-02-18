@@ -19,10 +19,18 @@ function General({ general, functions }: Props) {
         <div className="row">
           <div className="col-sm-8">
             <KeyPair keyPair={general.keyPair} functions={functions}/>
+            <h2>Transferir un simpl</h2>
             <TransactionToPublish general={general} functions={functions} />
+            <h2>Transacciones Publicadas no incluidas en la cadena</h2>
             <PendingTransactions general={general} />
+
+            <button
+              type="button"
+              className="btn btn-info"
+              onClick={functions.minear}>Incluir Transacciones en la Cadena</button>
             <br />
-            <Chain chain={general.cadena} generalChange={functions.generalChange}/>
+            <h2>Cadena</h2>
+            <Chain general={general} generalChange={functions.generalChange}/>
           </div>
           <div className="col-sm-2">
             <Directory general={general}/>

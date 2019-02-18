@@ -6,7 +6,8 @@
     "member-access": false,
     "interface-name": false,
     "jsx-no-lambda": false,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "no-console": false
   },
   "linterOptions": {
     "exclude": [

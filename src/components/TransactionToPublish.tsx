@@ -27,7 +27,7 @@ function TransactionToPublish({ general, functions }: Props) {
       </select>
 
       <Input text='da' onChange={functions.generalChange} value={general.transactionToPublish.da} path='transactionToPublish.da' />
-      <Input text='recibe firma' value={general.transactionToPublish.recibe} onChange={functions.generalChange} path='transactionToPublish.recibe'/>
+      <Input text='recibe dirección' value={general.transactionToPublish.recibe} onChange={functions.generalChange} path='transactionToPublish.recibe'/>
       <InputNumber text='cuanto' value={general.transactionToPublish.cuanto} onChange={functions.generalChange} path='transactionToPublish.cuanto'/>
       <Input text='firma' value={general.transactionToPublish.firma ? general.transactionToPublish.firma : ''} onChange={functions.generalChange} path='transactionToPublish.firma' />
       <p>para agregar en el bloque número {general.cadena.length}</p>

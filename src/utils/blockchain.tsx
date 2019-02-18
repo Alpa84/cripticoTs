@@ -60,7 +60,7 @@ function esUnBloqueInvalido(bloque: Block, indexBloque: number, cadenaRecibida: 
     return false
 }
 
-function hashearBloque(bloque: Block) {
+export function hashearBloque(bloque: Block) {
     let transaccionesString = transaccionesAString(bloque.transacciones)
     return md5(bloque.hashBloqueAnterior + ',' + transaccionesString + ',' + bloque.clave)
 }
@@ -122,7 +122,7 @@ function empiezaConCero(hash: string) {
 
 
 async function verQueAgregarleParaQueElHashEmpieceConCero(bloqueSinClave: Block, cadenaExistente: Block[], bloqueElement = null, cadena?: Block[]): Promise<string> {
-    let clave = '0'
+    let clave = 0
     let seguirBuscando = true
 
     while (seguirBuscando) {
@@ -133,11 +133,11 @@ async function verQueAgregarleParaQueElHashEmpieceConCero(bloqueSinClave: Block,
                 return 'cancelado'
             }
         }
-        bloqueSinClave.clave = clave
+        bloqueSinClave.clave = clave.toString()
         let resultado = hashearBloque(bloqueSinClave)
         let empieza = empiezaConCero(resultado) // split e index
         if (empieza) {
-            return clave
+            return clave.toString()
         } else {
             clave = clave + 1
         }
@@ -146,7 +146,7 @@ async function verQueAgregarleParaQueElHashEmpieceConCero(bloqueSinClave: Block,
     return ''
 }
 
-async function tratarDeAgregarUnBloque(depositoTransaccionesPendientes: Transaccion[], cadenaExistente: Block[]) {
+export async function tratarDeAgregarUnBloque(depositoTransaccionesPendientes: Transaccion[], cadenaExistente: Block[], direccionMinero: string): Promise<Block[]> {
     let transaccionesPendientes = depositoTransaccionesPendientes
     let ultimoBloque = cadenaExistente[cadenaExistente.length - 1]
     let hashBloqueAnterior = hashearBloque(ultimoBloque)
@@ -165,7 +165,7 @@ async function tratarDeAgregarUnBloque(depositoTransaccionesPendientes: Transacc
             alert(`no vale la transacción de ${transaccionPendiente.da} a ${transaccionPendiente.recibe} por ${transaccionPendiente.cuanto}, la vamos a ignorar`)
         }
     }
-    transaccionesPendientesAprobadas.unshift({ da: 'nadie', recibe: 'MineroA', cuanto: 1 , firma:''})
+    transaccionesPendientesAprobadas.unshift({ da: 'nadie', recibe: direccionMinero, cuanto: 1 , firma:''})
     let nuevoBloque: Block = {
         clave: '',
         hashBloqueAnterior,
@@ -173,10 +173,10 @@ async function tratarDeAgregarUnBloque(depositoTransaccionesPendientes: Transacc
     }
 
     let clave = await verQueAgregarleParaQueElHashEmpieceConCero(nuevoBloque,cadenaExistente , null, cadenaExistente)
-    if (clave === 'cancelado') { return }
+    if (clave === 'cancelado') { return cadenaExistente }
     nuevoBloque.clave = clave
     cadenaExistente.push(nuevoBloque)
-
+    return cadenaExistente
     // let cadenaYTransResponse = await axios({
     //     data: cadenaExistente,
     //     method: 'post',
@@ -186,10 +186,9 @@ async function tratarDeAgregarUnBloque(depositoTransaccionesPendientes: Transacc
     // mandarATodosLaCadenaConBloqueNuevo(cadenaExistente)
 
 }
-tratarDeAgregarUnBloque([], [])
 // recibirTransaccion(transaccionEjemplo)
 
-async function agregarATransaccionesPendientes(transaccion: Transaccion, clave: string, cadenaExistente: Block[]) {
+export async function agregarATransaccionesPendientes(transaccion: Transaccion, clave: string, cadenaExistente: Block[]) {
     let ultimoBloque = cadenaExistente[cadenaExistente.length - 1]
     let hashUltimoBloque = hashearBloque(ultimoBloque)
     transaccion.firma = createTransactionSignature(transaccion, hashUltimoBloque, clave)
@@ -199,7 +198,7 @@ async function agregarATransaccionesPendientes(transaccion: Transaccion, clave: 
     //     url: '/transaccion_pendiente',
     // })
 }
-agregarATransaccionesPendientes({da:'', recibe:'', cuanto:0, firma: ''},'',[])
+// agregarATransaccionesPendientes({da:'', recibe:'', cuanto:0, firma: ''},'',[])
 function recibirUnaNuevaCadena(cadenaRecibida: Block[], cadenaExistente: Block[]) {
     let razon = esUnaCadenaInvalida(cadenaRecibida)
     if (razon) {
@@ -222,7 +221,7 @@ function simularDemora(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function createTransactionSignature(transaccion: Transaccion, hashUltimoBloque: string, clave: string) {
+export function createTransactionSignature(transaccion: Transaccion, hashUltimoBloque: string, clave: string) {
     let privateE = bigInt(clave.split(',')[0])
     let publicN = bigInt(clave.split(',')[1])
     let transactionString = transactionToStringToSign(transaccion, hashUltimoBloque)

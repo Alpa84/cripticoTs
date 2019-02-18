@@ -1,13 +1,15 @@
 import * as React from 'react'
-import { Transaccion } from '../Types'
+import { GeneralType } from '../Types'
 import Transaction from './Transaction';
 export interface Props {
-  transactions: Transaccion[]
+  general: GeneralType,
   blockIndex: number
   generalChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  editable: boolean
 }
 
-function Transactions({ transactions, generalChange, blockIndex }: Props) {
+function Transactions({ general, generalChange, blockIndex, editable }: Props) {
+  let transactions = general.cadena[blockIndex].transacciones
   return (
     <div className="Transactions">
       {
@@ -15,7 +17,7 @@ function Transactions({ transactions, generalChange, blockIndex }: Props) {
           <div className="panel panel-default" key={transIndex}>
             <div className="panel-body">
               <div key={transIndex}>
-                <Transaction transaction={transaccion} path={`cadena[${blockIndex}].transacciones[${transIndex}]`}  onChange={generalChange} />
+                <Transaction general={general} transactionIndex={transIndex} blockIndex={blockIndex} onChange={generalChange} editable={editable}/>
               </div>
             </div>
           </div>

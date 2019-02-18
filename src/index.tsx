@@ -1,14 +1,13 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as axios from 'axios'
-import * as bigInt from 'big-integer'
-import * as md5 from 'md5'
 import * as _ from 'lodash'
 import General from './components/General'
-import { GeneralType, Transaccion, Directorio } from './Types'
-import { generateKeyPair, RSA } from './utils/rsa'
+import { GeneralType, Transaccion, Directorio, Block } from './Types'
+import { generateKeyPair } from './utils/rsa'
 import './index.css';
 import registerServiceWorker from './registerServiceWorker'
+import { tratarDeAgregarUnBloque, createTransactionSignature, hashearBloque } from './utils/blockchain';
 
 
 let general: GeneralType = {
@@ -33,24 +32,20 @@ const publishTransaction = async () => {
   general.transaccionesPendientes =  response.data
   update()
 }
-const firmarTransaccion = async () => {
+const preguntarYAgregarAlias = async() => {
   let alias = prompt('cual es el alias de la direccion?')
-  let privateE = bigInt(general.keyPair.clave.split(',')[0])
-  let publicN = bigInt(general.keyPair.clave.split(',')[1])
-  // atenti al hash ultimo bloque que está como string
-  let transactionString = transactionToStringToSign(general.transactionToPublish, 'hashUltimoBloque')
-  let hash = md5(transactionString)
-  const encodedMessage = RSA.encode(hash);
-  let firma = RSA.encrypt(encodedMessage, publicN, privateE).toString()
-  general.transactionToPublish.firma = firma
-  let response = await axios.default.post<Directorio>('http://localhost:5000/directorio', {direccion: general.keyPair.direccion ,nombre: alias})
+  let response = await axios.default.post<Directorio>('http://localhost:5000/directorio', { direccion: general.keyPair.direccion, nombre: alias })
   general.directorio = response.data
+}
+
+const firmarTransaccion = async () => {
+  let firma = createTransactionSignature(general.transactionToPublish, hashearBloque(_.last(general.cadena) as Block), general.keyPair.clave)
+  general.transactionToPublish.firma = firma
+  preguntarYAgregarAlias()
   update()
 
 }
-function transactionToStringToSign(transaccion: Transaccion, hashUltimoBloque: string) {
-  return `da: ${transaccion.da}, recibe: ${transaccion.recibe}, cuanto: ${transaccion.cuanto}, hashUtlimoBloque: ${hashUltimoBloque}`
-}
+
 const updateChain = async () => {
   let response = await axios.default.get< GeneralType >('http://localhost:5000/cadena_y_transacciones_pendientes')
   general.cadena =  response.data.cadena
@@ -58,9 +53,10 @@ const updateChain = async () => {
   general.directorio = response.data.directorio
   update()
 }
-setInterval(() => {
+// setInterval(() => {
   updateChain()
-}, 3000)
+// }, 3000)
+
 
 const generalChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement >) => {
   let element = event.target
@@ -72,10 +68,17 @@ const generalChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectEle
   _.set(general, path, value)
   update()
 }
+const minear = async() => {
+  preguntarYAgregarAlias()
+  let nuevaCadena = await tratarDeAgregarUnBloque(general.transaccionesPendientes, general.cadena, general.keyPair.direccion)
+  general.cadena = nuevaCadena
+  update()
+}
 const functions = {
   firmarTransaccion,
   generalChange,
   generateKeyPair: generateKeyPairAndUpdate,
+  minear,
   publishTransaction,
 }
 const update =  () => {
