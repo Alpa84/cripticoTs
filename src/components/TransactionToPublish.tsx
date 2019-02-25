@@ -9,6 +9,19 @@ export interface Props {
 }
 
 function TransactionToPublish({ general, functions }: Props) {
+  let daOptions = _.map(general.directorio, (key, value) => (
+    <option key={value} value={value} >{key}</option>
+  ))
+  const empty = () => (<option disabled={true} value='empty' key={-1}> -- select an option -- </option>)
+  // if (!general.directorio[general.transactionToPublish.da]) {
+    daOptions.push(empty())
+  // }
+  let recibeOptions = _.map(general.directorio, (key, value) => (
+    <option key={value} value={value} >{key}</option>
+  ))
+  // if (!general.directorio[general.transactionToPublish.recibe]) {
+  //   recibeOptions.push(empty())
+  // }
   return (
     <div>
       <select
@@ -19,14 +32,19 @@ function TransactionToPublish({ general, functions }: Props) {
         value={general.transactionToPublish.da}
         data-key = 'transactionToPublish.da'
         >
-        {
-          _.map( general.directorio, (key, value) => (
-            <option key={value} value={value}>{key}</option>
-          ))
-        }
+        {daOptions}
       </select>
-
       <Input text='da' onChange={functions.generalChange} value={general.transactionToPublish.da} path='transactionToPublish.da' />
+      <select
+        name="recibe"
+        id="inputrecibe"
+        className="form-control"
+        onChange={functions.generalChange}
+        value={general.transactionToPublish.recibe}
+        data-key='transactionToPublish.recibe'
+      >
+        {recibeOptions}
+      </select>
       <Input text='recibe dirección' value={general.transactionToPublish.recibe} onChange={functions.generalChange} path='transactionToPublish.recibe'/>
       <InputNumber text='cuanto' value={general.transactionToPublish.cuanto} onChange={functions.generalChange} path='transactionToPublish.cuanto'/>
       <Input text='firma' value={general.transactionToPublish.firma ? general.transactionToPublish.firma : ''} onChange={functions.generalChange} path='transactionToPublish.firma' />

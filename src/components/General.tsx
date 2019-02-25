@@ -5,6 +5,7 @@ import PendingTransactions from './PendingTransactions'
 import TransactionToPublish from './TransactionToPublish'
 import KeyPair from './KeyPair'
 import Directory from './Directory';
+import Balance from './Balance';
 
 export interface Props {
   general: GeneralType
@@ -34,6 +35,7 @@ function General({ general, functions }: Props) {
           </div>
           <div className="col-sm-2">
             <Directory general={general}/>
+            <Balance general={general}/>
           </div>
         </div>
       </div>

@@ -23,6 +23,7 @@ export interface GeneralType {
     transactionToPublish: Transaccion
     keyPair: KeyPair
     directorio: Directorio
+    balance: {[dir: string]: number}
 }
 export interface Directorio { [id: string]: string }
 export interface KeyPair {

@@ -7,10 +7,11 @@ import { GeneralType, Transaccion, Directorio, Block } from './Types'
 import { generateKeyPair } from './utils/rsa'
 import './index.css';
 import registerServiceWorker from './registerServiceWorker'
-import { tratarDeAgregarUnBloque, createTransactionSignature, hashearBloque } from './utils/blockchain';
+import { tratarDeAgregarUnBloque, createTransactionSignature, hashearBloque, calcularCuantoTieneElQueDa } from './utils/blockchain';
 
 
 let general: GeneralType = {
+  balance:{},
   cadena: [],
   directorio: {},
   keyPair: {
@@ -32,6 +33,11 @@ const publishTransaction = async () => {
   general.transaccionesPendientes =  response.data
   update()
 }
+const publishChain = async (cadena: Block[]) => {
+  let response = await axios.default.post<{cadena: Block[]}>('http://localhost:5000/cadena', cadena)
+  general.cadena =  response.data.cadena
+  update()
+}
 const preguntarYAgregarAlias = async() => {
   let alias = prompt('cual es el alias de la direccion?')
   let response = await axios.default.post<Directorio>('http://localhost:5000/directorio', { direccion: general.keyPair.direccion, nombre: alias })
@@ -51,11 +57,17 @@ const updateChain = async () => {
   general.cadena =  response.data.cadena
   general.transaccionesPendientes =  response.data.transaccionesPendientes
   general.directorio = response.data.directorio
+  let transacciones = _.flatMap(general.cadena, (cadena: Block) => cadena.transacciones)
+  let reciben = _.uniq(transacciones.map( transaccion => transaccion.recibe))
+  general.balance = _.reduce(reciben, (obj, recibe) => {
+    obj[recibe] = calcularCuantoTieneElQueDa(transacciones, recibe)
+    return obj
+  }, {})
   update()
 }
-// setInterval(() => {
+setInterval(() => {
   updateChain()
-// }, 3000)
+}, 3000)
 
 
 const generalChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement >) => {
@@ -71,7 +83,7 @@ const generalChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectEle
 const minear = async() => {
   preguntarYAgregarAlias()
   let nuevaCadena = await tratarDeAgregarUnBloque(general.transaccionesPendientes, general.cadena, general.keyPair.direccion)
-  general.cadena = nuevaCadena
+  publishChain(nuevaCadena)
   update()
 }
 const functions = {

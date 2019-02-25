@@ -103,8 +103,8 @@ function verSiElQueDaTieneLaPlata(transaccion: Transaccion, transacciones: Trans
     }
 }
 
-function calcularCuantoTieneElQueDa(transacciones: Transaccion[], calcularPara: string) {
-    let cuantoTiene = 0 // reforzar scope
+export function calcularCuantoTieneElQueDa(transacciones: Transaccion[], calcularPara: string) {
+    let cuantoTiene = 0
     for (let transaccion of transacciones) {
         if (transaccion.da === calcularPara) {
             cuantoTiene = cuantoTiene - transaccion.cuanto
