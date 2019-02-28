@@ -8,6 +8,7 @@ export interface Props {
 function Directory({ general }: Props) {
   return (
     <div className="Directory">
+      <h1>Directorio</h1>
       <div className="panel panel-default">
         <div className="panel-body">
           {

@@ -13,13 +13,14 @@ import { createTransactionSignature, hashearBloque, calcularCuantoTieneElQueDa, 
 let general: GeneralType = {
   balance:{},
   cadena: [],
+  dirToAddMined:'',
   directorio: {},
   keyPair: {
     clave: '',
     direccion: '',
   },
   transaccionesPendientes: [],
-  transactionToPublish: {da: '', recibe:'', cuanto: 0, firma:'' },
+  transactionToPublish: {da: '', recibe:'', cuanto: 0, firma:'', secretKey:'' },
 }
 
 const generateKeyPairAndUpdate = () => {
@@ -42,16 +43,19 @@ const publishChain = async (cadena: Block[]) => {
     console.error(error)
   }
 }
-const preguntarYAgregarAlias = async() => {
-  let alias = prompt('cual es el alias de la direccion?')
-  let response = await axios.default.post<Directorio>('http://localhost:5000/directorio', { direccion: general.keyPair.direccion, nombre: alias })
-  general.directorio = response.data
+const preguntarYAgregarAlias = async(path:string) => {
+  let dir = _.get(general, path)
+  if(!_.has(general.directorio, dir)) {
+    let alias = prompt('cual es el alias de la direccion?')
+    let response = await axios.default.post<Directorio>('http://localhost:5000/directorio', { direccion: general.keyPair.direccion, nombre: alias })
+    general.directorio = response.data
+  }
 }
 
 const firmarTransaccion = async () => {
-  let firma = createTransactionSignature(general.transactionToPublish, hashearBloque(_.last(general.cadena) as Block), general.keyPair.clave)
+  let firma = createTransactionSignature(general.transactionToPublish, hashearBloque(_.last(general.cadena) as Block), general.transactionToPublish.secretKey)
   general.transactionToPublish.firma = firma
-  preguntarYAgregarAlias()
+  preguntarYAgregarAlias('transactionToPublish.da')
   update()
 
 }
@@ -82,11 +86,13 @@ const generalChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectEle
     value = parseFloat(value)
   }
   _.set(general, path, value)
+  // don't know why the line above wont work for the secret key
+  if (path === 'general.transactionToPublish.secretKey') { general.transactionToPublish.secretKey = value.toString()}
   update()
 }
 const minear = async() => {
-  preguntarYAgregarAlias()
-  let bloqueSinClave = validateTransactions(general.transaccionesPendientes, general.cadena, general.keyPair.direccion)
+  preguntarYAgregarAlias('dirToAddMined')
+  let bloqueSinClave = validateTransactions(general.transaccionesPendientes, general.cadena, general.dirToAddMined)
   general.minedBlock = bloqueSinClave
   let clave = 0
   let keepSearching = true

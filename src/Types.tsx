@@ -18,10 +18,14 @@ export interface Transaccion {
     cuanto: number
     firma: string
 }
+export interface TransactionPlusKey extends Transaccion {
+    secretKey: string
+}
 export interface GeneralType {
     transaccionesPendientes: Transaccion[]
     cadena: Block[]
-    transactionToPublish: Transaccion
+    transactionToPublish: TransactionPlusKey
+    dirToAddMined: string,
     keyPair: KeyPair
     directorio: Directorio
     balance: {[dir: string]: number}
