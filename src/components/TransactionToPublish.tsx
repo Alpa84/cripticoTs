@@ -22,6 +22,9 @@ function TransactionToPublish({ general, functions }: Props) {
   // if (!general.directorio[general.transactionToPublish.recibe]) {
   //   recibeOptions.push(empty())
   // }
+  let toPub = general.transactionToPublish
+  let signEnabled = toPub.da && toPub.recibe && toPub.cuanto && toPub.secretKey
+  let publishEnabled = signEnabled && toPub.firma
   return (
     <div>
       <select
@@ -70,8 +73,17 @@ function TransactionToPublish({ general, functions }: Props) {
       </div>
       <p>Firma: {general.transactionToPublish.firma}</p>
       <p>para agregar en el bloque número {general.cadena.length}</p>
-      <button type="button" className="btn btn-warning" onClick={functions.firmarTransaccion}>firmar con clave privada</button>
-      <button type="button" className="btn btn-default" onClick={functions.publishTransaction}>Publicar Transacción</button>
+      <button
+        disabled={!signEnabled }
+        type="button"
+        className="btn
+        btn-warning"
+        onClick={functions.firmarTransaccion}>firmar con clave privada</button>
+      <button
+        disabled={!publishEnabled}
+        type="button"
+        className="btn btn-default"
+        onClick={functions.publishTransaction}>Publicar Transacción</button>
     </div>
   )
 }
