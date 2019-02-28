@@ -7,7 +7,7 @@ import { GeneralType, Transaccion, Directorio, Block } from './Types'
 import { generateKeyPair } from './utils/rsa'
 import './index.css';
 import registerServiceWorker from './registerServiceWorker'
-import { tratarDeAgregarUnBloque, createTransactionSignature, hashearBloque, calcularCuantoTieneElQueDa } from './utils/blockchain';
+import { createTransactionSignature, hashearBloque, calcularCuantoTieneElQueDa, hashearBloqueConClave, validateTransactions, empiezaConCero, simularDemora } from './utils/blockchain';
 
 
 let general: GeneralType = {
@@ -34,9 +34,13 @@ const publishTransaction = async () => {
   update()
 }
 const publishChain = async (cadena: Block[]) => {
-  let response = await axios.default.post<{cadena: Block[]}>('http://localhost:5000/cadena', cadena)
-  general.cadena =  response.data.cadena
-  update()
+  try {
+    let response = await axios.default.post<{cadena: Block[]}>('http://localhost:5000/cadena', cadena)
+    general.cadena = response.data.cadena
+    update()
+  } catch (error) {
+    console.error(error)
+  }
 }
 const preguntarYAgregarAlias = async() => {
   let alias = prompt('cual es el alias de la direccion?')
@@ -82,14 +86,33 @@ const generalChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectEle
 }
 const minear = async() => {
   preguntarYAgregarAlias()
-  let nuevaCadena = await tratarDeAgregarUnBloque(general.transaccionesPendientes, general.cadena, general.keyPair.direccion)
-  publishChain(nuevaCadena)
+  let bloqueSinClave = validateTransactions(general.transaccionesPendientes, general.cadena, general.keyPair.direccion)
+  general.minedBlock = bloqueSinClave
+  let clave = 0
+  let keepSearching = true
+  while (keepSearching) {
+    bloqueSinClave.clave = clave.toString()
+    let resultado = hashearBloqueConClave(bloqueSinClave, clave)
+    let empieza = empiezaConCero(resultado)
+    if (empieza) {
+      keepSearching = false
+    } else {
+      clave = clave + 1
+    }
+    update()
+    await simularDemora(4)
+  }
+  bloqueSinClave.clave = clave.toString()
+  general.cadena.push(bloqueSinClave)
+  delete general.minedBlock
+  publishChain(general.cadena)
   update()
 }
 const functions = {
   firmarTransaccion,
   generalChange,
   generateKeyPair: generateKeyPairAndUpdate,
+  hashearBloque,
   minear,
   publishTransaction,
 }

@@ -10,6 +10,7 @@ export interface Functions {
     generateKeyPair: () => void
     firmarTransaccion: () => void
     minear: () => void
+    hashearBloque: (bloque: Block) => string
 }
 export interface Transaccion {
     da: string
@@ -24,6 +25,7 @@ export interface GeneralType {
     keyPair: KeyPair
     directorio: Directorio
     balance: {[dir: string]: number}
+    minedBlock?: Block
 }
 export interface Directorio { [id: string]: string }
 export interface KeyPair {

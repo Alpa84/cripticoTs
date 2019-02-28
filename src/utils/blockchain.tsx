@@ -116,12 +116,12 @@ export function calcularCuantoTieneElQueDa(transacciones: Transaccion[], calcula
     return cuantoTiene
 }
 
-function empiezaConCero(hash: string) {
-    return hash.split('')[0] === '0'
+export function empiezaConCero(hash: string) {
+    return hash.substring(0, 2) === '00'
 }
 
 
-async function verQueAgregarleParaQueElHashEmpieceConCero(bloqueSinClave: Block, cadenaExistente: Block[], bloqueElement = null, cadena?: Block[]): Promise<string> {
+async function verQueAgregarleParaQueElHashEmpieceConCero(bloqueSinClave: Block, cadenaExistente: Block[], cadena?: Block[]): Promise<string> {
     let clave = 0
     let seguirBuscando = true
 
@@ -133,8 +133,7 @@ async function verQueAgregarleParaQueElHashEmpieceConCero(bloqueSinClave: Block,
                 return 'cancelado'
             }
         }
-        bloqueSinClave.clave = clave.toString()
-        let resultado = hashearBloque(bloqueSinClave)
+        let resultado = hashearBloqueConClave(bloqueSinClave, clave)
         let empieza = empiezaConCero(resultado) // split e index
         if (empieza) {
             return clave.toString()
@@ -145,8 +144,11 @@ async function verQueAgregarleParaQueElHashEmpieceConCero(bloqueSinClave: Block,
     }
     return ''
 }
-
-export async function tratarDeAgregarUnBloque(depositoTransaccionesPendientes: Transaccion[], cadenaExistente: Block[], direccionMinero: string): Promise<Block[]> {
+export const hashearBloqueConClave = (bloqueSinClave: Block, claveIntento: number): string=> {
+    bloqueSinClave.clave = claveIntento.toString()
+    return  hashearBloque(bloqueSinClave)
+}
+export const validateTransactions = (depositoTransaccionesPendientes: Transaccion[], cadenaExistente: Block[], direccionMinero: string): Block => {
     let transaccionesPendientes = depositoTransaccionesPendientes
     let ultimoBloque = cadenaExistente[cadenaExistente.length - 1]
     let hashBloqueAnterior = hashearBloque(ultimoBloque)
@@ -165,26 +167,21 @@ export async function tratarDeAgregarUnBloque(depositoTransaccionesPendientes: T
             alert(`no vale la transacción de ${transaccionPendiente.da} a ${transaccionPendiente.recibe} por ${transaccionPendiente.cuanto}, la vamos a ignorar`)
         }
     }
-    transaccionesPendientesAprobadas.unshift({ da: 'nadie', recibe: direccionMinero, cuanto: 1 , firma:''})
-    let nuevoBloque: Block = {
+    transaccionesPendientesAprobadas.unshift({ da: 'nadie', recibe: direccionMinero, cuanto: 1, firma: '' })
+    return {
         clave: '',
         hashBloqueAnterior,
         transacciones: transaccionesPendientesAprobadas,
     }
+}
 
-    let clave = await verQueAgregarleParaQueElHashEmpieceConCero(nuevoBloque,cadenaExistente , null, cadenaExistente)
+export async function tratarDeAgregarUnBloque(depositoTransaccionesPendientes: Transaccion[], cadenaExistente: Block[], direccionMinero: string): Promise<Block[]> {
+    let nuevoBloque = validateTransactions(depositoTransaccionesPendientes, cadenaExistente, direccionMinero)
+    let clave = await verQueAgregarleParaQueElHashEmpieceConCero(nuevoBloque,cadenaExistente, cadenaExistente)
     if (clave === 'cancelado') { return cadenaExistente }
     nuevoBloque.clave = clave
     cadenaExistente.push(nuevoBloque)
     return cadenaExistente
-    // let cadenaYTransResponse = await axios({
-    //     data: cadenaExistente,
-    //     method: 'post',
-    //     url: '/cadena',
-    // })
-    // cadenaYTransResponse.data
-    // mandarATodosLaCadenaConBloqueNuevo(cadenaExistente)
-
 }
 // recibirTransaccion(transaccionEjemplo)
 
@@ -217,7 +214,7 @@ function recibirUnaNuevaCadena(cadenaRecibida: Block[], cadenaExistente: Block[]
 }
 recibirUnaNuevaCadena([],[])
 
-function simularDemora(ms: number) {
+export function simularDemora(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 

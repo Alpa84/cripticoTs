@@ -6,6 +6,7 @@ import TransactionToPublish from './TransactionToPublish'
 import KeyPair from './KeyPair'
 import Directory from './Directory';
 import Balance from './Balance';
+import MinedBlock from './MinedBlock';
 
 export interface Props {
   general: GeneralType
@@ -31,7 +32,8 @@ function General({ general, functions }: Props) {
               onClick={functions.minear}>Incluir Transacciones en la Cadena</button>
             <br />
             <h2>Cadena</h2>
-            <Chain general={general} generalChange={functions.generalChange}/>
+            <MinedBlock general={general} functions={functions} />
+            <Chain general={general} functions={functions}/>
           </div>
           <div className="col-sm-2">
             <Directory general={general}/>
