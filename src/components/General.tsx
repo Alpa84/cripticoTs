@@ -46,7 +46,7 @@ function General({ general, functions }: Props) {
                 name='username'
                 id="dirToAdMinedBitcoin"
                 value={general.dirToAddMined}
-                data-key='keyPair.direccion'
+                data-key='dirToAddMined'
                 onChange={functions.generalChange} />
             </div>
             <button
