@@ -9,6 +9,7 @@ import './index.css';
 import registerServiceWorker from './registerServiceWorker'
 import { createTransactionSignature, hashearBloque, calcularCuantoTieneElQueDa, hashearBloqueConClave, validateTransactions, empiezaConCero, simularDemora } from './utils/blockchain';
 
+let defaultUrl = 'http://localhost:5000'
 
 let general: GeneralType = {
   balance:{},
@@ -25,18 +26,17 @@ let general: GeneralType = {
 
 const generateKeyPairAndUpdate = () => {
   let keyPair = generateKeyPair()
-  general.keyPair =  keyPair
   general.transactionToPublish.da = keyPair.direccion
   update()
 }
 const publishTransaction = async () => {
-  let response = await axios.default.post<Transaccion[]>('http://localhost:5000/transaccion_pendiente', general.transactionToPublish)
+  let response = await axios.default.post<Transaccion[]>(`${defaultUrl}/transaccion_pendiente`, general.transactionToPublish)
   general.transaccionesPendientes =  response.data
   update()
 }
 const publishChain = async (cadena: Block[]) => {
   try {
-    let response = await axios.default.post<{cadena: Block[]}>('http://localhost:5000/cadena', cadena)
+    let response = await axios.default.post<{cadena: Block[]}>(`${defaultUrl}/cadena`, cadena)
     general.cadena = response.data.cadena
     update()
   } catch (error) {
@@ -47,7 +47,7 @@ const preguntarYAgregarAlias = async(path:string) => {
   let dir = _.get(general, path)
   if(!_.has(general.directorio, dir)) {
     let alias = prompt('cual es el alias de la direccion?')
-    let response = await axios.default.post<Directorio>('http://localhost:5000/directorio', { direccion: general.keyPair.direccion, nombre: alias })
+    let response = await axios.default.post<Directorio>(`${defaultUrl}/directorio`, { direccion: general.keyPair.direccion, nombre: alias })
     general.directorio = response.data
   }
 }
@@ -61,7 +61,7 @@ const firmarTransaccion = async () => {
 }
 
 const updateChain = async () => {
-  let response = await axios.default.get< GeneralType >('http://localhost:5000/cadena_y_transacciones_pendientes')
+  let response = await axios.default.get< GeneralType >(`${defaultUrl}/cadena_y_transacciones_pendientes`)
   general.cadena =  response.data.cadena
   general.transaccionesPendientes =  response.data.transaccionesPendientes
   general.directorio = response.data.directorio
