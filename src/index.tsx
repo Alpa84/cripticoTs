@@ -11,7 +11,7 @@ import { createTransactionSignature, hashearBloque, calcularCuantoTieneElQueDa, 
 
 // TBD Make the following fix for prod/local less brittle
 // CORS network error ?
-// let defaultUrl = 'http://localhost:5000'
+//let defaultUrl = 'http://localhost:5000'
 let defaultUrl = ''
 
 let general: GeneralType = {
@@ -46,14 +46,6 @@ const publishChain = async (cadena: Block[]) => {
     console.error(error)
   }
 }
-const preguntarYAgregarAlias = async(path:string) => {
-  let dir = _.get(general, path)
-  if(!_.has(general.directorio, dir)) {
-    let alias = prompt('cual es el alias de la direccion?')
-    let response = await axios.default.post<Directorio>(`${defaultUrl}/directorio`, { address: general.keyPair.direccion, details: alias })
-    general.directorio = response.data
-  }
-}
 const generateWallet = async() => {
   let details: WalletDetails = { alias: general.alias , privateKey: general.keyPair.clave}
   let directorioApi: DirectorioAPI = { address: general.keyPair.direccion, details }
@@ -65,7 +57,6 @@ const generateWallet = async() => {
 const firmarTransaccion = async () => {
   let firma = createTransactionSignature(general.transactionToPublish, hashearBloque(_.last(general.cadena) as Block), general.transactionToPublish.secretKey )
   general.transactionToPublish.firma = firma
-  preguntarYAgregarAlias('transactionToPublish.da')
   update()
 
 }
@@ -98,7 +89,6 @@ const generalChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectEle
   update()
 }
 const minear = async() => {
-  preguntarYAgregarAlias('dirToAddMined')
   let bloqueSinClave = validateTransactions(general.transaccionesPendientes, general.cadena, general.dirToAddMined)
   general.minedBlock = bloqueSinClave
   let clave = 0
