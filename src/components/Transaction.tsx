@@ -15,8 +15,8 @@ function Transaction({ general, blockIndex, onChange, transactionIndex, editable
   let block = general.cadena[blockIndex]
   let transaction = block.transacciones[transactionIndex]
   let path = `cadena[${blockIndex}].transacciones[${transactionIndex}]`
-  let recibe = _.has(general.directorio, transaction.recibe) ? general.directorio[transaction.recibe] : transaction.recibe
-  let da = _.has(general.directorio, transaction.da) ? general.directorio[transaction.da] : transaction.da
+  let recibe = _.has(general.directorio, transaction.recibe) ? general.directorio[transaction.recibe].alias : transaction.recibe
+  let da = _.has(general.directorio, transaction.da) ? general.directorio[transaction.da].alias : transaction.da
   return (
     <div>
       {editable ? (

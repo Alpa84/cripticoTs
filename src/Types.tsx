@@ -8,9 +8,11 @@ export interface Functions {
     generalChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
     publishTransaction: () => void
     generateKeyPair: () => void
+    generateWallet: () => void
     firmarTransaccion: () => void
     minear: () => void
     hashearBloque: (bloque: Block) => string
+    calculateOwnerCoinsFromChain: (chain: Block[], address: string) => number
 }
 export interface Transaccion {
     da: string
@@ -27,11 +29,15 @@ export interface GeneralType {
     transactionToPublish: TransactionPlusKey
     dirToAddMined: string,
     keyPair: KeyPair
+    alias: string
     directorio: Directorio
-    balance: {[dir: string]: number}
     minedBlock?: Block
 }
-export interface Directorio { [id: string]: string }
+export interface WalletDetails {
+    alias: string,
+    privateKey: string,
+}
+export interface Directorio { [id: string]:  WalletDetails}
 export interface KeyPair {
     direccion: string
     clave: string
@@ -41,4 +47,9 @@ export interface Keys {
     d: BigInteger
     e: BigInteger
     n: BigInteger
+}
+
+export interface DirectorioAPI {
+    address: string,
+    details: WalletDetails
 }

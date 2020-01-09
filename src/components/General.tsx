@@ -6,7 +6,6 @@ import PendingTransactions from './PendingTransactions'
 import TransactionToPublish from './TransactionToPublish'
 import KeyPair from './KeyPair'
 import Directory from './Directory'
-import Balance from './Balance';
 import MinedBlock from './MinedBlock'
 
 export interface Props {
@@ -16,14 +15,14 @@ export interface Props {
 
 function General({ general, functions }: Props) {
   let daOptions = _.map(general.directorio, (key, value) => (
-    <option key={value} value={value} >{key}</option>
+    <option key={value} value={value} >{key.alias}</option>
   ))
   return (
     <div className="General">
       <div className="container">
         <div className="row">
           <div className="col-sm-8">
-            <KeyPair keyPair={general.keyPair} functions={functions}/>
+            <KeyPair general={general} functions={functions}/>
             <h2>Transferir un simpl</h2>
             <TransactionToPublish general={general} functions={functions} />
             <h2>Transacciones Publicadas no incluidas en la cadena</h2>
@@ -59,8 +58,7 @@ function General({ general, functions }: Props) {
             <Chain general={general} functions={functions}/>
           </div>
           <div className="col-sm-2">
-            <Directory general={general}/>
-            <Balance general={general}/>
+            <Directory general={general} functions={functions}/>
           </div>
         </div>
       </div>

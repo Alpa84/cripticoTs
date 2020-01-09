@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom'
 import * as axios from 'axios'
 import * as _ from 'lodash'
 import General from './components/General'
-import { GeneralType, Transaccion, Directorio, Block } from './Types'
+import { GeneralType, Transaccion, Directorio, Block, WalletDetails, DirectorioAPI, Functions } from './Types'
 import { generateKeyPair } from './utils/rsa'
 import './index.css';
 import registerServiceWorker from './registerServiceWorker'
@@ -12,7 +12,7 @@ import { createTransactionSignature, hashearBloque, calcularCuantoTieneElQueDa, 
 let defaultUrl = 'http://localhost:5000'
 
 let general: GeneralType = {
-  balance:{},
+  alias: '',
   cadena: [],
   dirToAddMined:'',
   directorio: {},
@@ -47,30 +47,34 @@ const preguntarYAgregarAlias = async(path:string) => {
   let dir = _.get(general, path)
   if(!_.has(general.directorio, dir)) {
     let alias = prompt('cual es el alias de la direccion?')
-    let response = await axios.default.post<Directorio>(`${defaultUrl}/directorio`, { direccion: general.keyPair.direccion, nombre: alias })
+    let response = await axios.default.post<Directorio>(`${defaultUrl}/directorio`, { address: general.keyPair.direccion, details: alias })
     general.directorio = response.data
   }
 }
+const generateWallet = async() => {
+  let details: WalletDetails = { alias: general.alias , privateKey: general.keyPair.clave}
+  let directorioApi: DirectorioAPI = { address: general.keyPair.direccion, details }
+  let response = await axios.default.post<Directorio>(`${defaultUrl}/directorio`, directorioApi)
+  general.directorio = response.data
+  update()
+}
 
 const firmarTransaccion = async () => {
-  let firma = createTransactionSignature(general.transactionToPublish, hashearBloque(_.last(general.cadena) as Block), general.transactionToPublish.secretKey)
+  let firma = createTransactionSignature(general.transactionToPublish, hashearBloque(_.last(general.cadena) as Block), general.transactionToPublish.secretKey )
   general.transactionToPublish.firma = firma
   preguntarYAgregarAlias('transactionToPublish.da')
   update()
 
 }
-
+const calculateOwnerCoinsFromChain = (chain: Block[], address: string) => {
+  let transacciones = _.flatMap(chain, (block: Block) => block.transacciones)
+    return calcularCuantoTieneElQueDa(transacciones, address)
+}
 const updateChain = async () => {
   let response = await axios.default.get< GeneralType >(`${defaultUrl}/cadena_y_transacciones_pendientes`)
   general.cadena =  response.data.cadena
   general.transaccionesPendientes =  response.data.transaccionesPendientes
   general.directorio = response.data.directorio
-  let transacciones = _.flatMap(general.cadena, (cadena: Block) => cadena.transacciones)
-  let reciben = _.uniq(transacciones.map( transaccion => transaccion.recibe))
-  general.balance = _.reduce(reciben, (obj, recibe) => {
-    obj[recibe] = calcularCuantoTieneElQueDa(transacciones, recibe)
-    return obj
-  }, {})
   update()
 }
 setInterval(() => {
@@ -87,7 +91,7 @@ const generalChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectEle
   }
   _.set(general, path, value)
   // don't know why the line above wont work for the secret key
-  if (path === 'general.transactionToPublish.secretKey') { general.transactionToPublish.secretKey = value.toString()}
+  if (path === 'general.transactionToPublish.firma') { general.transactionToPublish.firma = value.toString()}
   update()
 }
 const minear = async() => {
@@ -114,10 +118,12 @@ const minear = async() => {
   publishChain(general.cadena)
   update()
 }
-const functions = {
+const functions: Functions = {
+  calculateOwnerCoinsFromChain,
   firmarTransaccion,
   generalChange,
   generateKeyPair: generateKeyPairAndUpdate,
+  generateWallet,
   hashearBloque,
   minear,
   publishTransaction,

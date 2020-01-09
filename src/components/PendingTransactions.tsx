@@ -28,6 +28,6 @@ function PendingTransactions({ general }: Props) {
 }
 const prefferName =  (dir: string, general: GeneralType) => {
   let name = general.directorio[dir]
-  return name ? name : dir
+  return name ? name.alias : dir
 }
 export default PendingTransactions;

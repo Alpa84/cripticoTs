@@ -12,7 +12,7 @@ function Input({ text, value, onChange, path }: Props) {
     return (
         <div className="input-group">
             <div className="input-group-addon">{text}</div>
-            <input type="text" className="form-control" id="exampleInputAmount" value={value} data-key={path} onChange={onChange}/>
+            <input type="text" className="form-control" value={value} data-key={path} onChange={onChange}/>
         </div>
     )
 }
