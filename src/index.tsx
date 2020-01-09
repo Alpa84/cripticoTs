@@ -26,7 +26,7 @@ let general: GeneralType = {
 
 const generateKeyPairAndUpdate = () => {
   let keyPair = generateKeyPair()
-  general.transactionToPublish.da = keyPair.direccion
+  general.keyPair = keyPair
   update()
 }
 const publishTransaction = async () => {
