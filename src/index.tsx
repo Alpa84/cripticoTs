@@ -9,7 +9,10 @@ import './index.css';
 import registerServiceWorker from './registerServiceWorker'
 import { createTransactionSignature, hashearBloque, calcularCuantoTieneElQueDa, hashearBloqueConClave, validateTransactions, empiezaConCero, simularDemora } from './utils/blockchain';
 
-let defaultUrl = 'http://localhost:5000'
+// TBD Make the following fix for prod/local less brittle
+// CORS network error ?
+// let defaultUrl = 'http://localhost:5000'
+let defaultUrl = ''
 
 let general: GeneralType = {
   alias: '',
