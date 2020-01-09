@@ -11,7 +11,7 @@ import { createTransactionSignature, hashearBloque, calcularCuantoTieneElQueDa, 
 
 // TBD Make the following fix for prod/local less brittle
 // CORS network error ?
-//let defaultUrl = 'http://localhost:5000'
+// let defaultUrl = 'http://localhost:5000'
 let defaultUrl = ''
 
 let general: GeneralType = {
