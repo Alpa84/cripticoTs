@@ -33,13 +33,13 @@ const generateKeyPairAndUpdate = () => {
   update()
 }
 const publishTransaction = async () => {
-  let response = await axios.default.post<Transaccion[]>(`${defaultUrl}/transaccion_pendiente`, general.transactionToPublish)
+  let response = await axios.default.post<Transaccion[]>(`${defaultUrl}/pending_transaction`, general.transactionToPublish)
   general.transaccionesPendientes =  response.data
   update()
 }
 const publishChain = async (cadena: Block[]) => {
   try {
-    let response = await axios.default.post<{cadena: Block[]}>(`${defaultUrl}/cadena`, cadena)
+    let response = await axios.default.post<{cadena: Block[]}>(`${defaultUrl}/chain`, cadena)
     general.cadena = response.data.cadena
     update()
   } catch (error) {
@@ -49,7 +49,7 @@ const publishChain = async (cadena: Block[]) => {
 const generateWallet = async() => {
   let details: WalletDetails = { alias: general.alias , privateKey: general.keyPair.clave}
   let directorioApi: DirectorioAPI = { address: general.keyPair.direccion, details }
-  let response = await axios.default.post<Directorio>(`${defaultUrl}/directorio`, directorioApi)
+  let response = await axios.default.post<Directorio>(`${defaultUrl}/wallets`, directorioApi)
   general.directorio = response.data
   update()
 }
@@ -65,7 +65,7 @@ const calculateOwnerCoinsFromChain = (chain: Block[], address: string) => {
     return calcularCuantoTieneElQueDa(transacciones, address)
 }
 const updateChain = async () => {
-  let response = await axios.default.get< GeneralType >(`${defaultUrl}/cadena_y_transacciones_pendientes`)
+  let response = await axios.default.get<GeneralType>(`${defaultUrl}/pending_transactions_and_chain`)
   general.cadena =  response.data.cadena
   general.transaccionesPendientes =  response.data.transaccionesPendientes
   general.directorio = response.data.directorio
