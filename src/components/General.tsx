@@ -42,7 +42,6 @@ function General({ general, functions }: Props) {
               <input
                 type="text"
                 className="form-control"
-                name='username'
                 id="dirToAdMinedBitcoin"
                 value={general.dirToAddMined}
                 data-key='dirToAddMined'

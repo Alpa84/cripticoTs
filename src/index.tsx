@@ -11,8 +11,8 @@ import { createTransactionSignature, hashearBloque, calcularCuantoTieneElQueDa, 
 
 // TBD Make the following fix for prod/local less brittle
 // CORS network error ?
-// let defaultUrl = 'http://localhost:5000'
-let defaultUrl = ''
+let defaultUrl = 'http://localhost:5000'
+// let defaultUrl = ''
 
 let general: GeneralType = {
   alias: '',
@@ -24,7 +24,7 @@ let general: GeneralType = {
     direccion: '',
   },
   transaccionesPendientes: [],
-  transactionToPublish: {da: '', recibe:'', cuanto: 0, firma:'', secretKey:'' },
+  transactionToPublish: {gives: '', receives:'', amount: 0, signature:'', secretKey:'' },
 }
 
 const generateKeyPairAndUpdate = () => {
@@ -56,12 +56,12 @@ const generateWallet = async() => {
 
 const firmarTransaccion = async () => {
   let firma = createTransactionSignature(general.transactionToPublish, hashearBloque(_.last(general.cadena) as Block), general.transactionToPublish.secretKey )
-  general.transactionToPublish.firma = firma
+  general.transactionToPublish.signature = firma
   update()
 
 }
 const calculateOwnerCoinsFromChain = (chain: Block[], address: string) => {
-  let transacciones = _.flatMap(chain, (block: Block) => block.transacciones)
+  let transacciones = _.flatMap(chain, (block: Block) => block.transactions)
     return calcularCuantoTieneElQueDa(transacciones, address)
 }
 const updateChain = async () => {
@@ -85,7 +85,7 @@ const generalChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectEle
   }
   _.set(general, path, value)
   // don't know why the line above wont work for the secret key
-  if (path === 'general.transactionToPublish.firma') { general.transactionToPublish.firma = value.toString()}
+  if (path === 'general.transactionToPublish.firma') { general.transactionToPublish.signature = value.toString()}
   update()
 }
 const minear = async() => {
@@ -94,7 +94,7 @@ const minear = async() => {
   let clave = 0
   let keepSearching = true
   while (keepSearching) {
-    bloqueSinClave.clave = clave.toString()
+    bloqueSinClave.hash = clave.toString()
     let resultado = hashearBloqueConClave(bloqueSinClave, clave)
     let empieza = empiezaConCero(resultado)
     if (empieza) {
@@ -105,7 +105,7 @@ const minear = async() => {
     update()
     await simularDemora(4)
   }
-  bloqueSinClave.clave = clave.toString()
+  bloqueSinClave.hash = clave.toString()
   general.cadena.push(bloqueSinClave)
   delete general.minedBlock
   publishChain(general.cadena)

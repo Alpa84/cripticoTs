@@ -13,10 +13,10 @@ function PendingTransactions({ general }: Props) {
           <div className="panel panel-default" key={transIndex}>
             <div className="panel-body">
               <div key={transIndex}>
-                <div data-toggle="tooltip" title={`dir: ${transaccion.da}`} >da: {prefferName(transaccion.da, general)}</div>
-                <div data-toggle="tooltip" title={`dir: ${transaccion.recibe}`} >recibe: {prefferName(transaccion.recibe, general)}</div>
-                <div>cuanto: {transaccion.cuanto}</div>
-                <div>firma: {transaccion.firma}</div>
+                <div data-toggle="tooltip" title={`dir: ${transaccion.gives}`} >da: {prefferName(transaccion.gives, general)}</div>
+                <div data-toggle="tooltip" title={`dir: ${transaccion.receives}`} >recibe: {prefferName(transaccion.receives, general)}</div>
+                <div>cuanto: {transaccion.amount}</div>
+                <div>firma: {transaccion.signature}</div>
               </div>
             </div>
           </div>

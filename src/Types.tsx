@@ -1,8 +1,8 @@
 import { BigInteger } from 'big-integer'
 export interface Block  {
-    hashBloqueAnterior: string
-    clave: string
-    transacciones: Transaccion[]
+    previousBlockHash: string
+    hash: string
+    transactions: Transaccion[]
 }
 export interface Functions {
     generalChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
@@ -15,10 +15,10 @@ export interface Functions {
     calculateOwnerCoinsFromChain: (chain: Block[], address: string) => number
 }
 export interface Transaccion {
-    da: string
-    recibe: string
-    cuanto: number
-    firma: string
+    gives: string
+    receives: string
+    amount: number
+    signature: string
 }
 export interface TransactionPlusKey extends Transaccion {
     secretKey: string

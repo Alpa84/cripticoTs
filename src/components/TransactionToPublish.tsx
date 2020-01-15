@@ -18,8 +18,8 @@ function TransactionToPublish({ general, functions }: Props) {
   ))
   recibeOptions.unshift(empty())
   let toPub = general.transactionToPublish
-  let signEnabled = toPub.da && toPub.recibe && toPub.cuanto && toPub.secretKey
-  let publishEnabled = signEnabled && toPub.firma
+  let signEnabled = toPub.gives && toPub.receives && toPub.amount && toPub.secretKey
+  let publishEnabled = signEnabled && toPub.signature
   return (
     <div>
       <div className="input-group">
@@ -28,8 +28,8 @@ function TransactionToPublish({ general, functions }: Props) {
           name="da"
           className="form-control"
           onChange={functions.generalChange}
-          value={general.transactionToPublish.da}
-          data-key='transactionToPublish.da'
+          value={general.transactionToPublish.gives}
+          data-key='transactionToPublish.gives'
         >
           {daOptions}
         </select>
@@ -40,13 +40,13 @@ function TransactionToPublish({ general, functions }: Props) {
           name="recibe"
           className="form-control"
           onChange={functions.generalChange}
-          value={general.transactionToPublish.recibe}
-          data-key='transactionToPublish.recibe'
+          value={general.transactionToPublish.receives}
+          data-key='transactionToPublish.receives'
         >
           {recibeOptions}
         </select>
       </div>
-      <InputNumber text='cuanto' value={general.transactionToPublish.cuanto} onChange={functions.generalChange} path='transactionToPublish.cuanto'/>
+      <InputNumber text='cuanto' value={general.transactionToPublish.amount} onChange={functions.generalChange} path='transactionToPublish.amount'/>
       <div className="input-group">
         <div className="input-group-addon">clave privada</div>
         <input
@@ -57,7 +57,7 @@ function TransactionToPublish({ general, functions }: Props) {
           data-key={'transactionToPublish.secretKey'}
           onChange={functions.generalChange} />
       </div>
-      <p>Firma de Transacción: {general.transactionToPublish.firma}</p>
+      <p>Firma de Transacción: {general.transactionToPublish.signature}</p>
       <p>para agregar en el bloque número {general.cadena.length}</p>
       <button
         disabled={!signEnabled }

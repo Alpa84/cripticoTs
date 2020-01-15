@@ -16,17 +16,17 @@ function MinedBlock({ general, functions }: Props) {
         <div className="panel-heading">Trying to add block {blockIndex}</div>
         <div className="panel-body">
           <div>
-            <p>hash bloque anterior: {general.minedBlock.hashBloqueAnterior}</p>
-            <p>clave: {general.minedBlock.clave}</p>
+            <p>hash bloque anterior: {general.minedBlock.previousBlockHash}</p>
+            <p>clave: {general.minedBlock.hash}</p>
           </div>
           <h3>transacciones</h3>
           {
-            general.minedBlock.transacciones.map((transaccion, index) => (
+            general.minedBlock.transactions.map((transaccion, index) => (
               <div key={index}>
-                <p>da: {transaccion.da}</p>
-                <p>recibe: {transaccion.recibe}</p>
-                <p>cuanto: {transaccion.cuanto}</p>
-                <p>firma: {transaccion.firma}</p>
+                <p>da: {transaccion.gives}</p>
+                <p>recibe: {transaccion.receives}</p>
+                <p>cuanto: {transaccion.amount}</p>
+                <p>firma: {transaccion.signature}</p>
               </div>
             ))
           }

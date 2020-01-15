@@ -9,7 +9,7 @@ export interface Props {
 }
 
 function Transactions({ general, generalChange, blockIndex, editable }: Props) {
-  let transactions = general.cadena[blockIndex].transacciones
+  let transactions = general.cadena[blockIndex].transactions
   return (
     <div className="Transactions">
       {

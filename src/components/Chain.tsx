@@ -20,17 +20,17 @@ function Chain({ general, functions }: Props) {
               <p>hash: {functions.hashearBloque(bloque)}</p>
               { editable ? (
                 <div>
-                  <Input text='hash bloque anterior' onChange={functions.generalChange} value={bloque.hashBloqueAnterior} path={`cadena[${index}].hashBloqueAnterior`} />
-                  <Input text='clave' value={bloque.clave} onChange={functions.generalChange} path={`cadena[${index}].clave`} />
+                  <Input text='hash bloque anterior' onChange={functions.generalChange} value={bloque.previousBlockHash} path={`cadena[${index}].hashBloqueAnterior`} />
+                  <Input text='clave' value={bloque.hash} onChange={functions.generalChange} path={`cadena[${index}].clave`} />
                 </div>
               ) : (
                 <div>
-                    <p>clave: {bloque.clave}</p>
+                    <p>clave: {bloque.hash}</p>
                 </div>
               )}
               <h3>transacciones</h3>
               <Transactions general={general} blockIndex={index} generalChange={functions.generalChange} editable={editable}/>
-              <p>hash bloque anterior: {bloque.hashBloqueAnterior}</p>
+              <p>hash bloque anterior: {bloque.previousBlockHash}</p>
             </div>
           </div>
         )).reverse()

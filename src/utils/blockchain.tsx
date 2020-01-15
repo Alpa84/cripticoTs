@@ -26,29 +26,29 @@ function esUnBloqueInvalido(bloque: Block, indexBloque: number, cadenaRecibida: 
     let cadenaHastaEsteBloque = cadenaRecibida.slice(0, indexBloque)
     let transaccionesDeLaCadena = cadenaATransacciones(cadenaHastaEsteBloque)
     let transaccionesRevisadas = []
-    for (const [index, transaccion] of bloque.transacciones.entries()) {
+    for (const [index, transaccion] of bloque.transactions.entries()) {
         if (index === 0) { // la primera transaccion tiene que ser una moneda creada
-            if (transaccion.da !== 'nadie') {
-                return { transacciones: `La primera transacción tiene que ser una moneda generada, (da: nadie) y dice da: ${transaccion.da}` }
+            if (transaccion.gives !== 'mined') {
+                return { transacciones: `La primera transacción tiene que ser una moneda generada, (da: nadie) y dice da: ${transaccion.gives}` }
             }
-            if (transaccion.cuanto !== 1) {
-                return { transacciones: `La primera transacción tiene que ser una moneda generada, y tiene que tener un valor de 1 y tiene: ${transaccion.cuanto}` }
+            if (transaccion.amount !== 1) {
+                return { transacciones: `La primera transacción tiene que ser una moneda generada, y tiene que tener un valor de 1 y tiene: ${transaccion.amount}` }
             }
             transaccionesRevisadas.push(transaccion)
         } else {
             let transaccionesPrevias = [...transaccionesDeLaCadena, ...transaccionesRevisadas]
-            if (!hasValidTransactionSignature(transaccion, bloque.hashBloqueAnterior)) {
-                return { transacciones: `la transaccion de ${transaccion.da} por ${transaccion.cuanto} para darle a ${transaccion.recibe} no tiene una firma valida` }
+            if (!hasValidTransactionSignature(transaccion, bloque.previousBlockHash)) {
+                return { transacciones: `la transaccion de ${transaccion.gives} por ${transaccion.amount} para darle a ${transaccion.receives} no tiene una firma valida` }
             }
             if (verSiElQueDaTieneLaPlata(transaccion, transaccionesPrevias)) {
                 transaccionesRevisadas.push(transaccion)
             } else {
-                return { transacciones: `${transaccion.da} no tiene ${transaccion.cuanto} para darle a ${transaccion.recibe}` }
+                return { transacciones: `${transaccion.gives} no tiene ${transaccion.amount} para darle a ${transaccion.receives}` }
             }
 
         }
     }
-    let tieneRealmenteElHashDelBloqueAnterior = bloque.hashBloqueAnterior === hashearBloque(cadenaRecibida[indexBloque - 1])
+    let tieneRealmenteElHashDelBloqueAnterior = bloque.previousBlockHash === hashearBloque(cadenaRecibida[indexBloque - 1])
     if (!tieneRealmenteElHashDelBloqueAnterior && indexBloque !== 0) {
         return { hashBloqueAnterior: 'no es el hash del bloque anterior' }
     }
@@ -61,13 +61,13 @@ function esUnBloqueInvalido(bloque: Block, indexBloque: number, cadenaRecibida: 
 }
 
 export function hashearBloque(bloque: Block) {
-    let transaccionesString = transaccionesAString(bloque.transacciones)
-    return md5(bloque.hashBloqueAnterior + ',' + transaccionesString + ',' + bloque.clave)
+    let transaccionesString = transaccionesAString(bloque.transactions)
+    return md5(bloque.previousBlockHash + ',' + transaccionesString + ',' + bloque.hash)
 }
 function transaccionesAString(transacciones: Transaccion[]) {
     let transaccionesString = ''
     for (let transaccion of transacciones) {
-        transaccionesString += ',' + transaccion.da + ',' + transaccion.recibe + ',' + transaccion.cuanto + ',' + transaccion.firma
+        transaccionesString += ',' + transaccion.gives + ',' + transaccion.receives + ',' + transaccion.amount + ',' + transaccion.signature
     }
     return transaccionesString
 }
@@ -75,7 +75,7 @@ function transaccionesAString(transacciones: Transaccion[]) {
 function cadenaATransacciones(cadena: Block[]) {
     let transaccionesDeLaCadena = []
     for (let bloque of cadena) {
-        for (let transaccion of bloque.transacciones) {
+        for (let transaccion of bloque.transactions) {
             transaccionesDeLaCadena.push(transaccion)
         }
     }
@@ -85,18 +85,18 @@ function cadenaATransacciones(cadena: Block[]) {
 function hasValidTransactionSignature(transaccion: Transaccion, hashUltimoBloque: string) {
     let transactionString = transactionToStringToSign(transaccion, hashUltimoBloque)
     let hash = md5(transactionString)
-    let publicD = bigInt(transaccion.da.split(',')[0])
-    let publicN = bigInt(transaccion.da.split(',')[1])
-    const decryptedMessage = RSA.decrypt(transaccion.firma, publicD, publicN)
+    let publicD = bigInt(transaccion.gives.split(',')[0])
+    let publicN = bigInt(transaccion.gives.split(',')[1])
+    const decryptedMessage = RSA.decrypt(transaccion.signature, publicD, publicN)
     return RSA.decode(decryptedMessage.toString()) === hash
 }
 function transactionToStringToSign(transaccion: Transaccion, hashUltimoBloque: string) {
-    return `da: ${transaccion.da}, recibe: ${transaccion.recibe}, cuanto: ${transaccion.cuanto}, hashUtlimoBloque: ${hashUltimoBloque}`
+    return `da: ${transaccion.gives}, recibe: ${transaccion.receives}, cuanto: ${transaccion.amount}, hashUtlimoBloque: ${hashUltimoBloque}`
 }
 
 function verSiElQueDaTieneLaPlata(transaccion: Transaccion, transacciones: Transaccion[]) {
-    let elQueDaTiene = calcularCuantoTieneElQueDa(transacciones, transaccion.da)
-    if (transaccion.cuanto <= elQueDaTiene) {
+    let elQueDaTiene = calcularCuantoTieneElQueDa(transacciones, transaccion.gives)
+    if (transaccion.amount <= elQueDaTiene) {
         return true
     } else {
         return false
@@ -106,11 +106,11 @@ function verSiElQueDaTieneLaPlata(transaccion: Transaccion, transacciones: Trans
 export function calcularCuantoTieneElQueDa(transacciones: Transaccion[], calcularPara: string) {
     let cuantoTiene = 0
     for (let transaccion of transacciones) {
-        if (transaccion.da === calcularPara) {
-            cuantoTiene = cuantoTiene - transaccion.cuanto
+        if (transaccion.gives === calcularPara) {
+            cuantoTiene = cuantoTiene - transaccion.amount
         }
-        if (transaccion.recibe === calcularPara) {
-            cuantoTiene = cuantoTiene + transaccion.cuanto
+        if (transaccion.receives === calcularPara) {
+            cuantoTiene = cuantoTiene + transaccion.amount
         }
     }
     return cuantoTiene
@@ -127,7 +127,7 @@ async function verQueAgregarleParaQueElHashEmpieceConCero(bloqueSinClave: Block,
 
     while (seguirBuscando) {
         if (cadena) {
-            seguirBuscando = bloqueSinClave.hashBloqueAnterior === hashearBloque(cadenaExistente[cadenaExistente.length - 1])
+            seguirBuscando = bloqueSinClave.previousBlockHash === hashearBloque(cadenaExistente[cadenaExistente.length - 1])
             if (!seguirBuscando) {
                 alert('alguien agregó un nuevo bloque a la cadena antes que pudiéramos encontrar la clave del bloque para agregarlo nosotros')
                 return 'cancelado'
@@ -145,7 +145,7 @@ async function verQueAgregarleParaQueElHashEmpieceConCero(bloqueSinClave: Block,
     return ''
 }
 export const hashearBloqueConClave = (bloqueSinClave: Block, claveIntento: number): string=> {
-    bloqueSinClave.clave = claveIntento.toString()
+    bloqueSinClave.hash = claveIntento.toString()
     return  hashearBloque(bloqueSinClave)
 }
 export const validateTransactions = (depositoTransaccionesPendientes: Transaccion[], cadenaExistente: Block[], direccionMinero: string): Block => {
@@ -161,17 +161,17 @@ export const validateTransactions = (depositoTransaccionesPendientes: Transaccio
             if (hasValidTransactionSignature(transaccionPendiente, hashBloqueAnterior)) {
                 transaccionesPendientesAprobadas.push(transaccionPendiente)
             } else {
-                alert(`firma invalida. No vale la transacción de ${transaccionPendiente.da} a ${transaccionPendiente.recibe} por ${transaccionPendiente.cuanto}, la vamos a ignorar`)
+                alert(`firma invalida. No vale la transacción de ${transaccionPendiente.gives} a ${transaccionPendiente.receives} por ${transaccionPendiente.amount}, la vamos a ignorar`)
             }
         } else {
-            alert(`no vale la transacción de ${transaccionPendiente.da} a ${transaccionPendiente.recibe} por ${transaccionPendiente.cuanto}, la vamos a ignorar`)
+            alert(`no vale la transacción de ${transaccionPendiente.gives} a ${transaccionPendiente.receives} por ${transaccionPendiente.amount}, la vamos a ignorar`)
         }
     }
-    transaccionesPendientesAprobadas.unshift({ da: 'nadie', recibe: direccionMinero, cuanto: 1, firma: '' })
+    transaccionesPendientesAprobadas.unshift({ gives: 'mined', receives: direccionMinero, amount: 1, signature: '' })
     return {
-        clave: '',
-        hashBloqueAnterior,
-        transacciones: transaccionesPendientesAprobadas,
+        hash: '',
+        previousBlockHash: hashBloqueAnterior,
+        transactions: transaccionesPendientesAprobadas,
     }
 }
 
@@ -179,7 +179,7 @@ export async function tratarDeAgregarUnBloque(depositoTransaccionesPendientes: T
     let nuevoBloque = validateTransactions(depositoTransaccionesPendientes, cadenaExistente, direccionMinero)
     let clave = await verQueAgregarleParaQueElHashEmpieceConCero(nuevoBloque,cadenaExistente, cadenaExistente)
     if (clave === 'cancelado') { return cadenaExistente }
-    nuevoBloque.clave = clave
+    nuevoBloque.hash = clave
     cadenaExistente.push(nuevoBloque)
     return cadenaExistente
 }
@@ -188,7 +188,7 @@ export async function tratarDeAgregarUnBloque(depositoTransaccionesPendientes: T
 export async function agregarATransaccionesPendientes(transaccion: Transaccion, clave: string, cadenaExistente: Block[]) {
     let ultimoBloque = cadenaExistente[cadenaExistente.length - 1]
     let hashUltimoBloque = hashearBloque(ultimoBloque)
-    transaccion.firma = createTransactionSignature(transaccion, hashUltimoBloque, clave)
+    transaccion.signature = createTransactionSignature(transaccion, hashUltimoBloque, clave)
     // let pendientesResponse = await axios({
     //     data: transaccion,
     //     method: 'post',

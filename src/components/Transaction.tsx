@@ -13,25 +13,25 @@ export interface Props {
 
 function Transaction({ general, blockIndex, onChange, transactionIndex, editable }: Props) {
   let block = general.cadena[blockIndex]
-  let transaction = block.transacciones[transactionIndex]
+  let transaction = block.transactions[transactionIndex]
   let path = `cadena[${blockIndex}].transacciones[${transactionIndex}]`
-  let recibe = _.has(general.directorio, transaction.recibe) ? general.directorio[transaction.recibe].alias : transaction.recibe
-  let da = _.has(general.directorio, transaction.da) ? general.directorio[transaction.da].alias : transaction.da
+  let recibe = _.has(general.directorio, transaction.receives) ? general.directorio[transaction.receives].alias : transaction.receives
+  let da = _.has(general.directorio, transaction.gives) ? general.directorio[transaction.gives].alias : transaction.gives
   return (
     <div>
       {editable ? (
         <div>
-          <Input text='da' value={transaction.da} onChange={onChange} path={`${path}.cuanto`} />
-          <Input text='recibe' value={transaction.recibe} onChange={onChange} path={`${path}.recibe`} />
-          <InputNumber text='cuanto' value={transaction.cuanto} onChange={onChange} path={`${path}.cuanto`} />
-          <Input text='firma' value={transaction.firma ? transaction.firma : ''} onChange={onChange} path={`${path}.firma`} />
+          <Input text='da' value={transaction.gives} onChange={onChange} path={`${path}.amount`} />
+          <Input text='recibe' value={transaction.receives} onChange={onChange} path={`${path}.receives`} />
+          <InputNumber text='cuanto' value={transaction.amount} onChange={onChange} path={`${path}.amount`} />
+          <Input text='firma' value={transaction.signature ? transaction.signature : ''} onChange={onChange} path={`${path}.signature`} />
         </div>
       ) : (
         <div>
             <p>da: {da}</p>
             <p>recibe: {recibe}</p>
-            <p>cuanto: {transaction.cuanto}</p>
-            <p>firma: {transaction.firma}</p>
+            <p>cuanto: {transaction.amount}</p>
+            <p>firma: {transaction.signature}</p>
         </div>
       )}
 
