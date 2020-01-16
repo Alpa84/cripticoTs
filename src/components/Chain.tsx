@@ -13,24 +13,24 @@ function Chain({ general, functions }: Props) {
   return (
     <div className="Chain">
       {
-        general.cadena.map((bloque, index) => (
+        general.chain.map((block, index) => (
           <div key={index} className='panel panel-primary'>
             <div className="panel-heading">{index}</div>
             <div className="panel-body">
-              <p>hash: {functions.hashearBloque(bloque)}</p>
+              <p>hash: {functions.hashBlock(block)}</p>
               { editable ? (
                 <div>
-                  <Input text='hash bloque anterior' onChange={functions.generalChange} value={bloque.previousBlockHash} path={`cadena[${index}].hashBloqueAnterior`} />
-                  <Input text='clave' value={bloque.hash} onChange={functions.generalChange} path={`cadena[${index}].clave`} />
+                  <Input text='previous block hash' onChange={functions.generalChange} value={block.previousBlockHash} path={`chain[${index}].previousBlockHash`} />
+                  <Input text='nonce' value={block.nonce} onChange={functions.generalChange} path={`chain[${index}].privateKey`} />
                 </div>
               ) : (
                 <div>
-                    <p>clave: {bloque.hash}</p>
+                    <p>nonce: {block.nonce}</p>
                 </div>
               )}
-              <h3>transacciones</h3>
+              <h3>transactions</h3>
               <Transactions general={general} blockIndex={index} generalChange={functions.generalChange} editable={editable}/>
-              <p>hash bloque anterior: {bloque.previousBlockHash}</p>
+              <p>previous block hash: {block.previousBlockHash}</p>
             </div>
           </div>
         )).reverse()

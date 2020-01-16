@@ -8,12 +8,12 @@ const keyLength = 256
 
 export const generateKeyPair = () => {
     let keys = RSA.generate(keyLength)
-    return keysAClave(keys)
+    return keysToPrivateKey(keys)
 }
-const keysAClave = (keys: Keys) => {
+const keysToPrivateKey = (keys: Keys) => {
     return {
-        clave: `${keys.e.toString()},${keys.n.toString()}`,
-        direccion: `${keys.d.toString()},${keys.n.toString()}`,
+        address: `${keys.d.toString()},${keys.n.toString()}`,
+        privateKey: `${keys.e.toString()},${keys.n.toString()}`,
     }
 }
 export class RSA {

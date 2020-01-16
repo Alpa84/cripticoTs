@@ -6,19 +6,19 @@ export interface Props {
   functions: Functions
 }
 
-function Directory({ general, functions }: Props) {
+function Wallets({ general, functions }: Props) {
   return (
-    <div className="Directory">
-      <h1>Billeteras</h1>
+    <div className="Wallets">
+      <h1>Wallets</h1>
       <div className="panel panel-default">
         <div className="panel-body">
           {
-            Object.keys(general.directorio).map((dir, index) => (
+            Object.keys(general.wallets).map((dir, index) => (
               <div key={index}>
-                <h3>{general.directorio[dir].alias}</h3>
+                <h3>{general.wallets[dir].alias}</h3>
                 <div>
                   <b>Simplecoins:</b>
-                    {functions.calculateOwnerCoinsFromChain(general.cadena, dir)}
+                    {functions.calculateOwnerCoinsFromChain(general.chain, dir)}
                 </div>
                 <div><b>Public address:</b>
                   <div className='longString'>
@@ -27,7 +27,7 @@ function Directory({ general, functions }: Props) {
                 </div>
                 <div><b>Private Key (shhhhhh!):</b>
                   <div className='longString'>
-                    {general.directorio[dir].privateKey}
+                    {general.wallets[dir].privateKey}
                   </div>
                 </div>
               </div>
@@ -39,4 +39,4 @@ function Directory({ general, functions }: Props) {
   )
 }
 
-export default Directory;
+export default Wallets;

@@ -5,7 +5,7 @@ import Chain from './Chain';
 import PendingTransactions from './PendingTransactions'
 import TransactionToPublish from './TransactionToPublish'
 import KeyPair from './KeyPair'
-import Directory from './Directory'
+import Directory from './Wallets'
 import MinedBlock from './MinedBlock'
 
 export interface Props {
@@ -14,7 +14,7 @@ export interface Props {
 }
 
 function General({ general, functions }: Props) {
-  let daOptions = _.map(general.directorio, (key, value) => (
+  let givesOptions = _.map(general.wallets, (key, value) => (
     <option key={value} value={value} >{key.alias}</option>
   ))
   return (
@@ -23,9 +23,9 @@ function General({ general, functions }: Props) {
         <div className="row">
           <div className="col-sm-8">
             <KeyPair general={general} functions={functions}/>
-            <h2>Transferir un simpl</h2>
+            <h2>Transfer a simpl</h2>
             <TransactionToPublish general={general} functions={functions} />
-            <h2>Transacciones Publicadas no incluidas en la cadena</h2>
+            <h2>Published Transactions not yet included in the Blockchain</h2>
             <PendingTransactions general={general} />
             <select
               name="minedDir"
@@ -35,10 +35,10 @@ function General({ general, functions }: Props) {
               value={general.dirToAddMined}
               data-key='dirToAddMined'
             >
-              {daOptions}
+              {givesOptions}
             </select>
             <div className="input-group">
-              <div className="input-group-addon">direccion a sumar un simplecoin</div>
+              <div className="input-group-addon">address to add simplecoin</div>
               <input
                 type="text"
                 className="form-control"
@@ -50,9 +50,9 @@ function General({ general, functions }: Props) {
             <button
               type="button"
               className="btn btn-info"
-              onClick={functions.minear}>Incluir Transacciones en la Cadena</button>
+              onClick={functions.mine}>Include Published Transactions in Blockchain</button>
             <br />
-            <h2>Cadena</h2>
+            <h2>Blockchain</h2>
             <MinedBlock general={general} functions={functions} />
             <Chain general={general} functions={functions}/>
           </div>

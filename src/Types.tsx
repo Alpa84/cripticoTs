@@ -1,46 +1,46 @@
 import { BigInteger } from 'big-integer'
 export interface Block  {
     previousBlockHash: string
-    hash: string
-    transactions: Transaccion[]
+    nonce: string
+    transactions: Transaction[]
 }
 export interface Functions {
     generalChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
     publishTransaction: () => void
     generateKeyPair: () => void
     generateWallet: () => void
-    firmarTransaccion: () => void
-    minear: () => void
-    hashearBloque: (bloque: Block) => string
+    signTransaction: () => void
+    mine: () => void
+    hashBlock: (block: Block) => string
     calculateOwnerCoinsFromChain: (chain: Block[], address: string) => number
 }
-export interface Transaccion {
+export interface Transaction {
     gives: string
     receives: string
     amount: number
     signature: string
 }
-export interface TransactionPlusKey extends Transaccion {
+export interface TransactionPlusKey extends Transaction {
     secretKey: string
 }
 export interface GeneralType {
-    transaccionesPendientes: Transaccion[]
-    cadena: Block[]
+    pendingTransactions: Transaction[]
+    chain: Block[]
     transactionToPublish: TransactionPlusKey
     dirToAddMined: string,
     keyPair: KeyPair
     alias: string
-    directorio: Directorio
+    wallets: Wallets
     minedBlock?: Block
 }
 export interface WalletDetails {
     alias: string,
     privateKey: string,
 }
-export interface Directorio { [id: string]:  WalletDetails}
+export interface Wallets { [id: string]:  WalletDetails}
 export interface KeyPair {
-    direccion: string
-    clave: string
+    address: string
+    privateKey: string
 }
 
 export interface Keys {
@@ -49,7 +49,7 @@ export interface Keys {
     n: BigInteger
 }
 
-export interface DirectorioAPI {
+export interface WalletsAPI {
     address: string,
     details: WalletDetails
 }

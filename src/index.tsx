@@ -3,11 +3,11 @@ import * as ReactDOM from 'react-dom'
 import * as axios from 'axios'
 import * as _ from 'lodash'
 import General from './components/General'
-import { GeneralType, Transaccion, Directorio, Block, WalletDetails, DirectorioAPI, Functions } from './Types'
+import { GeneralType, Transaction, Wallets, Block, WalletDetails, WalletsAPI, Functions } from './Types'
 import { generateKeyPair } from './utils/rsa'
 import './index.css';
 import registerServiceWorker from './registerServiceWorker'
-import { createTransactionSignature, hashearBloque, calcularCuantoTieneElQueDa, hashearBloqueConClave, validateTransactions, empiezaConCero, simularDemora } from './utils/blockchain';
+import { createTransactionSignature, hashBlock, calculateGiverFunds, hashBlockWithoutNonce, validateTransactions, startsWithZeros, addDelay, receiveChain } from './utils/blockchain';
 
 // TBD Make the following fix for prod/local less brittle
 // CORS network error ?
@@ -16,15 +16,15 @@ let defaultUrl = 'http://localhost:5000'
 
 let general: GeneralType = {
   alias: '',
-  cadena: [],
+  chain: [],
   dirToAddMined:'',
-  directorio: {},
   keyPair: {
-    clave: '',
-    direccion: '',
+    address: '',
+    privateKey: '',
   },
-  transaccionesPendientes: [],
+  pendingTransactions: [],
   transactionToPublish: {gives: '', receives:'', amount: 0, signature:'', secretKey:'' },
+  wallets: {},
 }
 
 const generateKeyPairAndUpdate = () => {
@@ -33,42 +33,44 @@ const generateKeyPairAndUpdate = () => {
   update()
 }
 const publishTransaction = async () => {
-  let response = await axios.default.post<Transaccion[]>(`${defaultUrl}/pending_transaction`, general.transactionToPublish)
-  general.transaccionesPendientes =  response.data
+  let response = await axios.default.post<Transaction[]>(`${defaultUrl}/pending_transaction`, general.transactionToPublish)
+  general.pendingTransactions =  response.data
   update()
 }
-const publishChain = async (cadena: Block[]) => {
+const publishChain = async (chain: Block[]) => {
   try {
-    let response = await axios.default.post<{cadena: Block[]}>(`${defaultUrl}/chain`, cadena)
-    general.cadena = response.data.cadena
+    let response = await axios.default.post<{chain: Block[]}>(`${defaultUrl}/chain`, chain)
+    general.chain = response.data.chain
     update()
   } catch (error) {
     console.error(error)
   }
 }
 const generateWallet = async() => {
-  let details: WalletDetails = { alias: general.alias , privateKey: general.keyPair.clave}
-  let directorioApi: DirectorioAPI = { address: general.keyPair.direccion, details }
-  let response = await axios.default.post<Directorio>(`${defaultUrl}/wallets`, directorioApi)
-  general.directorio = response.data
+  let details: WalletDetails = { alias: general.alias , privateKey: general.keyPair.privateKey}
+  let walletsApi: WalletsAPI = { address: general.keyPair.address, details }
+  let response = await axios.default.post<Wallets>(`${defaultUrl}/wallets`, walletsApi)
+  general.wallets = response.data
   update()
 }
 
-const firmarTransaccion = async () => {
-  let firma = createTransactionSignature(general.transactionToPublish, hashearBloque(_.last(general.cadena) as Block), general.transactionToPublish.secretKey )
-  general.transactionToPublish.signature = firma
+const signTransaction = async () => {
+  let signature = createTransactionSignature(general.transactionToPublish, hashBlock(_.last(general.chain) as Block), general.transactionToPublish.secretKey )
+  general.transactionToPublish.signature = signature
   update()
 
 }
 const calculateOwnerCoinsFromChain = (chain: Block[], address: string) => {
-  let transacciones = _.flatMap(chain, (block: Block) => block.transactions)
-    return calcularCuantoTieneElQueDa(transacciones, address)
+  let transactions = _.flatMap(chain, (block: Block) => block.transactions)
+    return calculateGiverFunds(transactions, address)
 }
 const updateChain = async () => {
   let response = await axios.default.get<GeneralType>(`${defaultUrl}/pending_transactions_and_chain`)
-  general.cadena =  response.data.cadena
-  general.transaccionesPendientes =  response.data.transaccionesPendientes
-  general.directorio = response.data.directorio
+  let receivedChain = response.data.chain
+  let chainToKeep = receiveChain(receivedChain, general.chain)
+  general.chain = chainToKeep
+  general.pendingTransactions =  response.data.pendingTransactions
+  general.wallets = response.data.wallets
   update()
 }
 setInterval(() => {
@@ -80,46 +82,46 @@ const generalChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectEle
   let element = event.target
   let path = element.getAttribute('data-key') as string
   let value: string | number = element.value
-  if (path.split('.')[path.split('.').length - 1] === 'cuanto') {
+  if (path.split('.')[path.split('.').length - 1] === 'amount') {
     value = parseFloat(value)
   }
   _.set(general, path, value)
   // don't know why the line above wont work for the secret key
-  if (path === 'general.transactionToPublish.firma') { general.transactionToPublish.signature = value.toString()}
+  if (path === 'general.transactionToPublish.signature') { general.transactionToPublish.signature = value.toString()}
   update()
 }
-const minear = async() => {
-  let bloqueSinClave = validateTransactions(general.transaccionesPendientes, general.cadena, general.dirToAddMined)
-  general.minedBlock = bloqueSinClave
-  let clave = 0
+const mine = async() => {
+  let blockWithoutNonce = validateTransactions(general.pendingTransactions, general.chain, general.dirToAddMined)
+  general.minedBlock = blockWithoutNonce
+  let nonce = 0
   let keepSearching = true
   while (keepSearching) {
-    bloqueSinClave.hash = clave.toString()
-    let resultado = hashearBloqueConClave(bloqueSinClave, clave)
-    let empieza = empiezaConCero(resultado)
-    if (empieza) {
+    blockWithoutNonce.nonce = nonce.toString()
+    let result = hashBlockWithoutNonce(blockWithoutNonce, nonce)
+    let doesStart = startsWithZeros(result)
+    if (doesStart) {
       keepSearching = false
     } else {
-      clave = clave + 1
+      nonce = nonce + 1
     }
     update()
-    await simularDemora(4)
+    await addDelay(4)
   }
-  bloqueSinClave.hash = clave.toString()
-  general.cadena.push(bloqueSinClave)
+  blockWithoutNonce.nonce = nonce.toString()
+  general.chain.push(blockWithoutNonce)
   delete general.minedBlock
-  publishChain(general.cadena)
+  publishChain(general.chain)
   update()
 }
 const functions: Functions = {
   calculateOwnerCoinsFromChain,
-  firmarTransaccion,
   generalChange,
   generateKeyPair: generateKeyPairAndUpdate,
   generateWallet,
-  hashearBloque,
-  minear,
+  hashBlock,
+  mine,
   publishTransaction,
+  signTransaction,
 }
 const update =  () => {
   ReactDOM.render(
