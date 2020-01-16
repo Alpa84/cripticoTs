@@ -11,11 +11,12 @@ function KeyPair({ general, functions }: Props) {
     <div className='KeyPair'>
       <div className='panel panel-default' >
         <div className='panel-body'>
-          <button type='button' onClick={functions.generateKeyPair} className='btn btn-large btn-block btn-primary'>Generate Public Address and Private Key</button>
+          <button id='generateKeys' type='button' onClick={functions.generateKeyPair} className='btn btn-large btn-block btn-primary'>Generate Public Address and Private Key</button>
           <div className="input-group">
             <div className="input-group-addon">Public Address</div>
             <input
               type="text"
+              id='publicAddress'
               className="form-control"
               value={keyPair.address}
               data-key='keyPair.address'
@@ -25,6 +26,7 @@ function KeyPair({ general, functions }: Props) {
             <div className="input-group-addon">Private Key</div>
             <input
               type="text"
+              id='privateKey'
               className="form-control"
               value={keyPair.privateKey}
               data-key='keyPair.privateKey'
@@ -38,10 +40,12 @@ function KeyPair({ general, functions }: Props) {
             className="form-control"
             value={general.alias}
             data-key='alias'
+            id='alias'
             onChange={functions.generalChange} />
         </div>
         <button
           type="button"
+          id='generateWallet'
           className="btn btn-large btn-block btn-default"
           onClick={functions.generateWallet}
         >

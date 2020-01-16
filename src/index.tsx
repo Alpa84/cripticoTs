@@ -1,22 +1,19 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import * as axios from 'axios'
 import * as _ from 'lodash'
 import General from './components/General'
-import { GeneralType, Transaction, Wallets, Block, WalletDetails, WalletsAPI, Functions } from './Types'
+import { GeneralType, Transaction, Block, WalletDetails, Functions } from './Types'
 import { generateKeyPair } from './utils/rsa'
 import './index.css';
 import registerServiceWorker from './registerServiceWorker'
-import { createTransactionSignature, hashBlock, calculateGiverFunds, hashBlockWithoutNonce, validateTransactions, startsWithZeros, addDelay, receiveChain } from './utils/blockchain';
+import { createTransactionSignature, hashBlock, calculateGiverFunds, hashBlockWithoutNonce, validateTransactions, startsWithZeros, addDelay } from './utils/blockchain';
+import { DefaultWallets, DefaultChain } from './utils/defaultChain'
 
-// TBD Make the following fix for prod/local less brittle
-// CORS network error ?
-let defaultUrl = 'http://localhost:5000'
-// let defaultUrl = ''
+
 
 let general: GeneralType = {
   alias: '',
-  chain: [],
+  chain: DefaultChain,
   dirToAddMined:'',
   keyPair: {
     address: '',
@@ -24,7 +21,7 @@ let general: GeneralType = {
   },
   pendingTransactions: [],
   transactionToPublish: {gives: '', receives:'', amount: 0, signature:'', secretKey:'' },
-  wallets: {},
+  wallets: DefaultWallets,
 }
 
 const generateKeyPairAndUpdate = () => {
@@ -33,29 +30,19 @@ const generateKeyPairAndUpdate = () => {
   update()
 }
 const publishTransaction = async () => {
-  let response = await axios.default.post<Transaction[]>(`${defaultUrl}/pending_transaction`, general.transactionToPublish)
-  general.pendingTransactions =  response.data
-  update()
-}
-const publishChain = async (chain: Block[]) => {
-  try {
-    let response = await axios.default.post<{chain: Block[]}>(`${defaultUrl}/chain`, chain)
-    general.chain = response.data.chain
-    update()
-  } catch (error) {
-    console.error(error)
-  }
-}
-const generateWallet = async() => {
-  let details: WalletDetails = { alias: general.alias , privateKey: general.keyPair.privateKey}
-  let walletsApi: WalletsAPI = { address: general.keyPair.address, details }
-  let response = await axios.default.post<Wallets>(`${defaultUrl}/wallets`, walletsApi)
-  general.wallets = response.data
+  general.pendingTransactions.push( _.cloneDeep(general.transactionToPublish) as Transaction)
   update()
 }
 
-const signTransaction = async () => {
-  let signature = createTransactionSignature(general.transactionToPublish, hashBlock(_.last(general.chain) as Block), general.transactionToPublish.secretKey )
+const generateWallet = async() => {
+  let details: WalletDetails = { alias: general.alias , privateKey: general.keyPair.privateKey}
+  general.wallets[general.keyPair.address] = _.cloneDeep(details)
+  update()
+}
+
+export const signTransaction = async () => {
+  let lastBlockHash = hashBlock(_.last(general.chain) as Block )
+  let signature = createTransactionSignature(general.transactionToPublish, lastBlockHash, general.transactionToPublish.secretKey )
   general.transactionToPublish.signature = signature
   update()
 
@@ -64,19 +51,6 @@ const calculateOwnerCoinsFromChain = (chain: Block[], address: string) => {
   let transactions = _.flatMap(chain, (block: Block) => block.transactions)
     return calculateGiverFunds(transactions, address)
 }
-const updateChain = async () => {
-  let response = await axios.default.get<GeneralType>(`${defaultUrl}/pending_transactions_and_chain`)
-  let receivedChain = response.data.chain
-  let chainToKeep = receiveChain(receivedChain, general.chain)
-  general.chain = chainToKeep
-  general.pendingTransactions =  response.data.pendingTransactions
-  general.wallets = response.data.wallets
-  update()
-}
-setInterval(() => {
-  updateChain()
-}, 3000)
-
 
 const generalChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement >) => {
   let element = event.target
@@ -86,7 +60,6 @@ const generalChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectEle
     value = parseFloat(value)
   }
   _.set(general, path, value)
-  // don't know why the line above wont work for the secret key
   if (path === 'general.transactionToPublish.signature') { general.transactionToPublish.signature = value.toString()}
   update()
 }
@@ -110,7 +83,6 @@ const mine = async() => {
   blockWithoutNonce.nonce = nonce.toString()
   general.chain.push(blockWithoutNonce)
   delete general.minedBlock
-  publishChain(general.chain)
   update()
 }
 const functions: Functions = {

@@ -48,8 +48,3 @@ export interface Keys {
     e: BigInteger
     n: BigInteger
 }
-
-export interface WalletsAPI {
-    address: string,
-    details: WalletDetails
-}

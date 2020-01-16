@@ -14,15 +14,10 @@ function isInvalidChain(receivedChain: Block[]) {
     }
     return false
 }
-// async function loo (block: Block){
-//     delete block.nonce
-//     let laa = await calculateNonce(block, [])
-//     alert(laa)
-// }
+
 function isInvalidBlock(block: Block, blockIndex: number, receivedChain: Block[]) {
     // if it is the first block check if it has the primal block hash
     if (blockIndex === 0) {
-        // loo(block)
         return false
         if (hashBlock(block) !== FirstBlockHash) {
             return { nonce: 'it does not start with the original block' }

@@ -26,6 +26,7 @@ function TransactionToPublish({ general, functions }: Props) {
         <div className="input-group-addon">da</div>
         <select
           name="da"
+          id='toPublishGives'
           className="form-control"
           onChange={functions.generalChange}
           value={general.transactionToPublish.gives}
@@ -38,6 +39,7 @@ function TransactionToPublish({ general, functions }: Props) {
         <div className="input-group-addon">recibe</div>
         <select
           name="recibe"
+          id='toPublishReceives'
           className="form-control"
           onChange={functions.generalChange}
           value={general.transactionToPublish.receives}
@@ -46,28 +48,31 @@ function TransactionToPublish({ general, functions }: Props) {
           {receivesOptions}
         </select>
       </div>
-      <InputNumber text='cuanto' value={general.transactionToPublish.amount} onChange={functions.generalChange} path='transactionToPublish.amount'/>
+      <InputNumber inputId='toPublishAmount' text='cuanto' value={general.transactionToPublish.amount} onChange={functions.generalChange} path='transactionToPublish.amount'/>
       <div className="input-group">
         <div className="input-group-addon">private Key</div>
         <input
           type='password'
           name='password'
+          id = 'toPublishPass'
           className="form-control"
           value={general.transactionToPublish.secretKey}
           data-key={'transactionToPublish.secretKey'}
           onChange={functions.generalChange} />
       </div>
-      <p>Transaction Signature: {general.transactionToPublish.signature}</p>
+      <p className='longString'>Transaction Signature: {general.transactionToPublish.signature}</p>
       <p>to add in Block number: {general.chain.length}</p>
       <button
         disabled={!signEnabled }
         type="button"
+        id='toPublishSign'
         className="btn
         btn-warning"
         onClick={functions.signTransaction}>Sign with private Key</button>
       <button
         disabled={!publishEnabled}
         type="button"
+        id='toPublishPublish'
         className="btn btn-default"
         onClick={functions.publishTransaction}>Publish Transaction</button>
     </div>

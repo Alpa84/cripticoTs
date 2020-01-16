@@ -17,7 +17,7 @@ function Chain({ general, functions }: Props) {
           <div key={index} className='panel panel-primary'>
             <div className="panel-heading">{index}</div>
             <div className="panel-body">
-              <p>hash: {functions.hashBlock(block)}</p>
+              <p>hash: <span className='blockHash'>{functions.hashBlock(block)}</span></p>
               { editable ? (
                 <div>
                   <Input text='previous block hash' onChange={functions.generalChange} value={block.previousBlockHash} path={`chain[${index}].previousBlockHash`} />

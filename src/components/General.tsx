@@ -29,7 +29,7 @@ function General({ general, functions }: Props) {
             <PendingTransactions general={general} />
             <select
               name="minedDir"
-              id="minedDir"
+              id="selectDirToAddMined"
               className="form-control"
               onChange={functions.generalChange}
               value={general.dirToAddMined}
@@ -49,6 +49,7 @@ function General({ general, functions }: Props) {
             </div>
             <button
               type="button"
+              id="startMining"
               className="btn btn-info"
               onClick={functions.mine}>Include Published Transactions in Blockchain</button>
             <br />

@@ -11,12 +11,12 @@ function PendingTransactions({ general }: Props) {
       {
         general.pendingTransactions.map((transaccion, transIndex) => (
           <div className="panel panel-default" key={transIndex}>
-            <div className="panel-body">
+            <div className="panel-body" id='pendingTransactionsPanel'>
               <div key={transIndex}>
                 <div data-toggle="tooltip" title={`dir: ${transaccion.gives}`} >gives: {prefferName(transaccion.gives, general)}</div>
                 <div data-toggle="tooltip" title={`dir: ${transaccion.receives}`} >receives: {prefferName(transaccion.receives, general)}</div>
                 <div>amount: {transaccion.amount}</div>
-                <div>signature: {transaccion.signature}</div>
+                <div className="longString">signature: {transaccion.signature}</div>
               </div>
             </div>
           </div>
