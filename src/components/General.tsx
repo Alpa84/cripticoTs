@@ -27,6 +27,7 @@ function General({ general, functions }: Props) {
             <TransactionToPublish general={general} functions={functions} />
             <h2>Published Transactions not yet included in the Blockchain</h2>
             <PendingTransactions general={general} />
+            <h2>Mining</h2>
             <select
               name="minedDir"
               id="selectDirToAddMined"
@@ -38,7 +39,7 @@ function General({ general, functions }: Props) {
               {givesOptions}
             </select>
             <div className="input-group">
-              <div className="input-group-addon">address to add simplecoin</div>
+              <div className="input-group-addon">Miner's address</div>
               <input
                 type="text"
                 className="form-control"
@@ -51,7 +52,7 @@ function General({ general, functions }: Props) {
               type="button"
               id="startMining"
               className="btn btn-info"
-              onClick={functions.mine}>Include Published Transactions in Blockchain</button>
+              onClick={functions.mine}>Find a nonce that makes the block hash start with 00 and publish block</button>
             <br />
             <h2>Blockchain</h2>
             <MinedBlock general={general} functions={functions} />

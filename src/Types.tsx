@@ -7,8 +7,10 @@ export interface Block  {
 export interface Functions {
     generalChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
     publishTransaction: () => void
+    toggleEditableChain: () => void
     generateKeyPair: () => void
     generateWallet: () => void
+    isInvalidBlock: (block: Block, blockIndex: number, receivedChain: Block[]) => false | {[id: number]: string}
     signTransaction: () => void
     mine: () => void
     hashBlock: (block: Block) => string
@@ -26,6 +28,8 @@ export interface TransactionPlusKey extends Transaction {
 export interface GeneralType {
     pendingTransactions: Transaction[]
     chain: Block[]
+    editableChain?: Block[]
+    showEditableChain: boolean
     transactionToPublish: TransactionPlusKey
     dirToAddMined: string,
     keyPair: KeyPair

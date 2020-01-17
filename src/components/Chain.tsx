@@ -8,32 +8,53 @@ export interface Props {
   functions: Functions
 }
 
+
 function Chain({ general, functions }: Props) {
-  let editable = false
   return (
     <div className="Chain">
+      <button
+        type="button"
+        onClick={functions.toggleEditableChain}
+        id='toggleEditableChain'
+        className="btn btn-large btn-block btn-default"
+      >
+        { general.showEditableChain ? ('Back to Unedited Chain'):('Edit Chain')}
+      </button>
       {
-        general.chain.map((block, index) => (
-          <div key={index} className='panel panel-primary'>
-            <div className="panel-heading">{index}</div>
-            <div className="panel-body">
-              <p>hash: <span className='blockHash'>{functions.hashBlock(block)}</span></p>
-              { editable ? (
-                <div>
-                  <Input text='previous block hash' onChange={functions.generalChange} value={block.previousBlockHash} path={`chain[${index}].previousBlockHash`} />
-                  <Input text='nonce' value={block.nonce} onChange={functions.generalChange} path={`chain[${index}].privateKey`} />
-                </div>
-              ) : (
-                <div>
-                    <p>nonce: {block.nonce}</p>
-                </div>
-              )}
-              <h3>transactions</h3>
-              <Transactions general={general} blockIndex={index} generalChange={functions.generalChange} editable={editable}/>
-              <p>previous block hash: {block.previousBlockHash}</p>
+        general.chain.map((block, index) => {
+          let invalidBlockReason = functions.isInvalidBlock(block, index, general.chain)
+          return (
+            <div key={index} className={`panel panel-${invalidBlockReason ? 'danger': 'primary'}`}>
+              <div className="panel-heading">{index}</div>
+              <div className="panel-body">
+                {invalidBlockReason && (
+                  <div className="alert alert-danger">
+                    <strong>Invalid Block</strong> {
+                      _.map(invalidBlockReason, (value, key) => (
+                        <span key={key}>{value}</span>
+                      ))
+                    }
+                  </div>
+
+                )}
+                <p>hash: <span className='blockHash'>{functions.hashBlock(block)}</span></p>
+                {general.showEditableChain ? (
+                  <div>
+                    <Input text='previous block hash' onChange={functions.generalChange} value={block.previousBlockHash} path={`chain[${index}].previousBlockHash`} />
+                    <Input text='nonce' value={block.nonce} onChange={functions.generalChange} path={`chain[${index}].nonce`} />
+                  </div>
+                ) : (
+                    <div>
+                      <p>nonce: {block.nonce}</p>
+                    </div>
+                  )}
+                <h3>transactions</h3>
+                <Transactions general={general} blockIndex={index} generalChange={functions.generalChange} editable={general.showEditableChain} />
+                <p>previous block hash: {block.previousBlockHash}</p>
+              </div>
             </div>
-          </div>
-        )).reverse()
+          )
+        }).reverse()
       }
     </div>
   )

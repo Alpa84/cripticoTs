@@ -6,21 +6,19 @@ import { GeneralType, Transaction, Block, WalletDetails, Functions } from './Typ
 import { generateKeyPair } from './utils/rsa'
 import './index.css';
 import registerServiceWorker from './registerServiceWorker'
-import { createTransactionSignature, hashBlock, calculateGiverFunds, hashBlockWithoutNonce, validateTransactions, startsWithZeros, addDelay } from './utils/blockchain';
+import { createTransactionSignature, hashBlock, calculateGiverFunds, hashBlockWithoutNonce, validateTransactions, startsWithZeros, addDelay, isInvalidBlock } from './utils/blockchain';
 import { DefaultWallets, DefaultChain } from './utils/defaultChain'
 
-
-
+let emptyTransactionToPublish = { gives: '', receives: '', amount: 0, signature: '', secretKey: '' }
+let emptyKeyPair = { address: '', privateKey: ''}
 let general: GeneralType = {
   alias: '',
   chain: DefaultChain,
   dirToAddMined:'',
-  keyPair: {
-    address: '',
-    privateKey: '',
-  },
+  keyPair: _.cloneDeep(emptyKeyPair),
   pendingTransactions: [],
-  transactionToPublish: {gives: '', receives:'', amount: 0, signature:'', secretKey:'' },
+  showEditableChain: false,
+  transactionToPublish: _.cloneDeep(emptyTransactionToPublish),
   wallets: DefaultWallets,
 }
 
@@ -31,12 +29,15 @@ const generateKeyPairAndUpdate = () => {
 }
 const publishTransaction = async () => {
   general.pendingTransactions.push( _.cloneDeep(general.transactionToPublish) as Transaction)
+  general.transactionToPublish = _.cloneDeep(emptyTransactionToPublish)
   update()
 }
 
 const generateWallet = async() => {
   let details: WalletDetails = { alias: general.alias , privateKey: general.keyPair.privateKey}
   general.wallets[general.keyPair.address] = _.cloneDeep(details)
+  general.keyPair = _.cloneDeep(emptyKeyPair)
+  general.alias = ''
   update()
 }
 
@@ -83,6 +84,17 @@ const mine = async() => {
   blockWithoutNonce.nonce = nonce.toString()
   general.chain.push(blockWithoutNonce)
   delete general.minedBlock
+  general.pendingTransactions = []
+  update()
+}
+const toggleEditableChain = () => {
+  if (general.showEditableChain) {
+    general.showEditableChain = false
+    delete general.editableChain
+  } else {
+    general.showEditableChain = true
+    general.editableChain = _.cloneDeep(general.chain)
+  }
   update()
 }
 const functions: Functions = {
@@ -91,9 +103,11 @@ const functions: Functions = {
   generateKeyPair: generateKeyPairAndUpdate,
   generateWallet,
   hashBlock,
+  isInvalidBlock,
   mine,
   publishTransaction,
   signTransaction,
+  toggleEditableChain,
 }
 const update =  () => {
   ReactDOM.render(

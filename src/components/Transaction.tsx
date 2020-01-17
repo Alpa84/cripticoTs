@@ -21,7 +21,7 @@ function Transaction({ general, blockIndex, onChange, transactionIndex, editable
     <div>
       {editable ? (
         <div>
-          <Input text='gives' value={transaction.gives} onChange={onChange} path={`${path}.amount`} />
+          <Input text='gives' value={transaction.gives} onChange={onChange} path={`${path}.gives`} />
           <Input text='receives' value={transaction.receives} onChange={onChange} path={`${path}.receives`} />
           <InputNumber text='amount' value={transaction.amount} onChange={onChange} path={`${path}.amount`} />
           <Input text='signature' value={transaction.signature ? transaction.signature : ''} onChange={onChange} path={`${path}.signature`} />

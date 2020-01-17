@@ -4,7 +4,7 @@ import * as md5 from 'md5'
 import * as bigInt from 'big-integer'
 import { RSA } from '../utils/rsa'
 
-const FirstBlockHash = '09b7bf2c2c494722949b4d8634b26954'
+const FirstBlockHash = '005d0a494e618e052cb3fd683cebe954'
 const MinedAmount = 1
 
 function isInvalidChain(receivedChain: Block[]) {
@@ -15,12 +15,11 @@ function isInvalidChain(receivedChain: Block[]) {
     return false
 }
 
-function isInvalidBlock(block: Block, blockIndex: number, receivedChain: Block[]) {
+export function isInvalidBlock(block: Block, blockIndex: number, receivedChain: Block[]) {
     // if it is the first block check if it has the primal block hash
     if (blockIndex === 0) {
-        return false
         if (hashBlock(block) !== FirstBlockHash) {
-            return { nonce: 'it does not start with the original block' }
+            return { blockHash: 'This is not the first block. Everybody knows the first block' }
         } else {
             return false
         }

@@ -25,7 +25,7 @@ function TransactionToPublish({ general, functions }: Props) {
       <div className="input-group">
         <div className="input-group-addon">da</div>
         <select
-          name="da"
+          name="gives"
           id='toPublishGives'
           className="form-control"
           onChange={functions.generalChange}
@@ -38,7 +38,7 @@ function TransactionToPublish({ general, functions }: Props) {
       <div className="input-group">
         <div className="input-group-addon">recibe</div>
         <select
-          name="recibe"
+          name="receives"
           id='toPublishReceives'
           className="form-control"
           onChange={functions.generalChange}
@@ -48,9 +48,9 @@ function TransactionToPublish({ general, functions }: Props) {
           {receivesOptions}
         </select>
       </div>
-      <InputNumber inputId='toPublishAmount' text='cuanto' value={general.transactionToPublish.amount} onChange={functions.generalChange} path='transactionToPublish.amount'/>
+      <InputNumber inputId='toPublishAmount' text='amount' value={general.transactionToPublish.amount} onChange={functions.generalChange} path='transactionToPublish.amount'/>
       <div className="input-group">
-        <div className="input-group-addon">private Key</div>
+        <div className="input-group-addon">giver's private Key</div>
         <input
           type='password'
           name='password'
