@@ -3,50 +3,49 @@ import * as _ from 'lodash'
 import { GeneralType, Functions } from '../Types'
 import Chain from './Chain';
 import PendingTransactions from './PendingTransactions'
-import TransactionToPublish from './TransactionToPublish'
+import TransactionToPublish, { Empty } from './TransactionToPublish'
 import KeyPair from './KeyPair'
 import Directory from './Wallets'
 import MinedBlock from './MinedBlock'
+import Explanation from './Explanation';
 
 export interface Props {
   general: GeneralType
   functions: Functions
 }
 
+
 function General({ general, functions }: Props) {
-  let givesOptions = _.map(general.wallets, (key, value) => (
-    <option key={value} value={value} >{key.alias}</option>
+  let givesOptions = _.map(general.wallets, (value, key) => (
+    <option key={key} value={key} >{value.alias}</option>
   ))
+  givesOptions.unshift(Empty())
   return (
     <div className="General">
       <div className="container">
         <div className="row">
-          <div className="col-sm-8">
+          <div className="col-sm-3">
+            <Explanation/>
+          </div>
+          <div className="col-sm-7">
             <KeyPair general={general} functions={functions}/>
             <h2>Transfer a simpl</h2>
             <TransactionToPublish general={general} functions={functions} />
             <h2>Published Transactions not yet included in the Blockchain</h2>
             <PendingTransactions general={general} />
             <h2>Mining</h2>
-            <select
-              name="minedDir"
-              id="selectDirToAddMined"
-              className="form-control"
-              onChange={functions.generalChange}
-              value={general.dirToAddMined}
-              data-key='dirToAddMined'
-            >
-              {givesOptions}
-            </select>
             <div className="input-group">
-              <div className="input-group-addon">Miner's address</div>
-              <input
-                type="text"
+              <div className="input-group-addon">Owner of the new coin</div>
+              <select
+                name="minedDir"
+                id="selectDirToAddMined"
                 className="form-control"
-                id="dirToAdMinedBitcoin"
+                onChange={functions.generalChange}
                 value={general.dirToAddMined}
                 data-key='dirToAddMined'
-                onChange={functions.generalChange} />
+              >
+                {givesOptions}
+              </select>
             </div>
             <button
               type="button"

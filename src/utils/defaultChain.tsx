@@ -11,7 +11,7 @@ const MinerPrivateKey = '65537,6801080556317782046187896714684102979704882596120
 export const DefaultWallets = {
     [CreatorPublicAddress]: { alias: 'AlePan', privateKey: CreatorPrivateKey },
     [FirstUserPublicAddress]: { alias: 'Athena', privateKey: FirstUserPrivateKey },
-    [MinerPublicAddress]: { alias: 'Miner', privateKey: MinerPrivateKey },
+    [MinerPublicAddress]: { alias: 'SomeUser', privateKey: MinerPrivateKey },
 }
 
 export const DefaultChain: Block[] = [

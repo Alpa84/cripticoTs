@@ -4,7 +4,7 @@ import * as md5 from 'md5'
 import * as bigInt from 'big-integer'
 import { RSA } from '../utils/rsa'
 
-const FirstBlockHash = '005d0a494e618e052cb3fd683cebe954'
+// const FirstBlockHash = '005d0a494e618e052cb3fd683cebe954'
 const MinedAmount = 1
 
 function isInvalidChain(receivedChain: Block[]) {
@@ -16,14 +16,7 @@ function isInvalidChain(receivedChain: Block[]) {
 }
 
 export function isInvalidBlock(block: Block, blockIndex: number, receivedChain: Block[]) {
-    // if it is the first block check if it has the primal block hash
-    if (blockIndex === 0) {
-        if (hashBlock(block) !== FirstBlockHash) {
-            return { blockHash: 'This is not the first block. Everybody knows the first block' }
-        } else {
-            return false
-        }
-    }
+
     let chainUntilThisBlock = receivedChain.slice(0, blockIndex)
     let chainTransactions = chainToTransactions(chainUntilThisBlock)
     let reviewedTransactions = []
@@ -38,8 +31,13 @@ export function isInvalidBlock(block: Block, blockIndex: number, receivedChain: 
             reviewedTransactions.push(transaction)
         } else {
             let previousTransactions = [...chainTransactions, ...reviewedTransactions]
-            if (!hasValidTransactionSignature(transaction, block.previousBlockHash)) {
-                return { transactions: `the transaction from ${transaction.gives} to ${transaction.receives} for the amount of ${transaction.amount} does not have a valid signature` }
+            try {
+                let transactionSignatureValid = hasValidTransactionSignature(transaction, block.previousBlockHash)
+                if (!transactionSignatureValid) {
+                    return { transactions: `the transaction for the amount of ${transaction.amount} does not have a valid signature` }
+                }
+            } catch (error) {
+                return { transactions: `there is an error with a signature` }
             }
             if (checkIfGiverHasFunds(transaction, previousTransactions)) {
                 reviewedTransactions.push(transaction)
@@ -49,9 +47,11 @@ export function isInvalidBlock(block: Block, blockIndex: number, receivedChain: 
 
         }
     }
-    let hasPreviousBlockHash = block.previousBlockHash === hashBlock(receivedChain[blockIndex - 1])
-    if (!hasPreviousBlockHash && blockIndex !== 0) {
-        return { previousBlockHash: 'does not have the previous block hash' }
+    if (blockIndex !== 0) {
+        let hasPreviousBlockHash = block.previousBlockHash === hashBlock(receivedChain[blockIndex - 1])
+        if (!hasPreviousBlockHash) {
+            return { previousBlockHash: 'does not have the previous block hash' }
+        }
     }
     let hash = hashBlock(block)
     if (!startsWithZeros(hash)) {
@@ -158,10 +158,10 @@ export const validateTransactions = (pendingTransactionsDeposit: Transaction[], 
             if (hasValidTransactionSignature(pendingTransaction, previousBlockHash)) {
                 approvedPendingTransactions.push(pendingTransaction)
             } else {
-                alert(`Invalid Signature. the transaction from ${pendingTransaction.gives} to ${pendingTransaction.receives} for an amount of ${pendingTransaction.amount}, ignoring transaction`)
+                alert(`Invalid Signature. the transaction for an amount of ${pendingTransaction.amount}, ignoring transaction`)
             }
         } else {
-            alert(`The giver does not have funds to do this transaction. Invalid transaction from ${pendingTransaction.gives} to ${pendingTransaction.receives} for an amount of ${pendingTransaction.amount}, ignoring transaction`)
+            alert(`The giver does not have funds to do this transaction. Invalid transaction for an amount of ${pendingTransaction.amount}, ignoring transaction`)
         }
     }
     approvedPendingTransactions.unshift({ gives: 'mined', receives: minersAddress, amount: 1, signature: '' })

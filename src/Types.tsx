@@ -6,6 +6,7 @@ export interface Block  {
 }
 export interface Functions {
     generalChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void
+    findNonce: (block: Block) => Promise<void>
     publishTransaction: () => void
     toggleEditableChain: () => void
     generateKeyPair: () => void
@@ -30,6 +31,7 @@ export interface GeneralType {
     chain: Block[]
     editableChain?: Block[]
     showEditableChain: boolean
+    signatureError?: string
     transactionToPublish: TransactionPlusKey
     dirToAddMined: string,
     keyPair: KeyPair

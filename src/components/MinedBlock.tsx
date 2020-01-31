@@ -16,7 +16,8 @@ function MinedBlock({ general, functions }: Props) {
         <div className="panel-heading">Trying to add block {blockIndex}</div>
         <div className="panel-body">
           <div>
-            <p>previous block hash: {general.minedBlock.previousBlockHash}</p>
+            <p>hash: {functions.hashBlock(general.minedBlock)}</p>
+
             <p>nonce: {general.minedBlock.nonce}</p>
           </div>
           <h3>transactions</h3>
@@ -30,7 +31,7 @@ function MinedBlock({ general, functions }: Props) {
               </div>
             ))
           }
-          <p>hash: {functions.hashBlock(general.minedBlock)}</p>
+          <p>previous block hash: {general.minedBlock.previousBlockHash}</p>
         </div>
       </div>
     </div>

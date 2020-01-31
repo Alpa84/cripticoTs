@@ -41,12 +41,20 @@ const generateWallet = async() => {
   update()
 }
 
-export const signTransaction = async () => {
+export const signTransactionInternal = () => {
   let lastBlockHash = hashBlock(_.last(general.chain) as Block )
-  let signature = createTransactionSignature(general.transactionToPublish, lastBlockHash, general.transactionToPublish.secretKey )
-  general.transactionToPublish.signature = signature
-  update()
+  return createTransactionSignature(general.transactionToPublish, lastBlockHash, general.transactionToPublish.secretKey )
 
+}
+export const signTransaction = () =>{
+  try {
+    let signature = signTransactionInternal()
+    general.transactionToPublish.signature = signature
+    delete general.signatureError
+  } catch (error) {
+    general.signatureError = 'There was an error generating the signature, please check the private key'
+  }
+  update()
 }
 const calculateOwnerCoinsFromChain = (chain: Block[], address: string) => {
   let transactions = _.flatMap(chain, (block: Block) => block.transactions)
@@ -64,23 +72,29 @@ const generalChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectEle
   if (path === 'general.transactionToPublish.signature') { general.transactionToPublish.signature = value.toString()}
   update()
 }
-const mine = async() => {
-  let blockWithoutNonce = validateTransactions(general.pendingTransactions, general.chain, general.dirToAddMined)
-  general.minedBlock = blockWithoutNonce
+const tryDifferentNonces = async(block: Block) => {
   let nonce = 0
-  let keepSearching = true
-  while (keepSearching) {
-    blockWithoutNonce.nonce = nonce.toString()
-    let result = hashBlockWithoutNonce(blockWithoutNonce, nonce)
+  while (true) {
+    block.nonce = nonce.toString()
+    let result = hashBlockWithoutNonce(block, nonce)
     let doesStart = startsWithZeros(result)
     if (doesStart) {
-      keepSearching = false
+      update()
+      return nonce
     } else {
       nonce = nonce + 1
     }
     update()
     await addDelay(4)
   }
+}
+const findNonce = async (block: Block)=> {
+  tryDifferentNonces(block)
+}
+const mine = async() => {
+  let blockWithoutNonce = validateTransactions(general.pendingTransactions, general.chain, general.dirToAddMined)
+  general.minedBlock = blockWithoutNonce
+  let nonce = await tryDifferentNonces(blockWithoutNonce)
   blockWithoutNonce.nonce = nonce.toString()
   general.chain.push(blockWithoutNonce)
   delete general.minedBlock
@@ -99,6 +113,7 @@ const toggleEditableChain = () => {
 }
 const functions: Functions = {
   calculateOwnerCoinsFromChain,
+  findNonce,
   generalChange,
   generateKeyPair: generateKeyPairAndUpdate,
   generateWallet,

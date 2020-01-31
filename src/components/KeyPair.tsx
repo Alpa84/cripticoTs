@@ -12,26 +12,8 @@ function KeyPair({ general, functions }: Props) {
       <div className='panel panel-default' >
         <div className='panel-body'>
           <button id='generateKeys' type='button' onClick={functions.generateKeyPair} className='btn btn-large btn-block btn-primary'>Generate Public Address and Private Key</button>
-          <div className="input-group">
-            <div className="input-group-addon">Public Address</div>
-            <input
-              type="text"
-              id='publicAddress'
-              className="form-control"
-              value={keyPair.address}
-              data-key='keyPair.address'
-              onChange={functions.generalChange} />
-          </div>
-          <div className="input-group">
-            <div className="input-group-addon">Private Key</div>
-            <input
-              type="text"
-              id='privateKey'
-              className="form-control"
-              value={keyPair.privateKey}
-              data-key='keyPair.privateKey'
-              onChange={functions.generalChange} />
-          </div>
+          <div className='longString'>Public Address: {keyPair.address}</div>
+          <div className='longString'>Private Key: {keyPair.privateKey}</div>
         </div>
         <div className="input-group">
           <div className="input-group-addon">alias</div>

@@ -25,7 +25,7 @@ function Chain({ general, functions }: Props) {
           let invalidBlockReason = functions.isInvalidBlock(block, index, general.chain)
           return (
             <div key={index} className={`panel panel-${invalidBlockReason ? 'danger': 'primary'}`}>
-              <div className="panel-heading">{index}</div>
+              <div className="panel-heading">Block {index + 1}</div>
               <div className="panel-body">
                 {invalidBlockReason && (
                   <div className="alert alert-danger">
@@ -42,6 +42,7 @@ function Chain({ general, functions }: Props) {
                   <div>
                     <Input text='previous block hash' onChange={functions.generalChange} value={block.previousBlockHash} path={`chain[${index}].previousBlockHash`} />
                     <Input text='nonce' value={block.nonce} onChange={functions.generalChange} path={`chain[${index}].nonce`} />
+                    <button type="button" className="btn btn-info" onClick={() => functions.findNonce(block)}>Search Nonce</button>
                   </div>
                 ) : (
                     <div>

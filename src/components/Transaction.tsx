@@ -31,7 +31,9 @@ function Transaction({ general, blockIndex, onChange, transactionIndex, editable
             <p>gives: {gives}</p>
             <p>receives: {receives}</p>
             <p>amount: {transaction.amount}</p>
-            <p className='longString'>signature: {transaction.signature}</p>
+            { transaction.signature && (
+              <p className='longString'>signature: {transaction.signature}</p>
+            )}
         </div>
       )}
 

@@ -6,24 +6,24 @@ export interface Props {
   general: GeneralType
   functions: Functions
 }
+export const Empty = () => (<option disabled={true} value='' key={-1}> -- </option>)
 
 function TransactionToPublish({ general, functions }: Props) {
   let givesOptions = _.map(general.wallets, (value, key) => (
     <option key={key} value={key} >{value.alias}</option>
   ))
-  const empty = () => (<option disabled={true} value='' key={-1}> -- </option>)
-  givesOptions.unshift(empty())
+  givesOptions.unshift(Empty())
   let receivesOptions = _.map(general.wallets, (value, key) => (
     <option key={key} value={key} >{value.alias}</option>
   ))
-  receivesOptions.unshift(empty())
+  receivesOptions.unshift(Empty())
   let toPub = general.transactionToPublish
   let signEnabled = toPub.gives && toPub.receives && toPub.amount && toPub.secretKey
   let publishEnabled = signEnabled && toPub.signature
   return (
     <div>
       <div className="input-group">
-        <div className="input-group-addon">da</div>
+        <div className="input-group-addon">gives</div>
         <select
           name="gives"
           id='toPublishGives'
@@ -36,7 +36,7 @@ function TransactionToPublish({ general, functions }: Props) {
         </select>
       </div>
       <div className="input-group">
-        <div className="input-group-addon">recibe</div>
+        <div className="input-group-addon">receives</div>
         <select
           name="receives"
           id='toPublishReceives'
@@ -62,6 +62,9 @@ function TransactionToPublish({ general, functions }: Props) {
       </div>
       <p className='longString'>Transaction Signature: {general.transactionToPublish.signature}</p>
       <p>to add in Block number: {general.chain.length}</p>
+      {general.signatureError && (
+        <div>{general.signatureError}</div>
+      )}
       <button
         disabled={!signEnabled }
         type="button"
