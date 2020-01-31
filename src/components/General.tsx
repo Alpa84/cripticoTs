@@ -24,10 +24,10 @@ function General({ general, functions }: Props) {
     <div className="General">
       <div className="container">
         <div className="row">
-          <div className="col-sm-3">
+          <div className="col-sm-5">
             <Explanation/>
           </div>
-          <div className="col-sm-7">
+          <div className="col-sm-5">
             <KeyPair general={general} functions={functions}/>
             <h2>Transfer a simpl</h2>
             <TransactionToPublish general={general} functions={functions} />
