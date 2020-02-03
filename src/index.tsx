@@ -65,6 +65,12 @@ const removeBlock = (index: number) => {
   }
   update()
 }
+const removeTransaction = (blockIndex: number, index: number) => {
+  if (general.editableChain){
+    general.editableChain[blockIndex].transactions.splice(index, 1)
+  }
+  update()
+}
 const generalChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement >) => {
   let element = event.target
   let path = element.getAttribute('data-key') as string
@@ -124,6 +130,7 @@ const functions: Functions = {
   mine,
   publishTransaction,
   removeBlock,
+  removeTransaction,
   signTransaction,
   toggleEditableChain,
 }

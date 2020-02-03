@@ -42,7 +42,7 @@ function Chain({ general, functions }: Props) {
                   <button
                     type="button"
                     onClick={() => { functions.removeBlock(index) }}
-                    className="btn btn-large btn-block btn-danger">Remove Block</button>
+                    className="btn btn-large btn-block btn-warning">Remove Block</button>
                 )}
                 <p>hash: <span className='blockHash'>{functions.hashBlock(block)}</span></p>
                 {general.editableChain ? (
@@ -57,7 +57,7 @@ function Chain({ general, functions }: Props) {
                     </div>
                   )}
                 <h3>transactions</h3>
-                <Transactions general={general} blockIndex={index} generalChange={functions.generalChange} editable={!!general.editableChain} />
+                <Transactions general={general} blockIndex={index} functions={functions} />
                 <p>previous block hash: {block.previousBlockHash}</p>
               </div>
             </div>

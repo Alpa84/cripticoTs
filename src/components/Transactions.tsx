@@ -1,14 +1,13 @@
 import * as React from 'react'
-import { GeneralType } from '../Types'
+import { GeneralType, Functions } from '../Types'
 import Transaction from './Transaction';
 export interface Props {
   general: GeneralType,
   blockIndex: number
-  generalChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-  editable: boolean
+  functions: Functions
 }
 
-function Transactions({ general, generalChange, blockIndex, editable }: Props) {
+function Transactions({ general, functions, blockIndex }: Props) {
   let transactions = general.editableChain ? general.editableChain[blockIndex].transactions : general.chain[blockIndex].transactions
   return (
     <div className="Transactions">
@@ -17,7 +16,7 @@ function Transactions({ general, generalChange, blockIndex, editable }: Props) {
           <div className="panel panel-default" key={transIndex}>
             <div className="panel-body">
               <div key={transIndex}>
-                <Transaction general={general} transactionIndex={transIndex} blockIndex={blockIndex} onChange={generalChange} />
+                <Transaction general={general} transactionIndex={transIndex} blockIndex={blockIndex} functions={functions} />
               </div>
             </div>
           </div>

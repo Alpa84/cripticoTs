@@ -1,16 +1,17 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { GeneralType } from '../Types'
+import { GeneralType, Functions } from '../Types'
 import InputNumber from './InputNumber'
 import Input from './Input'
 export interface Props {
   general: GeneralType
   blockIndex: number
   transactionIndex: number
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  functions: Functions
 }
 
-function Transaction({ general, blockIndex, onChange, transactionIndex }: Props) {
+function Transaction({ general, blockIndex, functions, transactionIndex }: Props) {
+  let onChange = functions.generalChange
   let block = general.editableChain ? general.editableChain[blockIndex] : general.chain[blockIndex]
   let transaction = block.transactions[transactionIndex]
   let path = `chain[${blockIndex}].transactions[${transactionIndex}]`
@@ -24,6 +25,12 @@ function Transaction({ general, blockIndex, onChange, transactionIndex }: Props)
           <Input text='receives' value={transaction.receives} onChange={onChange} path={`${path}.receives`} />
           <InputNumber text='amount' value={transaction.amount} onChange={onChange} path={`${path}.amount`} />
           <Input text='signature' value={transaction.signature ? transaction.signature : ''} onChange={onChange} path={`${path}.signature`} />
+
+          <button
+            type="button"
+            onClick={() => functions.removeTransaction(blockIndex, transactionIndex)}
+            className="btn btn-large btn-block btn-warning">Remove Transaction</button>
+
         </div>
       ) : (
         <div>
