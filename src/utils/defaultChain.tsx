@@ -1,4 +1,4 @@
-import { Block } from "src/Types"
+import { Block, Transaction } from "src/Types"
 const CreatorPublicAddress = '1928746700469236093671538177020857857720733381331271737456327216724741025401,32738739318480270880847344601765335773851669760144296954546538700397943059327'
 const CreatorPrivateKey = '65537,32738739318480270880847344601765335773851669760144296954546538700397943059327'
 
@@ -47,4 +47,10 @@ export const DefaultChain: Block[] = [
         ],
     },
 ]
+export const DefaultEmptyTransaction: Transaction  = {
+    amount: 0,
+    gives: '',
+    receives: '',
+    signature: '',
+}
 

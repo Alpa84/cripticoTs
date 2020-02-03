@@ -14,7 +14,7 @@ function Transaction({ general, blockIndex, functions, transactionIndex }: Props
   let onChange = functions.generalChange
   let block = general.editableChain ? general.editableChain[blockIndex] : general.chain[blockIndex]
   let transaction = block.transactions[transactionIndex]
-  let path = `chain[${blockIndex}].transactions[${transactionIndex}]`
+  let path = `editableChain[${blockIndex}].transactions[${transactionIndex}]`
   let receives = _.has(general.wallets, transaction.receives) ? general.wallets[transaction.receives].alias : transaction.receives
   let gives = _.has(general.wallets, transaction.gives) ? general.wallets[transaction.gives].alias : transaction.gives
   return (

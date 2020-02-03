@@ -11,6 +11,12 @@ function Transactions({ general, functions, blockIndex }: Props) {
   let transactions = general.editableChain ? general.editableChain[blockIndex].transactions : general.chain[blockIndex].transactions
   return (
     <div className="Transactions">
+      {general.editableChain && (
+        <button
+          type="button"
+          onClick={() => functions.addTransaction(blockIndex)}
+          className="btn btn-large btn-block btn-default">Add Transaction</button>
+      )}
       {
         transactions.map((transaccion, transIndex) => (
           <div className="panel panel-default" key={transIndex}>
