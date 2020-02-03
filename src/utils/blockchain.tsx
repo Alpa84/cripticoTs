@@ -23,7 +23,7 @@ export function isInvalidBlock(block: Block, blockIndex: number, receivedChain: 
   for (const [index, transaction] of block.transactions.entries()) {
     if (index === 0) {
       if (transaction.gives !== 'mined') {
-        return { transactions: `The first transaction has to be a mined coin, (gives: mined) and it is gives: ${transaction.gives}` }
+        return { transactions: `The first transaction has to be a mined coin, (gives: mined)` }
       }
       if (transaction.amount !== MinedAmount) {
         return { transactions: `The first transaction has to be a mined coin, and it has to have a value of 1 and it has a value of : ${transaction.amount}` }

@@ -20,7 +20,7 @@ function Transactions({ general, functions, blockIndex }: Props) {
               </div>
             </div>
           </div>
-        ))
+        )).reverse()
       }
     </div>
   )
