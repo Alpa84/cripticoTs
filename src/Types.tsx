@@ -9,6 +9,7 @@ export interface Functions {
     removeBlock:(index: number)=> void
     removeTransaction:(blockIndex: number, index: number)=> void
     addTransaction: (blockIndex:number) => void
+    addBlock: () => void
     findNonce: (block: Block) => Promise<void>
     publishTransaction: () => void
     toggleEditableChain: () => void

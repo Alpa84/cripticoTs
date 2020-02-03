@@ -7,7 +7,7 @@ import { generateKeyPair } from './utils/rsa'
 import './index.css';
 import registerServiceWorker from './registerServiceWorker'
 import { createTransactionSignature, hashBlock, calculateGiverFunds, hashBlockWithoutNonce, validateTransactions, startsWithZeros, addDelay, isInvalidBlock } from './utils/blockchain';
-import { DefaultWallets, DefaultChain, DefaultEmptyTransaction } from './utils/defaultChain'
+import { DefaultWallets, DefaultChain, DefaultEmptyTransaction, DefaultEmptyBlock } from './utils/defaultChain'
 
 let emptyTransactionToPublish = { gives: '', receives: '', amount: 0, signature: '', secretKey: '' }
 let emptyKeyPair = { address: '', privateKey: ''}
@@ -77,6 +77,12 @@ const addTransaction = (blockIndex: number) => {
   }
   update()
 }
+const addBlock = () => {
+  if (general.editableChain){
+    general.editableChain.push(DefaultEmptyBlock)
+  }
+  update()
+}
 const generalChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement >) => {
   let element = event.target
   let path = element.getAttribute('data-key') as string
@@ -126,6 +132,7 @@ const toggleEditableChain = () => {
   update()
 }
 const functions: Functions = {
+  addBlock,
   addTransaction,
   calculateOwnerCoinsFromChain,
   findNonce,

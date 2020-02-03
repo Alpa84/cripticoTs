@@ -53,4 +53,9 @@ export const DefaultEmptyTransaction: Transaction  = {
     receives: '',
     signature: '',
 }
+export const DefaultEmptyBlock: Block  = {
+    nonce: '',
+    previousBlockHash: '',
+    transactions: [],
+}
 

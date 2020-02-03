@@ -21,6 +21,13 @@ function Chain({ general, functions }: Props) {
       >
         { general.editableChain ? ('Back to Unedited Chain'):('Edit Chain')}
       </button>
+      { general.editableChain && (
+        <button
+          type="button"
+          onClick={functions.addBlock}
+          className="btn btn-large btn-block btn-default">Add Block</button>
+      )}
+
       {
         chain.map((block, index) => {
           let invalidBlockReason = functions.isInvalidBlock(block, index, chain)
