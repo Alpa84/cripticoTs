@@ -17,7 +17,6 @@ let general: GeneralType = {
   dirToAddMined:'',
   keyPair: _.cloneDeep(emptyKeyPair),
   pendingTransactions: [],
-  showEditableChain: false,
   transactionToPublish: _.cloneDeep(emptyTransactionToPublish),
   wallets: DefaultWallets,
 }
@@ -60,7 +59,12 @@ const calculateOwnerCoinsFromChain = (chain: Block[], address: string) => {
   let transactions = _.flatMap(chain, (block: Block) => block.transactions)
     return calculateGiverFunds(transactions, address)
 }
-
+const removeBlock = (index: number) => {
+  if (general.editableChain){
+    general.editableChain.splice(index, 1)
+  }
+  update()
+}
 const generalChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement >) => {
   let element = event.target
   let path = element.getAttribute('data-key') as string
@@ -102,11 +106,9 @@ const mine = async() => {
   update()
 }
 const toggleEditableChain = () => {
-  if (general.showEditableChain) {
-    general.showEditableChain = false
+  if (general.editableChain) {
     delete general.editableChain
   } else {
-    general.showEditableChain = true
     general.editableChain = _.cloneDeep(general.chain)
   }
   update()
@@ -121,6 +123,7 @@ const functions: Functions = {
   isInvalidBlock,
   mine,
   publishTransaction,
+  removeBlock,
   signTransaction,
   toggleEditableChain,
 }

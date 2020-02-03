@@ -2,7 +2,7 @@ import * as React from 'react'
 import { GeneralType, Functions} from '../Types'
 import * as _ from 'lodash'
 import Input from './Input'
-import Transactions from './Transacions';
+import Transactions from './Transactions';
 export interface Props {
   general: GeneralType
   functions: Functions
@@ -10,6 +10,7 @@ export interface Props {
 
 
 function Chain({ general, functions }: Props) {
+  let chain = general.editableChain ? general.editableChain : general.chain
   return (
     <div className="Chain">
       <button
@@ -18,11 +19,11 @@ function Chain({ general, functions }: Props) {
         id='toggleEditableChain'
         className="btn btn-large btn-block btn-default"
       >
-        { general.showEditableChain ? ('Back to Unedited Chain'):('Edit Chain')}
+        { general.editableChain ? ('Back to Unedited Chain'):('Edit Chain')}
       </button>
       {
-        general.chain.map((block, index) => {
-          let invalidBlockReason = functions.isInvalidBlock(block, index, general.chain)
+        chain.map((block, index) => {
+          let invalidBlockReason = functions.isInvalidBlock(block, index, chain)
           return (
             <div key={index} className={`panel panel-${invalidBlockReason ? 'danger': 'primary'}`}>
               <div className="panel-heading">Block {index + 1}</div>
@@ -37,11 +38,17 @@ function Chain({ general, functions }: Props) {
                   </div>
 
                 )}
+                { general.editableChain && (
+                  <button
+                    type="button"
+                    onClick={() => { functions.removeBlock(index) }}
+                    className="btn btn-large btn-block btn-danger">Remove Block</button>
+                )}
                 <p>hash: <span className='blockHash'>{functions.hashBlock(block)}</span></p>
-                {general.showEditableChain ? (
+                {general.editableChain ? (
                   <div>
-                    <Input text='previous block hash' onChange={functions.generalChange} value={block.previousBlockHash} path={`chain[${index}].previousBlockHash`} />
-                    <Input text='nonce' value={block.nonce} onChange={functions.generalChange} path={`chain[${index}].nonce`} />
+                    <Input text='previous block hash' onChange={functions.generalChange} value={block.previousBlockHash} path={`editableChain[${index}].previousBlockHash`} />
+                    <Input text='nonce' value={block.nonce} onChange={functions.generalChange} path={`editableChain[${index}].nonce`} />
                     <button type="button" className="btn btn-info" onClick={() => functions.findNonce(block)}>Search Nonce</button>
                   </div>
                 ) : (
@@ -50,7 +57,7 @@ function Chain({ general, functions }: Props) {
                     </div>
                   )}
                 <h3>transactions</h3>
-                <Transactions general={general} blockIndex={index} generalChange={functions.generalChange} editable={general.showEditableChain} />
+                <Transactions general={general} blockIndex={index} generalChange={functions.generalChange} editable={!!general.editableChain} />
                 <p>previous block hash: {block.previousBlockHash}</p>
               </div>
             </div>

@@ -42,7 +42,7 @@ export function isInvalidBlock(block: Block, blockIndex: number, receivedChain: 
             if (checkIfGiverHasFunds(transaction, previousTransactions)) {
                 reviewedTransactions.push(transaction)
             } else {
-                return { transactions: `${transaction.gives} does not have ${transaction.amount} simplecoins to give to ${transaction.receives}` }
+                return { transactions: `A giver does not have ${transaction.amount} simplecoins to give` }
             }
 
         }

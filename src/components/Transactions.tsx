@@ -9,7 +9,7 @@ export interface Props {
 }
 
 function Transactions({ general, generalChange, blockIndex, editable }: Props) {
-  let transactions = general.chain[blockIndex].transactions
+  let transactions = general.editableChain ? general.editableChain[blockIndex].transactions : general.chain[blockIndex].transactions
   return (
     <div className="Transactions">
       {
@@ -17,7 +17,7 @@ function Transactions({ general, generalChange, blockIndex, editable }: Props) {
           <div className="panel panel-default" key={transIndex}>
             <div className="panel-body">
               <div key={transIndex}>
-                <Transaction general={general} transactionIndex={transIndex} blockIndex={blockIndex} onChange={generalChange} editable={editable}/>
+                <Transaction general={general} transactionIndex={transIndex} blockIndex={blockIndex} onChange={generalChange} />
               </div>
             </div>
           </div>
