@@ -19,7 +19,7 @@ function Chain({ general, functions }: Props) {
         id='toggleEditableChain'
         className="btn btn-large btn-block btn-default"
       >
-        { general.editableChain ? ('Back to Unedited Chain'):('Edit Chain')}
+        { general.editableChain ? ('Back to Unedited Chain'):('Hack the Chain')}
       </button>
       { general.editableChain && (
         <button
