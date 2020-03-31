@@ -19,7 +19,7 @@ function Transactions({ general, functions, blockIndex }: Props) {
       )}
       {
         transactions.map((transaccion, transIndex) => (
-          <div className="panel panel-default" key={transIndex}>
+          <div className="panel panel-default" key={transIndex} data-tut="transaction">
             <div className="panel-body">
               <div key={transIndex}>
                 <Transaction general={general} transactionIndex={transIndex} blockIndex={blockIndex} functions={functions} />

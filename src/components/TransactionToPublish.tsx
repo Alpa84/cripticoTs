@@ -21,7 +21,7 @@ function TransactionToPublish({ general, functions }: Props) {
   let signEnabled = toPub.gives && toPub.receives && toPub.amount && toPub.secretKey
   let publishEnabled = signEnabled && toPub.signature
   return (
-    <div>
+    <div data-tut="publish">
       <div className="input-group">
         <div className="input-group-addon">gives</div>
         <select

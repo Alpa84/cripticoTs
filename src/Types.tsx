@@ -12,6 +12,7 @@ export interface Functions {
     addBlock: () => void
     findNonce: (block: Block) => Promise<void>
     publishTransaction: () => void
+    closeTour: () => void
     toggleEditableChain: () => void
     generateKeyPair: () => void
     generateWallet: () => void
@@ -31,6 +32,7 @@ export interface TransactionPlusKey extends Transaction {
     secretKey: string
 }
 export interface GeneralType {
+    tourOpen: boolean
     pendingTransactions: Transaction[]
     chain: Block[]
     editableChain?: Block[]

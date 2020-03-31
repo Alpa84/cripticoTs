@@ -18,6 +18,7 @@ function Chain({ general, functions }: Props) {
         onClick={functions.toggleEditableChain}
         id='toggleEditableChain'
         className="btn btn-large btn-block btn-default"
+        data-tut="toggleHackTheChain"
       >
         { general.editableChain ? ('Back to Unedited Chain'):('Hack the Chain')}
       </button>
@@ -32,7 +33,10 @@ function Chain({ general, functions }: Props) {
         chain.map((block, index) => {
           let invalidBlockReason = functions.isInvalidBlock(block, index, chain)
           return (
-            <div key={index} className={`panel panel-${invalidBlockReason ? 'danger': 'primary'}`}>
+            <div
+              key={index}
+              className={`panel panel-${invalidBlockReason ? 'danger' : 'primary'}`}
+              data-tut='block'>
               <div className="panel-heading">Block {index + 1}</div>
               <div className="panel-body">
                 {invalidBlockReason && (

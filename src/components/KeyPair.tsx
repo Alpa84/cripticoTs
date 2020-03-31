@@ -8,13 +8,13 @@ export interface Props {
 function KeyPair({ general, functions }: Props) {
   let keyPair = general.keyPair
   return (
-    <div className='KeyPair'>
-      <div className='panel panel-default' >
-        <div className='panel-body'>
-          <button id='generateKeys' type='button' onClick={functions.generateKeyPair} className='btn btn-large btn-block btn-primary'>Generate Public Address and Private Key</button>
-          <div className='longString'>Public Address: {keyPair.address}</div>
-          <div className='longString'>Private Key: {keyPair.privateKey}</div>
-        </div>
+    <div className='panel panel-default' >
+      <div className='panel-body' data-tut="keyPair">
+        <button id='generateKeys' type='button' onClick={functions.generateKeyPair} className='btn btn-large btn-block btn-primary'>Generate Public Address and Private Key</button>
+        <div className='longString'>Public Address: {keyPair.address}</div>
+        <div className='longString'>Private Key: {keyPair.privateKey}</div>
+      </div>
+      <div data-tut="alias">
         <div className="input-group">
           <div className="input-group-addon">alias</div>
           <input
@@ -22,7 +22,7 @@ function KeyPair({ general, functions }: Props) {
             className="form-control"
             value={general.alias}
             data-key='alias'
-            id='alias'
+            key='newAlias'
             onChange={functions.generalChange} />
         </div>
         <button

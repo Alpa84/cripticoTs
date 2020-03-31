@@ -5,6 +5,7 @@
   "homepage": "http://alpa84.github.io/coin",
   "dependencies": {
     "@types/lodash": "^4.14.119",
+    "@types/reactour": "^1.13.1",
     "axios": "^0.18.0",
     "big-integer": "^1.6.40",
     "lodash": "^4.17.11",
@@ -12,7 +13,9 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-scripts-ts": "3.1.0",
-    "serve": "^10.1.1"
+    "reactour": "^1.16.3",
+    "serve": "^10.1.1",
+    "styled-components": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts-ts start",
@@ -27,7 +30,7 @@
   "devDependencies": {
     "@types/md5": "^2.1.33",
     "@types/node": "^10.12.18",
-    "@types/react": "^16.7.18",
+    "@types/react": "16.9.23",
     "@types/react-dom": "^16.0.11",
     "cypress": "^3.8.2",
     "gh-pages": "^2.2.0",

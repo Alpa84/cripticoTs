@@ -8,13 +8,13 @@ export interface Props {
 
 function Wallets({ general, functions }: Props) {
   return (
-    <div className="Wallets">
+    <div className="Wallets" data-tut="wallets">
       <h1>Wallets</h1>
       <div className="panel panel-default">
         <div className="panel-body">
           {
             Object.keys(general.wallets).map((dir, index) => (
-              <div key={index}>
+              <div key={index} data-tut="wallet">
                 <h3>{general.wallets[dir].alias}</h3>
                 <div>
                   <b>Simplecoins:</b>
@@ -25,7 +25,7 @@ function Wallets({ general, functions }: Props) {
                     {dir}
                   </div>
                 </div>
-                <div><b>Private Key (shhhhhh!):</b>
+                <div className='privateKey'><b>Private Key (shhhhhh!):</b>
                   <div className='longString'>
                     {general.wallets[dir].privateKey}
                   </div>

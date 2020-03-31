@@ -17,6 +17,7 @@ let general: GeneralType = {
   dirToAddMined:'',
   keyPair: _.cloneDeep(emptyKeyPair),
   pendingTransactions: [],
+  tourOpen: true,
   transactionToPublish: _.cloneDeep(emptyTransactionToPublish),
   wallets: DefaultWallets,
 }
@@ -131,10 +132,15 @@ const toggleEditableChain = () => {
   }
   update()
 }
+const closeTour = () => {
+    general.tourOpen = false
+  update()
+}
 const functions: Functions = {
   addBlock,
   addTransaction,
   calculateOwnerCoinsFromChain,
+  closeTour,
   findNonce,
   generalChange,
   generateKeyPair: generateKeyPairAndUpdate,
