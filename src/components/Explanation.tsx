@@ -15,7 +15,7 @@ function Explanation({general, functions}: Props) {
       <Tour
         steps={steps}
         isOpen={general.tourOpen}
-        onRequestClose={functions.closeTour} />
+        onRequestClose={() => functions.dispatch({type: 'closeTour'})} />
     </div>
   )
 }

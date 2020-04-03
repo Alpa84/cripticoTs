@@ -1,7 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import { Functions, GeneralType } from '../Types'
-import InputNumber from './InputNumber'
 export interface Props {
   general: GeneralType
   functions: Functions
@@ -28,9 +27,8 @@ function TransactionToPublish({ general, functions }: Props) {
           name="gives"
           id='toPublishGives'
           className="form-control"
-          onChange={functions.generalChange}
+          onChange={(event) => functions.dispatch({ type: 'changeGives', gives: event.target.value})}
           value={general.transactionToPublish.gives}
-          data-key='transactionToPublish.gives'
         >
           {givesOptions}
         </select>
@@ -41,14 +39,22 @@ function TransactionToPublish({ general, functions }: Props) {
           name="receives"
           id='toPublishReceives'
           className="form-control"
-          onChange={functions.generalChange}
+          onChange={(event) => functions.dispatch({ type: 'changeReceives', receives: event.target.value })}
           value={general.transactionToPublish.receives}
-          data-key='transactionToPublish.receives'
         >
           {receivesOptions}
         </select>
       </div>
-      <InputNumber inputId='toPublishAmount' text='amount' value={general.transactionToPublish.amount} onChange={functions.generalChange} path='transactionToPublish.amount'/>
+      <div className="input-group">
+        <div className="input-group-addon">amount</div>
+        <input
+          id='toPublishAmount'
+          type="number"
+          className="form-control"
+          onChange={(event) => functions.dispatch({type:'changeTransactionAmount' , amount: parseFloat(event.target.value)})}
+          value={general.transactionToPublish.amount}
+        />
+      </div>
       <div className="input-group">
         <div className="input-group-addon">giver's private Key</div>
         <input
@@ -57,8 +63,7 @@ function TransactionToPublish({ general, functions }: Props) {
           id = 'toPublishPass'
           className="form-control"
           value={general.transactionToPublish.secretKey}
-          data-key={'transactionToPublish.secretKey'}
-          onChange={functions.generalChange} />
+          onChange={(event) => functions.dispatch({ type: 'changeTransactionSecretKey', secretKey: event.target.value })} />
       </div>
       <p className='longString'>Transaction Signature: {general.transactionToPublish.signature}</p>
       <p>to add in Block number: {general.chain.length}</p>
@@ -71,13 +76,13 @@ function TransactionToPublish({ general, functions }: Props) {
         id='toPublishSign'
         className="btn
         btn-warning"
-        onClick={functions.signTransaction}>Sign with private Key</button>
+        onClick={()=> functions.dispatch({type:'signTransaction'}) }>Sign with private Key</button>
       <button
         disabled={!publishEnabled}
         type="button"
         id='toPublishPublish'
         className="btn btn-default"
-        onClick={functions.publishTransaction}>Publish Transaction</button>
+        onClick={()=> functions.dispatch({type:'publishTransaction'}) }>Publish Transaction</button>
     </div>
   )
 }

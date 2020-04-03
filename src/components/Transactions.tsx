@@ -14,7 +14,7 @@ function Transactions({ general, functions, blockIndex }: Props) {
       {general.editableChain && (
         <button
           type="button"
-          onClick={() => functions.addTransaction(blockIndex)}
+          onClick={() => functions.dispatch({type: 'addTransaction', blockIndex})}
           className="btn btn-large btn-block btn-default">Add Transaction</button>
       )}
       {

@@ -10,7 +10,11 @@ function KeyPair({ general, functions }: Props) {
   return (
     <div className='panel panel-default' >
       <div className='panel-body' data-tut="keyPair">
-        <button id='generateKeys' type='button' onClick={functions.generateKeyPair} className='btn btn-large btn-block btn-primary'>Generate Public Address and Private Key</button>
+        <button
+          id='generateKeys'
+          type='button'
+          onClick={()=> functions.dispatch({type: 'generateKeyPair'})}
+          className='btn btn-large btn-block btn-primary'>Generate Public Address and Private Key</button>
         <div className='longString'>Public Address: {keyPair.address}</div>
         <div className='longString'>Private Key: {keyPair.privateKey}</div>
       </div>
@@ -23,13 +27,13 @@ function KeyPair({ general, functions }: Props) {
             value={general.alias}
             data-key='alias'
             key='newAlias'
-            onChange={functions.generalChange} />
+            onChange={(event)=>functions.dispatch({type:'changeAlias', alias: event.target.value})} />
         </div>
         <button
           type="button"
           id='generateWallet'
           className="btn btn-large btn-block btn-default"
-          onClick={functions.generateWallet}
+          onClick={()=> functions.dispatch({type: 'generateWallet'}) }
         >
           Generate Wallet
         </button>

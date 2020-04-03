@@ -100,6 +100,11 @@ function checkIfGiverHasFunds(transaction: Transaction, transactions: Transactio
   return transaction.amount <= giverFunds
 }
 
+export const calculateOwnerCoinsFromChain = (chain: Block[], address: string) => {
+  let transactions = _.flatMap(chain, (block: Block) => block.transactions)
+  return calculateGiverFunds(transactions, address)
+}
+
 export function calculateGiverFunds(transactions: Transaction[], giver: string) {
   let funds = 0
   for (let transaction of transactions) {

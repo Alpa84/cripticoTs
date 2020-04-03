@@ -4,15 +4,14 @@ import * as React from 'react';
 export interface Props {
     text: string
     value: string
-    path: string
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-function Input({ text, value, onChange, path }: Props) {
+function Input({ text, value, onChange }: Props) {
     return (
         <div className="input-group">
             <div className="input-group-addon">{text}</div>
-            <input type="text" className="form-control" value={value} data-key={path} onChange={onChange}/>
+            <input type="text" className="form-control" value={value} onChange={onChange}/>
         </div>
     )
 }

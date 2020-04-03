@@ -7,6 +7,7 @@
     "interface-name": false,
     "jsx-no-lambda": false,
     "downlevelIteration": true,
+    "object-literal-sort-keys": false,
     "no-console": false
   },
   "linterOptions": {

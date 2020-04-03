@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { GeneralType, Functions } from '../Types'
+import { calculateOwnerCoinsFromChain } from 'src/utils/blockchain';
 
 export interface Props {
   general: GeneralType
@@ -18,7 +19,7 @@ function Wallets({ general, functions }: Props) {
                 <h3>{general.wallets[dir].alias}</h3>
                 <div>
                   <b>Simplecoins:</b>
-                    <span className='coins'>{functions.calculateOwnerCoinsFromChain(general.chain, dir)}</span>
+                    <span className='coins'>{calculateOwnerCoinsFromChain(general.chain, dir)}</span>
                 </div>
                 <div><b>Public address:</b>
                   <div className='longString'>

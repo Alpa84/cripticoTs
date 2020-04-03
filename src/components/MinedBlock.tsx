@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { GeneralType, Functions } from '../Types'
+import { hashBlock } from 'src/utils/blockchain'
 export interface Props {
   general: GeneralType
   functions: Functions,
@@ -13,10 +14,10 @@ function MinedBlock({ general, functions }: Props) {
   return (
     <div className="MinedBlock">
       <div className='panel panel-primary'>
-        <div className="panel-heading">Trying to add block {blockIndex}</div>
+        <div className="panel-heading">Trying to add block {blockIndex + 1}</div>
         <div className="panel-body">
           <div>
-            <p>hash: {functions.hashBlock(general.minedBlock)}</p>
+            <p>hash: {hashBlock(general.minedBlock)}</p>
 
             <p>nonce: {general.minedBlock.nonce}</p>
           </div>

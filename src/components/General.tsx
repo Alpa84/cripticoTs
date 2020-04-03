@@ -42,7 +42,7 @@ function General({ general, functions }: Props) {
                     name="minedDir"
                     id="selectDirToAddMined"
                     className="form-control"
-                    onChange={functions.generalChange}
+                    onChange={(event) => functions.dispatch({ type: 'changeDirToAddMined', dir: event.target.value })}
                     value={general.dirToAddMined}
                     data-key='dirToAddMined'
                   >
