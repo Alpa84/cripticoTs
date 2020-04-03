@@ -1,10 +1,9 @@
 import { Block, Transaction } from "src/Types"
 import * as md5 from 'md5'
-// import * as axios from 'axios'
+import * as _ from 'lodash'
 import * as bigInt from 'big-integer'
 import { RSA } from '../utils/rsa'
 
-// const FirstBlockHash = '005d0a494e618e052cb3fd683cebe954'
 const MinedAmount = 1
 
 function isInvalidChain(receivedChain: Block[]) {
@@ -20,6 +19,12 @@ export function isInvalidBlock(block: Block, blockIndex: number, receivedChain: 
   let chainUntilThisBlock = receivedChain.slice(0, blockIndex)
   let chainTransactions = chainToTransactions(chainUntilThisBlock)
   let reviewedTransactions = []
+  if (blockIndex !== 0) {
+    let hasPreviousBlockHash = block.previousBlockHash === hashBlock(receivedChain[blockIndex - 1])
+    if (!hasPreviousBlockHash) {
+      return { previousBlockHash: 'does not have the previous block hash' }
+    }
+  }
   for (const [index, transaction] of block.transactions.entries()) {
     if (index === 0) {
       if (transaction.gives !== 'mined') {
@@ -45,12 +50,6 @@ export function isInvalidBlock(block: Block, blockIndex: number, receivedChain: 
         return { transactions: `A giver does not have ${transaction.amount} simplecoins to give` }
       }
 
-    }
-  }
-  if (blockIndex !== 0) {
-    let hasPreviousBlockHash = block.previousBlockHash === hashBlock(receivedChain[blockIndex - 1])
-    if (!hasPreviousBlockHash) {
-      return { previousBlockHash: 'does not have the previous block hash' }
     }
   }
   let hash = hashBlock(block)
