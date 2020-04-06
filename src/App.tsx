@@ -3,10 +3,12 @@ import './App.css'
 import * as _ from 'lodash'
 import { useReducer } from 'react'
 import General from './components/General'
+import Tour from 'reactour'
 import { DefaultChain, DefaultWallets } from './utils/defaultChain'
 import { GeneralType, Functions, Block } from './Types'
 import { hashBlockWithoutNonce, startsWithZeros, validateTransactions, addDelay } from './utils/blockchain'
 import { reducer } from './utils/reducer'
+import { steps } from './utils/steps'
 
 let emptyTransactionToPublish = { gives: '', receives: '', amount: 0, signature: '', secretKey: '' }
 let emptyKeyPair = { address: '', privateKey: '' }
@@ -61,7 +63,13 @@ function App() {
     mine,
   }
   return  (
-    <General general={general} functions={functions}/>
+    <>
+      <General general={general} functions={functions}/>
+      <Tour
+        steps={steps}
+        isOpen={general.tourOpen}
+        onRequestClose={() => functions.dispatch({ type: 'closeTour' })} />
+    </>
   )
 }
 

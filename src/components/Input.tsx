@@ -18,8 +18,3 @@ function Input({ text, value, onChange }: Props) {
 
 export default Input;
 
-// // helpers
-
-// function getExclamationMarks(numChars: number) {
-//     return Array(numChars + 1).join('!');
-// }
