@@ -118,8 +118,6 @@ export const reducer = (general: GeneralType, action: Action) => {
             clonedPublished.pendingTransactions.push(_.cloneDeep(clonedPublished.transactionToPublish) as Transaction)
             clonedPublished.transactionToPublish = _.cloneDeep(emptyTransactionToPublish)
             return clonedPublished
-        case 'closeTour':
-            return { ...general, tourOpen: false }
         case 'toggleEditableChain':
             let clonedToggledChain = _.cloneDeep(general)
             if (clonedToggledChain.editableChain) {

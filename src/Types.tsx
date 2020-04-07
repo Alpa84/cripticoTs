@@ -33,7 +33,6 @@ export type Action =
     | { type: 'changeMinedBlock', block: Block}
     | { type: 'addMinedBlockToChain'}
     | { type: 'publishTransaction'}
-    | { type: 'closeTour'}
     | { type: 'toggleEditableChain'}
     | { type: 'generateKeyPair'}
     | { type: 'generateWallet'}
@@ -49,7 +48,6 @@ export interface TransactionPlusKey extends Transaction {
     secretKey: string
 }
 export interface GeneralType {
-    tourOpen: boolean
     pendingTransactions: Transaction[]
     chain: Block[]
     editableChain?: Block[]
