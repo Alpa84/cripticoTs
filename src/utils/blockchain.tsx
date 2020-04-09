@@ -4,7 +4,7 @@ import * as _ from 'lodash'
 import * as bigInt from 'big-integer'
 import { RSA } from '../utils/rsa'
 
-const MinedAmount = 1
+const MinedAmount = 100
 
 function isInvalidChain(receivedChain: Block[]) {
   for (let [blockIndex, block] of receivedChain.entries()) {
@@ -31,7 +31,7 @@ export function isInvalidBlock(block: Block, blockIndex: number, receivedChain: 
         return { transactions: `The first transaction has to be a mined coin, (gives: mined)` }
       }
       if (transaction.amount !== MinedAmount) {
-        return { transactions: `The first transaction has to be a mined coin, and it has to have a value of 1 and it has a value of : ${transaction.amount}` }
+        return { transactions: `The first transaction has to be a mined coin, and it has to have a value of ${MinedAmount} and it has a value of : ${transaction.amount}` }
       }
       reviewedTransactions.push(transaction)
     } else {
@@ -168,7 +168,7 @@ export const validateTransactions = (pendingTransactionsDeposit: Transaction[], 
       alert(`The giver does not have funds to do this transaction. Invalid transaction for an amount of ${pendingTransaction.amount}, ignoring transaction`)
     }
   }
-  approvedPendingTransactions.unshift({ gives: 'mined', receives: minersAddress, amount: 1, signature: '' })
+  approvedPendingTransactions.unshift({ gives: 'mined', receives: minersAddress, amount: MinedAmount, signature: '' })
   return {
     nonce: '',
     previousBlockHash,

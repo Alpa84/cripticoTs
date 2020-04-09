@@ -66,7 +66,7 @@ function TransactionToPublish({ general, functions }: Props) {
           onChange={(event) => functions.dispatch({ type: 'changeTransactionSecretKey', secretKey: event.target.value })} />
       </div>
       <p className='longString'>Transaction Signature: {general.transactionToPublish.signature}</p>
-      <p>to add in Block number: {general.chain.length}</p>
+      <p>to add in Block number: {general.chain.length + 1}</p>
       {general.signatureError && (
         <div>{general.signatureError}</div>
       )}

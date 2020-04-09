@@ -16,11 +16,11 @@ export const DefaultWallets = {
 
 export const DefaultChain: Block[] = [
     {
-        nonce: '75',
+        nonce: '433',
         previousBlockHash: '',
         transactions: [
             {
-                amount: 1,
+                amount: 100,
                 gives: 'mined',
                 receives: CreatorPublicAddress,
                 signature: ''
@@ -29,20 +29,20 @@ export const DefaultChain: Block[] = [
         ],
     },
     {
-        nonce: '121',
-        previousBlockHash: '005d0a494e618e052cb3fd683cebe954',
+        nonce: '104',
+        previousBlockHash: '002ad067d829079ff31e6df090228f7c',
         transactions: [
             {
-                amount: 1,
+                amount: 100,
                 gives: 'mined',
                 receives: MinerPublicAddress,
                 signature: ''
             },
             {
-                amount: 0.2,
+                amount: 20,
                 gives: CreatorPublicAddress,
                 receives: FirstUserPublicAddress,
-                signature: '23910372707287407453649144988419849450818779848466113454171123480163117208754'
+                signature: '5473174752784867862248874001086504892202029064443007835117631946601240039121'
             },
         ],
     },
