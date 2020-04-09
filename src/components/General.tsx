@@ -27,7 +27,7 @@ function General({ general, functions }: Props) {
           <div data-tut="header">
             <h1>Toy Coin</h1>
             <h3>
-            Your own crypto coin to play with (with every major feature of a bitcoin-like coin )
+            Your own crypto coin to play with (with every major feature a crypto coin should have)
             </h3>
           </div>
         </div>

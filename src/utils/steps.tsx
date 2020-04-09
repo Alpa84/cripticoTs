@@ -12,6 +12,19 @@ export const steps = [
   {
     content: () => (
     <div>
+      <p>In this tour we are going to: </p>
+      <p>steal some coin</p>
+      <p>make a transaction</p>
+      <p>publish it</p>
+      <p>do some mining</p>
+      <p>and explore how the blockchain works</p>
+    </div>
+    ),
+    selector: '[data-tut="header"]',
+  },
+  {
+    content: () => (
+    <div>
       To do aything with with a crypto coin you have to have a wallet. For that, you have to generate a Public Address and a Private Key.
       Your public address is like an email address.If anyone wants to send you coin all they need to know is your public address.
       Your private key is like a password.You have to keep it secret.Anyone with your private key will be able to sell your coin.
@@ -200,7 +213,8 @@ export const steps = [
     },
     content: () => (
       <div>
-        <p> Change the data of the block and watch the hash change as you change the data. For the moment, never mind the warnings you are going to see.</p>
+        <p>Instead of the users aliases, you will see the user addresses. Blochains usually store user addresses, we show the aliases to make it more readable </p>
+        <p>Change the data of the block and watch the hash change as you change the data. For the moment, never mind the warnings you are going to see.</p>
       </div>
     ),
     selector: '[data-tut="block"]',
@@ -231,7 +245,7 @@ export const steps = [
   {
     content: () => (
       <div>
-        <p>Millions are spent trying to find the right nonce for each new block. </p><p> Why work so hard? </p><p> The one who find the right nonce gets the privilege of creating a new coin for himself.</p>
+        <p>Millions are spent trying to find the right nonce for each new block. </p><p> Why work so hard? </p><p> The one who finds the right nonce gets the privilege of creating a new coin for himself.</p>
       </div>
     ),
   },

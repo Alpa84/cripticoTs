@@ -32,7 +32,7 @@ function Wallets({ general, functions }: Props) {
                   </div>
                 </div>
               </div>
-            ))
+            )).reverse()
           }
       </div>
     </div>
