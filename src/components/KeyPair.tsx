@@ -32,7 +32,10 @@ function KeyPair({ general, functions }: Props) {
           type="button"
           id='generateWallet'
           className="btn btn-large btn-block btn-default"
-          onClick={()=> functions.dispatch({type: 'generateWallet'}) }
+          onClick={()=> {
+            functions.dispatch({ type: 'generateWallet' })
+            functions.setStep(4)
+          } }
           disabled={general.keyPair.address === '' || general.alias === '' }
         >
           Generate Wallet

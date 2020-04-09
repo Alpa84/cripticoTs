@@ -26,8 +26,8 @@ export const steps = [
     content: () => (
     <div>
       To do aything with with a crypto coin you have to have a wallet. For that, you have to generate a Public Address and a Private Key.
-      Your public address is like an email address.If anyone wants to send you coin all they need to know is your public address.
-      Your private key is like a password.You have to keep it secret.Anyone with your private key will be able to sell your coin.
+      Your public address is like an email address. If anyone wants to send you a crypto-coin all they need to know is your public address.
+      Your private key is like a password.You have to keep it secret.Anyone with your private key will be able to sell all your coins.
       Go ahead and click <b>generate a Public Address and a Private Key</b>
     </div>
     ),
@@ -47,7 +47,8 @@ export const steps = [
   {
     content: () => (
       <div>
-        The data of your wallet will be stored here.
+        <p>Excellent!</p>
+        <p>The data of your wallet will be stored here.</p>
       </div>
     ),
     selector: '[data-tut="wallets"]',
@@ -59,7 +60,7 @@ export const steps = [
           So, how do you get some sweet coin?
     </p>
         <p>
-          The only way to own a coin is to generate one or having someone who owns some transfer you some coin. Every coin out there had to be generated first.
+          The only way to own a coin is to generate one or having someone who owns some transfer you some coin. Every crypto coin out there had to be generated first.
     </p>
         <p>It will be easier having someone transfer you. So, who has some? That information is in the <b>Blockchain</b>.</p>
       </div>
@@ -77,7 +78,7 @@ export const steps = [
   {
     content: () => (
       <div>
-        <p>If user AlePan has mined one coin ( see <b>block 1</b> ) and has transfered 0.2 coins to Athena on <b>block 2</b>. How much does he has? </p>
+        <p>If user AlePan has mined 100 coins ( see <b>block 1</b> ) and has transfered 20 coins to Athena on <b>block 2</b>, how much does he has? </p>
         <p>That is how it is calculated. Instead of keeping track of how much everyone has, the blockchain stores informatio about all the transactions and mined coins.</p>
       </div>
     ),
@@ -86,7 +87,7 @@ export const steps = [
   {
     content: () => (
       <div>
-        <p>So, this AlePan has some coin. If only you had his private key you could make a transaction to your address and steal it.</p>
+        <p>So, this AlePan has some coin. Anyone with his private key could make a transaction for him steal his coins.</p>
         <p>Let's see the <b>wallets</b></p>
       </div>
     ),
@@ -123,7 +124,6 @@ export const steps = [
     content: () => (
       <div>
         <p>You also have to sign the transaction. To sign it you have to know the giver's private key (which we do, hehe)</p>
-        <p>Let's copy AlePan's private key from the wallets</p>
       </div>
     ),
     selector: '[data-tut="publish"]',
@@ -131,7 +131,8 @@ export const steps = [
   {
     content: () => (
       <div>
-        <p>Double click to select and copy it</p>
+        <p>Let's copy AlePan's private key from the wallets</p>
+        <p>Double click to select the secret key and copy it</p>
       </div>
     ),
     selector: '[data-tut="wallets"] .privateKey',
@@ -165,7 +166,8 @@ export const steps = [
     },
     content: () => (
       <div>
-        <p>You have already signed the transaction, now you have to <b>publish</b> it. By publishing the transaction you are saying everyone that you want that transaction included in the blockchain.</p>
+        <p>You have already signed the transaction, but the money is not yours yet</p>
+        <p>Now you have to <b>publish</b> the transaction. By publishing the transaction you are saying everyone that you want that transaction included in the blockchain.</p>
       </div>
     ),
     selector: '[data-tut="publish"]',
@@ -173,7 +175,7 @@ export const steps = [
   {
     content: () => (
       <div>
-        <p>How does is gets included?</p>
+        <p>How does it gets included?</p>
         <p>Enter Mining. A Miner takes all the published transactions that haven't already got in the chain and groups them in a block.</p>
       </div>
     ),
@@ -184,7 +186,14 @@ export const steps = [
       <div>
         <p>So they just include it in the blockchain?</p>
         <p>Of course not, there is a catch.</p>
-        <p>Notice how every block on the blockchain has funny number called a 'hash'</p>
+      </div>
+    ),
+    selector: '[data-tut="notPublishedYet"]',
+  },
+  {
+    content: () => (
+      <div>
+        <p>Notice how every block on the blockchain has funny number called a <b>"hash"</b> </p>
       </div>
     ),
     selector: '[data-tut="blockchain"]',
@@ -214,7 +223,7 @@ export const steps = [
     content: () => (
       <div>
         <p>Instead of the users aliases, you will see the user addresses. Blochains usually store user addresses, we show the aliases to make it more readable </p>
-        <p>Change the data of the block and watch the hash change as you change the data. For the moment, never mind the warnings you are going to see.</p>
+        <p>Change any field of the block and watch the <b>hash</b> change as you change the data. For the moment, never mind the warnings you are going to see.</p>
       </div>
     ),
     selector: '[data-tut="block"]',
@@ -225,7 +234,7 @@ export const steps = [
     },
     content: () => (
       <div>
-        <p>All that the miner does is try to make that hash start with two zeros (or more). </p><p> How? </p><p>He just tries different numbers in a place specially meant for that, called the "nonce" until the block hash starts with '00'.</p>
+        <p>All that the miner does is try to make that <b>hash</b> start with two zeros (or more). </p><p> How? </p><p>He just tries different numbers in a place specially meant for that, called the <b>"nonce"</b> until the block <b>hash</b> starts with '00'.</p>
       </div>
     ),
     selector: '[data-tut="block"]',
@@ -236,8 +245,8 @@ export const steps = [
     },
     content: () => (
       <div>
-        <p>You can try it yourself by changing the nonce until the hash starts with '00' or by clicking <b>Find Nonce</b> to make the computer search it for you. That is what mining is all about, blindly trying random numbers until the hash starts with an established amount of zeros.</p>
-        <p>Here it is a fairly simple task because we just need to make the hash start with two zeros. It gets exponentially harder as you require more zeros. In the Bitcoin chain the hash has to start with about 19 zeros.</p>
+        <p>You can try it yourself by changing the nonce until the hash starts with '00' or by clicking <b>Find Nonce</b> to make the computer search it for you. That is what mining is all about, blindly the <b>nonce</b> until the hash starts with an established amount of zeros.</p>
+        <p>Here it is a fairly simple task because we just need to make the hash start with two zeros. It gets exponentially harder as more zeros are required. In the Bitcoin chain the hash has to start with about 19 zeros.</p>
       </div>
     ),
     selector: '[data-tut="block"]',
@@ -268,7 +277,7 @@ export const steps = [
   {
     content: () => (
       <div>
-        <p>We are going to watch ta miner grabbing the published transactions, packing them in a block and trying different numbers in the nonce until the hash starts with '00'.</p>
+        <p>We are going to watch the miner grabbing the published transactions, packing them in a block and trying different numbers in the nonce until the hash starts with '00'.</p>
       </div>
     ),
     selector: '[data-tut="toggleHackTheChain"]',
@@ -302,7 +311,7 @@ export const steps = [
   {
     content: () => (
       <div>
-        <p>How much everyone has can also be seen in the wallets, but the ground trith is allways in the blockchain </p>
+        <p>How much everyone has can also be seen in the wallets, but the ground truth is always in the blockchain </p>
       </div>
     ),
     selector: '[data-tut="wallet"]:last-of-type',

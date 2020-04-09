@@ -9,6 +9,7 @@ export interface Functions {
     dispatch: Dispatch<Action>
     findNonce: (block: Block, blockIndex: number) => Promise<void>
     mine: ()=> void
+    setStep: (step: number) => void
 }
 
 export type Action =

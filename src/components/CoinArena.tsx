@@ -18,8 +18,10 @@ const defaultGeneral: GeneralType = {
   transactionToPublish: _.cloneDeep(emptyTransactionToPublish),
   wallets: DefaultWallets,
 }
-
-function CoinArena() {
+export interface Props {
+  setStep: (setStep: number) => void
+}
+function CoinArena({setStep } : Props) {
 
   const [general, dispatch] = useReducer(reducer, defaultGeneral)
 
@@ -57,6 +59,7 @@ function CoinArena() {
     dispatch,
     findNonce,
     mine,
+    setStep,
   }
   return  (
     <General general={general} functions={functions}/>

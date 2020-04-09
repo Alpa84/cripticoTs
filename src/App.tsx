@@ -9,12 +9,13 @@ import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 
 function App() {
   const [tourOpen, setTour] = useState(true)
+  const [step, setStep] = useState(0)
   const accentColor = "#a9a9a9"
   const disableBody = (target: HTMLElement) => disableBodyScroll(target)
   const enableBody = (target: HTMLElement) => enableBodyScroll(target)
   return  (
     <>
-      <CoinArena />
+      <CoinArena  setStep={setStep} />
       <Tour
         onAfterOpen={disableBody}
         onBeforeClose={enableBody}
@@ -24,6 +25,7 @@ function App() {
         showNavigation={false}
         accentColor={accentColor}
         rounded={0}
+        goToStep={step}
         isOpen={tourOpen}
         onRequestClose={() => setTour(false)} />
     </>

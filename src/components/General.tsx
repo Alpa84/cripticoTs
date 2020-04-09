@@ -61,12 +61,12 @@ function General({ general, functions }: Props) {
                     {givesOptions}
                   </select>
                 </div>
+                <button
+                  type="button"
+                  id="startMining"
+                  className="btn btn-info"
+                  onClick={functions.mine}>Start Mining</button>
               </div>
-              <button
-                type="button"
-                id="startMining"
-                className="btn btn-info"
-                onClick={functions.mine}>Start Mining</button>
               <br />
               <div data-tut="blockchain">
                 <h2>Blockchain</h2>
