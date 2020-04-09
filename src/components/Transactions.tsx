@@ -18,7 +18,7 @@ function Transactions({ general, functions, blockIndex }: Props) {
           className="btn btn-large btn-block btn-default">Add Transaction</button>
       )}
       {
-        transactions.map((transaccion, transIndex) => (
+        transactions.map((transaction, transIndex) => (
           <div className="panel panel-default" key={transIndex} data-tut="transaction">
             <div className="panel-body">
               <div key={transIndex}>

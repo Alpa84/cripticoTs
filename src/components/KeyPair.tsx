@@ -8,16 +8,15 @@ export interface Props {
 function KeyPair({ general, functions }: Props) {
   let keyPair = general.keyPair
   return (
-    <div className='panel panel-default' >
-      <div className='panel-body' data-tut="keyPair">
-        <button
-          id='generateKeys'
-          type='button'
-          onClick={()=> functions.dispatch({type: 'generateKeyPair'})}
-          className='btn btn-large btn-block btn-primary'>Generate Public Address and Private Key</button>
-        <div className='longString'>Public Address: {keyPair.address}</div>
-        <div className='longString'>Private Key: {keyPair.privateKey}</div>
-      </div>
+    <div data-tut="keyPair">
+      <h2>Wallet Generator</h2>
+      <button
+        id='generateKeys'
+        type='button'
+        onClick={()=> functions.dispatch({type: 'generateKeyPair'})}
+        className='btn btn-large btn-block btn-primary'>Generate Public Address and Private Key</button>
+      <div className='longString'>Public Address: {keyPair.address}</div>
+      <div className='longString'>Private Key: {keyPair.privateKey}</div>
       <div data-tut="alias">
         <div className="input-group">
           <div className="input-group-addon">alias</div>
@@ -34,6 +33,7 @@ function KeyPair({ general, functions }: Props) {
           id='generateWallet'
           className="btn btn-large btn-block btn-default"
           onClick={()=> functions.dispatch({type: 'generateWallet'}) }
+          disabled={general.keyPair.address === '' || general.alias === '' }
         >
           Generate Wallet
         </button>

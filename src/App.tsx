@@ -8,11 +8,17 @@ import CoinArena from './components/CoinArena'
 
 function App() {
   const [tourOpen, setTour] = useState(true)
+  const accentColor = "#a9a9a9"
   return  (
     <>
       <CoinArena />
       <Tour
         steps={steps}
+        showNumber={false}
+        scrollDuration={100}
+        showNavigation={false}
+        accentColor={accentColor}
+        rounded={0}
         isOpen={tourOpen}
         onRequestClose={() => setTour(false)} />
     </>

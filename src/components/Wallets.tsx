@@ -10,7 +10,7 @@ export interface Props {
 function Wallets({ general, functions }: Props) {
   return (
     <div className="Wallets" data-tut="wallets">
-      <h1>Wallets</h1>
+      <h2>Wallets</h2>
       <div className="panel panel-default">
         <div className="panel-body">
           {

@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { GeneralType } from '../Types'
+import FixedTransaction from './FixedTransaction';
 export interface Props {
   general: GeneralType
 }
@@ -9,14 +10,11 @@ function PendingTransactions({ general }: Props) {
   return (
     <div className="PendingTransactions">
       {
-        general.pendingTransactions.map((transaccion, transIndex) => (
+        general.pendingTransactions.map((transaction, transIndex) => (
           <div className="panel panel-default" key={transIndex}>
             <div className="panel-body" id='pendingTransactionsPanel'>
               <div key={transIndex}>
-                <div data-toggle="tooltip" title={`dir: ${transaccion.gives}`} >gives: {prefferName(transaccion.gives, general)}</div>
-                <div data-toggle="tooltip" title={`dir: ${transaccion.receives}`} >receives: {prefferName(transaccion.receives, general)}</div>
-                <div>amount: {transaccion.amount}</div>
-                <div className="longString">signature: {transaccion.signature}</div>
+                <FixedTransaction general={general} transaction={transaction} />
               </div>
             </div>
           </div>
@@ -26,8 +24,5 @@ function PendingTransactions({ general }: Props) {
   )
 
 }
-const prefferName =  (dir: string, general: GeneralType) => {
-  let name = general.wallets[dir]
-  return name ? name.alias : dir
-}
+
 export default PendingTransactions;

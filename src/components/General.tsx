@@ -7,7 +7,7 @@ import TransactionToPublish, { Empty } from './TransactionToPublish'
 import KeyPair from './KeyPair'
 import Directory from './Wallets'
 import MinedBlock from './MinedBlock'
-import Explanation from './Explanation';
+// import Explanation from './Explanation';
 
 export interface Props {
   general: GeneralType
@@ -24,18 +24,30 @@ function General({ general, functions }: Props) {
     <div className="General">
       <div className="container">
         <div className="row">
-          <div className="col-sm-5">
-            <Explanation general={general} functions={functions} />
+          <div data-tut="header">
+            <h1>Toy Coin</h1>
+            <h3>
+            Your own crypto coin to play with (with every major feature of a bitcoin-like coin )
+            </h3>
           </div>
+        </div>
+        <div className="row">
+          {/* <div className="col-sm-5">
+            <Explanation general={general} functions={functions} />
+          </div> */}
           <div className="col-sm-5">
             <KeyPair general={general} functions={functions}/>
-            <h2>Transfer a simpl</h2>
+            <h2>Transfer Generator</h2>
             <TransactionToPublish general={general} functions={functions} />
             <div data-tut="mining">
-              <h2>Published Transactions not yet included in the Blockchain</h2>
-              <PendingTransactions general={general} />
+              { general.pendingTransactions.length >0  && (
+                <div>
+                  <h2>Published Transactions not yet included in the Blockchain</h2>
+                  <PendingTransactions general={general} />
+                </div>
+              )}
               <div data-tut="notPublishedYet">
-                <h2>Mining</h2>
+                <h2>Mining Zone</h2>
                 <div className="input-group">
                   <div className="input-group-addon">Miner</div>
                   <select
@@ -63,7 +75,7 @@ function General({ general, functions }: Props) {
               </div>
             </div>
           </div>
-          <div className="col-sm-2">
+          <div className="col-sm-4">
             <Directory general={general} functions={functions}/>
           </div>
         </div>

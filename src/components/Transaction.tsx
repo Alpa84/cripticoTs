@@ -3,6 +3,7 @@ import * as _ from 'lodash'
 import { GeneralType, Functions } from '../Types'
 import Input from './Input'
 import InputNumber from './InputNumber'
+import FixedTransaction from './FixedTransaction'
 export interface Props {
   general: GeneralType
   blockIndex: number
@@ -13,8 +14,6 @@ export interface Props {
 function Transaction({ general, blockIndex, functions, transactionIndex }: Props) {
   let block = general.editableChain ? general.editableChain[blockIndex] : general.chain[blockIndex]
   let transaction = block.transactions[transactionIndex]
-  let receives = _.has(general.wallets, transaction.receives) ? general.wallets[transaction.receives].alias : transaction.receives
-  let gives = _.has(general.wallets, transaction.gives) ? general.wallets[transaction.gives].alias : transaction.gives
   return (
     <div>
       {general.editableChain ? (
@@ -59,14 +58,7 @@ function Transaction({ general, blockIndex, functions, transactionIndex }: Props
 
         </div>
       ) : (
-        <div>
-            <p>gives: {gives}</p>
-            <p>receives: {receives}</p>
-            <p>amount: {transaction.amount}</p>
-            { transaction.signature && (
-              <p className='longString'>signature: {transaction.signature}</p>
-            )}
-        </div>
+        <FixedTransaction general={general} transaction={transaction} />
       )}
 
     </div>

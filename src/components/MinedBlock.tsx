@@ -23,12 +23,12 @@ function MinedBlock({ general, functions }: Props) {
           </div>
           <h3>transactions</h3>
           {
-            general.minedBlock.transactions.map((transaccion, index) => (
+            general.minedBlock.transactions.map((transaction, index) => (
               <div key={index}>
-                <p className='longString'>gives: {transaccion.gives}</p>
-                <p className='longString'>receives: {transaccion.receives}</p>
-                <p>amount: {transaccion.amount}</p>
-                <p className='longString'>signature: {transaccion.signature}</p>
+                <p className='longString'>gives: {transaction.gives}</p>
+                <p className='longString'>receives: {transaction.receives}</p>
+                <p>amount: {transaction.amount}</p>
+                <p className='longString'>signature: {transaction.signature}</p>
               </div>
             ))
           }
