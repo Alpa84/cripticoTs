@@ -5,14 +5,19 @@ import { useState } from 'react'
 import Tour from 'reactour'
 import { steps } from './utils/steps'
 import CoinArena from './components/CoinArena'
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 
 function App() {
   const [tourOpen, setTour] = useState(true)
   const accentColor = "#a9a9a9"
+  const disableBody = (target: HTMLElement) => disableBodyScroll(target)
+  const enableBody = (target: HTMLElement) => enableBodyScroll(target)
   return  (
     <>
       <CoinArena />
       <Tour
+        onAfterOpen={disableBody}
+        onBeforeClose={enableBody}
         steps={steps}
         showNumber={false}
         scrollDuration={100}

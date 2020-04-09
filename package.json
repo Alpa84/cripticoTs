@@ -8,6 +8,7 @@
     "@types/reactour": "^1.13.1",
     "axios": "^0.18.1",
     "big-integer": "^1.6.40",
+    "body-scroll-lock": "^3.0.1",
     "lodash": "^4.17.11",
     "md5": "^2.2.1",
     "react": "^16.7.0",
@@ -28,6 +29,7 @@
     "blog": "cp -a build  ../../../ALE/Blog/ElBlog/coin"
   },
   "devDependencies": {
+    "@types/body-scroll-lock": "^2.6.1",
     "@types/md5": "^2.1.33",
     "@types/node": "^10.12.18",
     "@types/react": "16.9.23",

@@ -18,7 +18,7 @@ function Wallets({ general, functions }: Props) {
               <div key={index} data-tut="wallet">
                 <h3>{general.wallets[dir].alias}</h3>
                 <div>
-                  <b>Simplecoins:</b>
+                  <b>$: </b>
                     <span className='coins'>{calculateOwnerCoinsFromChain(general.chain, dir)}</span>
                 </div>
                 <div><b>Public address:</b>
