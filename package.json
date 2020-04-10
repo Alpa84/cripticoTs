@@ -26,7 +26,7 @@
     "server_up": "serve -s build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "blog": "cp -a build  ../../../ALE/Blog/ElBlog/coin",
+    "blog": "cp -a build  /Users/poochi/ALE/Blog/ElBlog && rm -rf /Users/poochi/ALE/Blog/ElBlog/coin  && mv /Users/poochi/ALE/Blog/ElBlog/build /Users/poochi/ALE/Blog/ElBlog/coin",
     "pub": "yarn build && npm run blog"
   },
   "devDependencies": {
