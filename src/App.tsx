@@ -15,6 +15,21 @@ function App() {
   const enableBody = (target: HTMLElement) => enableBodyScroll(target)
   return  (
     <>
+      <div className="container">
+        <div className="row">
+          <div data-tut="header">
+            <h1>Toy Coin</h1>
+            <h3>
+              Your own crypto coin to play with (with every major feature a crypto coin should have)
+            </h3>
+          </div>
+          <button type="button" className="btn btn-default"
+            onClick={() => setTour(true)}
+          >
+            {step === 0 ? 'Join the Tour' : 'Resume the Tour'}
+          </button>
+        </div>
+      </div>
       <CoinArena  setStep={setStep} />
       <Tour
         onAfterOpen={disableBody}

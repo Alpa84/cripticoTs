@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { GeneralType, Functions } from '../Types'
 import { calculateOwnerCoinsFromChain } from 'src/utils/blockchain';
+import { CreatorPublicAddress } from 'src/utils/defaultChain';
 
 export interface Props {
   general: GeneralType
@@ -15,7 +16,7 @@ function Wallets({ general, functions }: Props) {
         <div className="panel-body">
           {
             Object.keys(general.wallets).map((dir, index) => (
-              <div key={index} data-tut="wallet">
+              <div key={index} data-tut={dir === CreatorPublicAddress ? 'creatorWallet' : 'wallet'} >
                 <h3>{general.wallets[dir].alias}</h3>
                 <div>
                   <b>$: </b>

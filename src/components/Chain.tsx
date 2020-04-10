@@ -12,11 +12,23 @@ export interface Props {
 
 function Chain({ general, functions }: Props) {
   let chain = general.editableChain ? general.editableChain : general.chain
+  let onHackChain: () => void
+  if (general.editableChain) {
+    onHackChain = () => {
+      functions.setStep(28)
+      functions.dispatch({ type: 'toggleEditableChain' })
+    }
+  } else {
+    onHackChain = () => {
+      functions.setStep(22)
+      functions.dispatch({ type: 'toggleEditableChain' })
+    }
+  }
   return (
     <div className="Chain">
       <button
         type="button"
-        onClick={()=>functions.dispatch({type:'toggleEditableChain'})}
+        onClick={onHackChain}
         id='toggleEditableChain'
         className="btn btn-large btn-block btn-default"
         data-tut="toggleHackTheChain"

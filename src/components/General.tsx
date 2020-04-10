@@ -24,14 +24,6 @@ function General({ general, functions }: Props) {
     <div className="General">
       <div className="container">
         <div className="row">
-          <div data-tut="header">
-            <h1>Toy Coin</h1>
-            <h3>
-            Your own crypto coin to play with (with every major feature a crypto coin should have)
-            </h3>
-          </div>
-        </div>
-        <div className="row">
           {/* <div className="col-sm-5">
             <Explanation general={general} functions={functions} />
           </div> */}
@@ -39,14 +31,14 @@ function General({ general, functions }: Props) {
             <KeyPair general={general} functions={functions}/>
             <h2>Transfer Generator</h2>
             <TransactionToPublish general={general} functions={functions} />
-            <div data-tut="mining">
+            <div data-tut="notPublishedYet">
               { general.pendingTransactions.length >0  && (
                 <div>
                   <h2>Published Transactions not yet included in the Blockchain</h2>
                   <PendingTransactions general={general} />
                 </div>
               )}
-              <div data-tut="notPublishedYet">
+              <div data-tut="mining">
                 <h2>Mining Zone</h2>
                 <div className="input-group">
                   <div className="input-group-addon">Miner</div>

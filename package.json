@@ -26,7 +26,8 @@
     "server_up": "serve -s build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "blog": "cp -a build  ../../../ALE/Blog/ElBlog/coin"
+    "blog": "cp -a build  ../../../ALE/Blog/ElBlog/coin",
+    "pub": "yarn build && npm run blog"
   },
   "devDependencies": {
     "@types/body-scroll-lock": "^2.6.1",

@@ -1,6 +1,6 @@
 import * as React from 'react'
 export const steps = [
-  {
+ {
     content: () => (
     <div>
       <h2>Welcome!</h2>
@@ -13,11 +13,11 @@ export const steps = [
     content: () => (
     <div>
       <p>In this tour we are going to: </p>
-      <p>steal some coin</p>
-      <p>make a transaction</p>
-      <p>publish it</p>
-      <p>do some mining</p>
-      <p>and explore how the blockchain works</p>
+      <p>steal some coin,</p>
+      <p>make a transaction,</p>
+      <p>publish it,</p>
+      <p>do some mining,</p>
+      <p>and explore how the blockchain works.</p>
     </div>
     ),
     selector: '[data-tut="header"]',
@@ -42,7 +42,7 @@ export const steps = [
         Now that you have a key pair, choose an < b > alias</b > for your public address and < b > generate a wallet</b >.
       </div>
     ),
-    selector: '[data-tut="alias"]',
+    selector: '[data-tut="keyPair"]',
   },
   {
     content: () => (
@@ -135,7 +135,7 @@ export const steps = [
         <p>Double click to select the secret key and copy it</p>
       </div>
     ),
-    selector: '[data-tut="wallets"] .privateKey',
+    selector: '[data-tut="creatorWallet"] .privateKey',
   },
   {
     action: (node: any) => {
@@ -167,7 +167,8 @@ export const steps = [
     content: () => (
       <div>
         <p>You have already signed the transaction, but the money is not yours yet</p>
-        <p>Now you have to <b>publish</b> the transaction. By publishing the transaction you are saying everyone that you want that transaction included in the blockchain.</p>
+        <p>Now you have to publish the transaction. By publishing the transaction you are saying everyone that you want that transaction included in the blockchain.</p>
+        <p>Go ahead and <b> publish the transaction</b></p>
       </div>
     ),
     selector: '[data-tut="publish"]',
@@ -209,6 +210,9 @@ export const steps = [
     selector: '[data-tut="block"]',
   },
   {
+    action: (node: any) => {
+      node.focus()
+    },
     content: () => (
       <div>
         <p> Go ahead and click <b>Hack the Chain</b></p>
@@ -267,6 +271,9 @@ export const steps = [
     selector: '[data-tut="transaction"]',
   },
   {
+    action: (node: any) => {
+      node.focus()
+    },
     content: () => (
       <div>
         <p>Let's go <b>Back to the Unedited Chain</b> .</p>
@@ -278,17 +285,10 @@ export const steps = [
     content: () => (
       <div>
         <p>We are going to watch the miner grabbing the published transactions, packing them in a block and trying different numbers in the nonce until the hash starts with '00'.</p>
+        <p>Select a <b>miner</b> Click the <b>Start Mining</b></p>
       </div>
     ),
-    selector: '[data-tut="toggleHackTheChain"]',
-  },
-  {
-    content: () => (
-      <div>
-        <p>Select a <b>miner</b> Click the <b>Start Mining</b> button. Watch the miner grabbing the published transactions, packing them in a block and trying different numbers in the nonce until the hash starts with '00'.</p>
-      </div>
-    ),
-    selector: '[data-tut="mining"]',
+    selector: '[data-tut="notPublishedYet"]',
   },
   {
     content: () => (
@@ -297,13 +297,13 @@ export const steps = [
         <p>Once he finds the magic number, it tells everybody that he has a new block, and everybody adds that new block to the chain.</p>
       </div>
     ),
-    selector: '[data-tut="mining"]',
+    selector: '[data-tut="notPublishedYet"]',
   },
   {
     content: () => (
       <div>
         <p>That is it. That is what needs to happen for you to have some sweet coin.</p>
-        <p>You can see that the blockchain now says that AlePan gave you come amount of coin</p>
+        <p>You can see that the blockchain now says that AlePan gave you some amount of coin</p>
       </div>
     ),
     selector: '[data-tut="blockchain"]',

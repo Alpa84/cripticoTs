@@ -76,13 +76,21 @@ function TransactionToPublish({ general, functions }: Props) {
         id='toPublishSign'
         className="btn
         btn-warning"
-        onClick={()=> functions.dispatch({type:'signTransaction'}) }>Sign with private Key</button>
+        onClick={()=>{
+          functions.dispatch({ type: 'signTransaction' })
+          functions.setStep(16)
+        } }
+        >Sign with private Key</button>
       <button
         disabled={!publishEnabled}
         type="button"
         id='toPublishPublish'
         className="btn btn-default"
-        onClick={()=> functions.dispatch({type:'publishTransaction'}) }>Publish Transaction</button>
+        onClick={()=>{
+          functions.dispatch({ type: 'publishTransaction' })
+          functions.setStep(18)
+        } }
+        >Publish Transaction</button>
     </div>
   )
 }

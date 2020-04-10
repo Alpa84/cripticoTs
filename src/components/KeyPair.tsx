@@ -13,7 +13,10 @@ function KeyPair({ general, functions }: Props) {
       <button
         id='generateKeys'
         type='button'
-        onClick={()=> functions.dispatch({type: 'generateKeyPair'})}
+        onClick={()=> {
+          functions.dispatch({ type: 'generateKeyPair' })
+          functions.setStep(3)
+        }}
         className='btn btn-large btn-block btn-primary'>Generate Public Address and Private Key</button>
       <div className='longString'>Public Address: {keyPair.address}</div>
       <div className='longString'>Private Key: {keyPair.privateKey}</div>
