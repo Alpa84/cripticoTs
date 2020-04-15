@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { GeneralType, Functions } from '../Types'
 import Transaction from './Transaction';
+import TourWrapper from './TourWrapper';
 export interface Props {
   general: GeneralType,
   blockIndex: number
@@ -19,13 +20,20 @@ function Transactions({ general, functions, blockIndex }: Props) {
       )}
       {
         transactions.map((transaction, transIndex) => (
-          <div className="panel panel-default" key={transIndex} data-tut="transaction">
+          <TourWrapper
+            general={general}
+            functions={functions}
+            key={transIndex}
+            tutName={transIndex === 0 && blockIndex === 0  ? 'transaction' : ''}
+          >
+          <div className="panel panel-default" >
             <div className="panel-body">
               <div key={transIndex}>
                 <Transaction general={general} transactionIndex={transIndex} blockIndex={blockIndex} functions={functions} />
               </div>
             </div>
           </div>
+          </TourWrapper>
         )).reverse()
       }
     </div>

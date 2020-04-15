@@ -6,10 +6,13 @@ import { GeneralType, Functions, Block } from '../Types'
 import { hashBlockWithoutNonce, startsWithZeros, validateTransactions, addDelay } from '../utils/blockchain'
 import General from './General'
 import { reducer } from 'src/utils/reducer'
+import { steps } from 'src/utils/steps'
 
 let emptyTransactionToPublish = { gives: '', receives: '', amount: 0, signature: '', secretKey: '' }
 let emptyKeyPair = { address: '', privateKey: '' }
 const defaultGeneral: GeneralType = {
+  mobileTourOpen: true,
+  mobileStep: 0,
   alias: '',
   chain: DefaultChain,
   dirToAddMined: '',
@@ -19,12 +22,45 @@ const defaultGeneral: GeneralType = {
   wallets: DefaultWallets,
 }
 export interface Props {
-  setStep: (setStep: number) => void
+  all: {
+    setStep: (step: number) => void
+    isSmallScreen: boolean
+  }
 }
-function CoinArena({setStep } : Props) {
-
+const delay = (time = 1500) => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(true)
+    }, time)
+  })
+}
+function CoinArena({all } : Props) {
   const [general, dispatch] = useReducer(reducer, defaultGeneral)
+  let refList:{[name:string]: HTMLElement} = {}
 
+  const setStepMobile = async(step: number) => {
+    dispatch({ type: 'changeMobileStep', step })
+    await delay(10)
+    let stepProp = steps[step]
+    let tutName
+    if (stepProp.selector){
+      tutName = stepProp.selector.split('"')[1]
+    } else if (stepProp.altSelector) {
+      tutName = stepProp.altSelector
+    }
+    if (tutName) {
+      refList[tutName].scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    }
+  }
+  let setStep
+  if (all.isSmallScreen) {setStep = setStepMobile} else {setStep = all.setStep}
+
+  const setRef = (refName: string, ref: HTMLElement) => {
+    refList[refName] = ref
+  }
   const tryDifferentNonces = async (block: Block, blockIndex: number) => {
     let nonce = 0
     while (true) {
@@ -60,6 +96,7 @@ function CoinArena({setStep } : Props) {
     findNonce,
     mine,
     setStep,
+    setRef,
   }
   return  (
     <General general={general} functions={functions}/>

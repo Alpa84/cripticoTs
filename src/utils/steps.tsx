@@ -1,27 +1,32 @@
 import * as React from 'react'
+
+type StepPosition = 'top' | 'right' | 'bottom' | 'left' | 'center'
+let top: string = "top";
+let topT: StepPosition = top as StepPosition
+
 export const steps = [
- {
-    content: () => (
-    <div>
-      <h2>Welcome!</h2>
-      This site runs a crypto coin in your browser for you to experience and, if you dare, to hack...
-    </div>
-    ),
-    selector: '[data-tut="header"]',
-  },
-  {
-    content: () => (
-    <div>
-      <p>In this tour we are going to: </p>
-      <p>steal some coin,</p>
-      <p>make a transaction,</p>
-      <p>publish it,</p>
-      <p>do some mining,</p>
-      <p>and explore how the blockchain works.</p>
-    </div>
-    ),
-    selector: '[data-tut="header"]',
-  },
+//  {
+//     content: () => (
+//     <div>
+//       <h2>Welcome!</h2>
+//       This site runs a crypto coin in your browser for you to experience and, if you dare, to hack...
+//     </div>
+//     ),
+//     selector: '[data-tut="header"]',
+//   },
+//   {
+//     content: () => (
+//     <div>
+//       <p>In this tour we are going to: </p>
+//       <p>steal some coin,</p>
+//       <p>make a transaction,</p>
+//       <p>publish it,</p>
+//       <p>do some mining,</p>
+//       <p>and explore how the blockchain works.</p>
+//     </div>
+//     ),
+//     selector: '[data-tut="header"]',
+//   },
   {
     content: () => (
     <div>
@@ -37,6 +42,7 @@ export const steps = [
     action: (node: any) => {
       node.focus()
     },
+    position: topT,
     content: () => (
       <div>
         Now that you have a key pair, choose an < b > alias</b > for your public address and < b > generate a wallet</b >.
@@ -65,6 +71,7 @@ export const steps = [
         <p>It will be easier having someone transfer you. So, who has some? That information is in the <b>Blockchain</b>.</p>
       </div>
     ),
+    altSelector: 'wallets',
   },
   {
     content: () => (
@@ -91,6 +98,7 @@ export const steps = [
         <p>Let's see the <b>wallets</b></p>
       </div>
     ),
+    altSelector: 'blockchain',
   },
   {
     content: () => (
@@ -107,6 +115,7 @@ export const steps = [
         <p>Lets make a transaction from AlePan to your public address.</p>
       </div>
     ),
+    altSelector: 'wallets',
   },
   {
     action: (node: any) => {
@@ -135,7 +144,7 @@ export const steps = [
         <p>Double click to select the secret key and copy it</p>
       </div>
     ),
-    selector: '[data-tut="creatorWallet"] .privateKey',
+    selector: '[data-tut="creatorPrivateKey"]',
   },
   {
     action: (node: any) => {
@@ -261,6 +270,7 @@ export const steps = [
         <p>Millions are spent trying to find the right nonce for each new block. </p><p> Why work so hard? </p><p> The one who finds the right nonce gets the privilege of creating a new coin for himself.</p>
       </div>
     ),
+    altSelector: 'block',
   },
   {
     content: () => (
@@ -314,6 +324,6 @@ export const steps = [
         <p>How much everyone has can also be seen in the wallets, but the ground truth is always in the blockchain </p>
       </div>
     ),
-    selector: '[data-tut="wallet"]:last-of-type',
+    selector: '[data-tut="userWallet"]',
   },
 ]

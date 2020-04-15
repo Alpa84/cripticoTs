@@ -11,8 +11,12 @@ export const reducer = (general: GeneralType, action: Action) => {
     switch (action.type) {
         case 'changeAlias':
             return {...general, alias: action.alias}
+        case 'changeMobileStep':
+            return {...general, mobileStep: action.step}
         case 'changeDirToAddMined':
             return {...general, dirToAddMined: action.dir}
+        case 'changeMobileTourOpen':
+            return {...general, mobileTourOpen: action.on}
         case 'changeGives':
             let clonedGives = _.cloneDeep(general)
             clonedGives.transactionToPublish.gives = action.gives

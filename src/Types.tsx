@@ -10,13 +10,16 @@ export interface Functions {
     findNonce: (block: Block, blockIndex: number) => Promise<void>
     mine: ()=> void
     setStep: (step: number) => void
+    setRef: (refName: string, ref: HTMLElement) => void
 }
 
 export type Action =
     | { type: 'changeAlias', alias: string}
+    | { type: 'changeMobileStep', step: number}
     | { type: 'changeGives', gives: string}
     | { type: 'changeReceives', receives: string}
     | { type: 'changeDirToAddMined', dir: string}
+    | { type: 'changeMobileTourOpen', on: boolean}
     | { type: 'changeTransactionAmount', amount: number}
     | { type: 'changeTransactionSecretKey', secretKey: string}
     | { type: 'changeChainTGives', gives: string, blockIndex: number, index: number}
@@ -50,6 +53,8 @@ export interface TransactionPlusKey extends Transaction {
 }
 export interface GeneralType {
     pendingTransactions: Transaction[]
+    mobileTourOpen: boolean
+    mobileStep: number
     chain: Block[]
     editableChain?: Block[]
     signatureError?: string

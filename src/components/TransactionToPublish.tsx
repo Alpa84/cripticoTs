@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import { Functions, GeneralType } from '../Types'
+import TourWrapper from './TourWrapper'
 export interface Props {
   general: GeneralType
   functions: Functions
@@ -20,7 +21,7 @@ function TransactionToPublish({ general, functions }: Props) {
   let signEnabled = toPub.gives && toPub.receives && toPub.amount && toPub.secretKey
   let publishEnabled = signEnabled && toPub.signature
   return (
-    <div data-tut="publish">
+    <TourWrapper general={general} functions={functions} tutName='publish'>
       <div className="input-group">
         <div className="input-group-addon">gives</div>
         <select
@@ -91,7 +92,7 @@ function TransactionToPublish({ general, functions }: Props) {
           functions.setStep(18)
         } }
         >Publish Transaction</button>
-    </div>
+    </TourWrapper>
   )
 }
 

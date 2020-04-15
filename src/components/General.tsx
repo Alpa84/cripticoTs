@@ -7,7 +7,7 @@ import TransactionToPublish, { Empty } from './TransactionToPublish'
 import KeyPair from './KeyPair'
 import Directory from './Wallets'
 import MinedBlock from './MinedBlock'
-// import Explanation from './Explanation';
+import TourWrapper from './TourWrapper';
 
 export interface Props {
   general: GeneralType
@@ -24,21 +24,18 @@ function General({ general, functions }: Props) {
     <div className="General">
       <div className="container">
         <div className="row">
-          {/* <div className="col-sm-5">
-            <Explanation general={general} functions={functions} />
-          </div> */}
           <div className="col-sm-5">
             <KeyPair general={general} functions={functions}/>
             <h2>Transfer Generator</h2>
             <TransactionToPublish general={general} functions={functions} />
-            <div data-tut="notPublishedYet">
+            <TourWrapper general={general} functions={functions} tutName='notPublishedYet'>
               { general.pendingTransactions.length >0  && (
                 <div>
                   <h2>Published Transactions not yet included in the Blockchain</h2>
                   <PendingTransactions general={general} />
                 </div>
               )}
-              <div data-tut="mining">
+              <TourWrapper general={general} functions={functions} tutName='mining'>
                 <h2>Mining Zone</h2>
                 <div className="input-group">
                   <div className="input-group-addon">Miner</div>
@@ -58,14 +55,16 @@ function General({ general, functions }: Props) {
                   id="startMining"
                   className="btn btn-info"
                   onClick={functions.mine}>Start Mining</button>
-              </div>
+              </TourWrapper>
+
+
               <br />
-              <div data-tut="blockchain">
+              <TourWrapper general={general} functions={functions} tutName={"blockchain"}>
                 <h2>Blockchain</h2>
                 <MinedBlock general={general} functions={functions} />
                 <Chain general={general} functions={functions} />
-              </div>
-            </div>
+              </TourWrapper>
+            </TourWrapper>
           </div>
           <div className="col-sm-4">
             <Directory general={general} functions={functions}/>
