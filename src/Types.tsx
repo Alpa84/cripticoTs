@@ -6,6 +6,7 @@ export interface Block  {
     transactions: Transaction[]
 }
 export interface Functions {
+    setTour: (on: boolean) =>void
     dispatch: Dispatch<Action>
     findNonce: (block: Block, blockIndex: number) => Promise<void>
     mine: ()=> void

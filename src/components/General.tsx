@@ -10,12 +10,20 @@ import MinedBlock from './MinedBlock'
 import TourWrapper from './TourWrapper';
 
 export interface Props {
+  isSmallScreen: boolean
   general: GeneralType
   functions: Functions
 }
 
 
-function General({ general, functions }: Props) {
+function General({ general, functions, isSmallScreen }: Props) {
+  const onTourClick =  ()=> {
+    if(isSmallScreen) {
+      functions.dispatch({type:'changeMobileTourOpen', on: true})
+    } else {
+      functions.setTour(true)
+    }
+  }
   let givesOptions = _.map(general.wallets, (value, key) => (
     <option key={key} value={key} >{value.alias}</option>
   ))
@@ -23,6 +31,23 @@ function General({ general, functions }: Props) {
   return (
     <div className="General">
       <div className="container">
+        <div className="row">
+          <TourWrapper general={general} functions={functions} tutName='header'>
+            <h1>Toy Coin</h1>
+            <h3>
+              Your own crypto coin to play with (with every major feature a crypto coin should have)
+            </h3>
+          </TourWrapper>
+          <button type="button" className="btn btn-default"
+            onClick={onTourClick}
+          >
+            {isSmallScreen && general.mobileStep !== 0 ?  (
+              'Resume the Tour'
+            ) : (
+                'Join the Tour'
+            )}
+          </button>
+        </div>
         <div className="row">
           <div className="col-sm-5">
             <KeyPair general={general} functions={functions}/>

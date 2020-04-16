@@ -1,7 +1,7 @@
 import * as React from 'react'
 import './App.css'
 import * as _ from 'lodash'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Tour from 'reactour'
 import { steps } from './utils/steps'
 import CoinArena from './components/CoinArena'
@@ -15,24 +15,13 @@ function App() {
   const enableBody = (target: HTMLElement) => enableBodyScroll(target)
   const SmallScreenSize = 700
   const isSmallScreen = window.innerWidth < SmallScreenSize
+  useEffect(() => {
+    if (!isSmallScreen) { setTour(true) }
+  }, []) // used to fire dispatch just once on open
+
   return  (
     <>
-      <div className="container">
-        <div className="row">
-          <div data-tut="header">
-            <h1>Toy Coin</h1>
-            <h3>
-              Your own crypto coin to play with (with every major feature a crypto coin should have)
-            </h3>
-          </div>
-          <button type="button" className="btn btn-default"
-            onClick={() => setTour(true)}
-          >
-            {step === 0 ? 'Join the Tour' : 'Resume the Tour'}
-          </button>
-        </div>
-      </div>
-      <CoinArena  all={{setStep, isSmallScreen}} />
+      <CoinArena all={{ setStep, setTour, isSmallScreen, isTourOpen: tourOpen}} />
       <Tour
         onAfterOpen={disableBody}
         onBeforeClose={enableBody}

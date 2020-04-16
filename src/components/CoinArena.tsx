@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { useReducer } from 'react'
+import { useReducer, useEffect } from 'react'
 import { DefaultChain, DefaultWallets } from '../utils/defaultChain'
 import { GeneralType, Functions, Block } from '../Types'
 import { hashBlockWithoutNonce, startsWithZeros, validateTransactions, addDelay } from '../utils/blockchain'
@@ -11,7 +11,7 @@ import { steps } from 'src/utils/steps'
 let emptyTransactionToPublish = { gives: '', receives: '', amount: 0, signature: '', secretKey: '' }
 let emptyKeyPair = { address: '', privateKey: '' }
 const defaultGeneral: GeneralType = {
-  mobileTourOpen: true,
+  mobileTourOpen: false,
   mobileStep: 0,
   alias: '',
   chain: DefaultChain,
@@ -24,6 +24,8 @@ const defaultGeneral: GeneralType = {
 export interface Props {
   all: {
     setStep: (step: number) => void
+    setTour: (on: boolean) => void
+    isTourOpen: boolean
     isSmallScreen: boolean
   }
 }
@@ -36,8 +38,12 @@ const delay = (time = 1500) => {
 }
 function CoinArena({all } : Props) {
   const [general, dispatch] = useReducer(reducer, defaultGeneral)
-  let refList:{[name:string]: HTMLElement} = {}
 
+  useEffect(() => {
+    if ( all.isSmallScreen) { dispatch({ type: 'changeMobileTourOpen', on: true }) }
+  }, []) // used to fire dispatch just once on open
+
+  let refList: { [name: string]: HTMLElement } = {}
   const setStepMobile = async(step: number) => {
     dispatch({ type: 'changeMobileStep', step })
     await delay(10)
@@ -55,8 +61,14 @@ function CoinArena({all } : Props) {
       })
     }
   }
-  let setStep
-  if (all.isSmallScreen) {setStep = setStepMobile} else {setStep = all.setStep}
+  const setStep = (step:number) => {
+    if (all.isSmallScreen && general.mobileTourOpen) {
+      setStepMobile(step)
+    } else if (!all.isSmallScreen && all.isTourOpen) {
+      all.setStep(step)
+    }
+  }
+
 
   const setRef = (refName: string, ref: HTMLElement) => {
     refList[refName] = ref
@@ -92,6 +104,7 @@ function CoinArena({all } : Props) {
   }
 
   const functions: Functions = {
+    setTour: all.setTour,
     dispatch,
     findNonce,
     mine,
@@ -99,7 +112,10 @@ function CoinArena({all } : Props) {
     setRef,
   }
   return  (
-    <General general={general} functions={functions}/>
+    <General
+      general={general}
+      functions={functions}
+      isSmallScreen={all.isSmallScreen}/>
   )
 }
 

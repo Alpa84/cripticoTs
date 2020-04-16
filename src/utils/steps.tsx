@@ -5,28 +5,28 @@ let top: string = "top";
 let topT: StepPosition = top as StepPosition
 
 export const steps = [
-//  {
-//     content: () => (
-//     <div>
-//       <h2>Welcome!</h2>
-//       This site runs a crypto coin in your browser for you to experience and, if you dare, to hack...
-//     </div>
-//     ),
-//     selector: '[data-tut="header"]',
-//   },
-//   {
-//     content: () => (
-//     <div>
-//       <p>In this tour we are going to: </p>
-//       <p>steal some coin,</p>
-//       <p>make a transaction,</p>
-//       <p>publish it,</p>
-//       <p>do some mining,</p>
-//       <p>and explore how the blockchain works.</p>
-//     </div>
-//     ),
-//     selector: '[data-tut="header"]',
-//   },
+ {
+    content: () => (
+    <div>
+      <h2>Welcome!</h2>
+      This site runs a crypto coin in your browser for you to experience and, if you dare, to hack...
+    </div>
+    ),
+    selector: '[data-tut="header"]',
+  },
+  {
+    content: () => (
+    <div>
+      <p>In this tour we are going to: </p>
+      <p>steal some coin,</p>
+      <p>make a transaction,</p>
+      <p>publish it,</p>
+      <p>do some mining,</p>
+      <p>and explore how the blockchain works.</p>
+    </div>
+    ),
+    selector: '[data-tut="header"]',
+  },
   {
     content: () => (
     <div>

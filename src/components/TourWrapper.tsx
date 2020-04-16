@@ -28,6 +28,11 @@ function TourWrapper({children, functions, general, tutName}: Props) {
       data-tut={tutName}>
       { show && (
         <div>
+          <button
+            onClick={()=>functions.dispatch({type:'changeMobileTourOpen', on:false})}
+            type="button"
+            className="btn btn-default">close tour</button>
+
           {step.content()}
           {general.mobileStep  > 0 && (
             <button className="btn btn-default"
