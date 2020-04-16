@@ -68,7 +68,14 @@ function CoinArena({all } : Props) {
       all.setStep(step)
     }
   }
-
+  const joinTour = () => {
+    if (all.isSmallScreen) {
+      functions.dispatch({ type: 'changeMobileTourOpen', on: true })
+      setStepMobile(general.mobileStep)
+    } else {
+      functions.setTour(true)
+    }
+  }
 
   const setRef = (refName: string, ref: HTMLElement) => {
     refList[refName] = ref
@@ -105,6 +112,7 @@ function CoinArena({all } : Props) {
 
   const functions: Functions = {
     setTour: all.setTour,
+    joinTour,
     dispatch,
     findNonce,
     mine,

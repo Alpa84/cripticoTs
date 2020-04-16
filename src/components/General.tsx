@@ -17,13 +17,7 @@ export interface Props {
 
 
 function General({ general, functions, isSmallScreen }: Props) {
-  const onTourClick =  ()=> {
-    if(isSmallScreen) {
-      functions.dispatch({type:'changeMobileTourOpen', on: true})
-    } else {
-      functions.setTour(true)
-    }
-  }
+
   let givesOptions = _.map(general.wallets, (value, key) => (
     <option key={key} value={key} >{value.alias}</option>
   ))
@@ -39,7 +33,7 @@ function General({ general, functions, isSmallScreen }: Props) {
             </h3>
           </TourWrapper>
           <button type="button" className="btn btn-default"
-            onClick={onTourClick}
+            onClick={functions.joinTour}
           >
             {isSmallScreen && general.mobileStep !== 0 ?  (
               'Resume the Tour'

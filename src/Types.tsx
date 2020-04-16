@@ -11,6 +11,7 @@ export interface Functions {
     findNonce: (block: Block, blockIndex: number) => Promise<void>
     mine: ()=> void
     setStep: (step: number) => void
+    joinTour: ()=> void
     setRef: (refName: string, ref: HTMLElement) => void
 }
 
