@@ -3,6 +3,7 @@ import * as md5 from 'md5'
 import * as _ from 'lodash'
 import * as bigInt from 'big-integer'
 import { RSA } from '../utils/rsa'
+import { addDelay } from './misc'
 
 const MinedAmount = 100
 
@@ -203,10 +204,6 @@ export function receiveChain(receivedChain: Block[], existingChain: Block[]) {
       return existingChain
     }
   }
-}
-
-export function addDelay(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 export function createTransactionSignature(transaction: Transaction, lastBlockHash: string, privateKey: string) {

@@ -3,10 +3,11 @@ import * as _ from 'lodash'
 import { useReducer, useEffect } from 'react'
 import { DefaultChain, DefaultWallets } from '../utils/defaultChain'
 import { GeneralType, Functions, Block } from '../Types'
-import { hashBlockWithoutNonce, startsWithZeros, validateTransactions, addDelay } from '../utils/blockchain'
+import { hashBlockWithoutNonce, startsWithZeros, validateTransactions } from '../utils/blockchain'
 import General from './General'
 import { reducer } from 'src/utils/reducer'
 import { steps } from 'src/utils/steps'
+import { addDelay } from 'src/utils/misc'
 
 let emptyTransactionToPublish = { gives: '', receives: '', amount: 0, signature: '', secretKey: '' }
 let emptyKeyPair = { address: '', privateKey: '' }
