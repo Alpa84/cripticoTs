@@ -29,7 +29,7 @@ function General({ general, functions, isSmallScreen }: Props) {
           <TourWrapper general={general} functions={functions} tutName='header'>
             <h1>Toy Coin</h1>
             <h3>
-              Your own crypto coin to play with (with every major feature a crypto coin should have)
+              An an interactive demo of a crypto currency. (Including blockchain, digital signatures and more)
             </h3>
           </TourWrapper>
           <button type="button" className="btn btn-default"
