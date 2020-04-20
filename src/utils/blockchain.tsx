@@ -16,7 +16,6 @@ function isInvalidChain(receivedChain: Block[]) {
 }
 
 export function isInvalidBlock(block: Block, blockIndex: number, receivedChain: Block[]) {
-
   let chainUntilThisBlock = receivedChain.slice(0, blockIndex)
   let chainTransactions = chainToTransactions(chainUntilThisBlock)
   let reviewedTransactions = []
@@ -121,7 +120,6 @@ export function calculateGiverFunds(transactions: Transaction[], giver: string) 
 export function startsWithZeros(hash: string) {
   return hash.substring(0, 2) === '00'
 }
-
 
 async function calculateNonce(blockWithoutNonce: Block, existingChain: Block[], chain?: Block[]): Promise<string> {
   let nonce = 0
