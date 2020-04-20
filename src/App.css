@@ -21,13 +21,15 @@
 .App-intro {
   font-size: large;
 }
-
+.tourExplanation {
+  border-style: solid;
+  border-color: grey;
+}
 .activeTut {
   border-style: dashed;
   border-color: sienna;
 }
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.panel-danger {
+  background-color: #F8C471;
 }
+

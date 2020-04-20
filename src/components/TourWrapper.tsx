@@ -27,7 +27,7 @@ function TourWrapper({children, functions, general, tutName}: Props) {
       ref={(ref) => { if (tutName !== '' && ref) { functions.setRef(tutName, ref) } }}
       data-tut={tutName}>
       { show && (
-        <div>
+        <div className='tourExplanation'>
           <button
             onClick={()=>functions.dispatch({type:'changeMobileTourOpen', on:false})}
             type="button"
