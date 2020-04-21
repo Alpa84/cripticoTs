@@ -22,32 +22,39 @@ function TransactionToPublish({ general, functions }: Props) {
   let publishEnabled = signEnabled && toPub.signature
   return (
     <TourWrapper general={general} functions={functions} tutName='publish'>
-      <div className="input-group">
-        <div className="input-group-addon">gives</div>
+      <h2>Transfer Generator</h2>
+      <div className="input-group mb-3">
+        <div className="input-group-prepend">
+          <label className="input-group-text" >gives</label>
+          </div>
         <select
           name="gives"
           id='toPublishGives'
-          className="form-control"
+          className="custom-select"
           onChange={(event) => functions.dispatch({ type: 'changeGives', gives: event.target.value})}
           value={general.transactionToPublish.gives}
         >
           {givesOptions}
         </select>
       </div>
-      <div className="input-group">
-        <div className="input-group-addon">receives</div>
+      <div className="input-group mb-3">
+        <div className="input-group-prepend">
+            <label className="input-group-text">receives</label>
+          </div>
         <select
           name="receives"
           id='toPublishReceives'
-          className="form-control"
+          className="custom-select"
           onChange={(event) => functions.dispatch({ type: 'changeReceives', receives: event.target.value })}
           value={general.transactionToPublish.receives}
         >
           {receivesOptions}
         </select>
       </div>
-      <div className="input-group">
-        <div className="input-group-addon">amount</div>
+      <div className="input-group mb-3">
+        <div className="input-group-prepend">
+            <span className="input-group-text">amount</span>
+          </div>
         <input
           id='toPublishAmount'
           type="number"
@@ -56,8 +63,10 @@ function TransactionToPublish({ general, functions }: Props) {
           value={general.transactionToPublish.amount}
         />
       </div>
-      <div className="input-group">
-        <div className="input-group-addon">giver's private Key</div>
+      <div className="input-group mb-3">
+        <div className="input-group-prepend">
+            <span className="input-group-text">giver's private Key</span>
+          </div>
         <input
           type='password'
           name='password'
@@ -75,8 +84,7 @@ function TransactionToPublish({ general, functions }: Props) {
         disabled={!signEnabled }
         type="button"
         id='toPublishSign'
-        className="btn
-        btn-warning"
+        className="btn btn-primary"
         onClick={()=>{
           functions.dispatch({ type: 'signTransaction' })
           functions.setStep(16)
@@ -86,7 +94,7 @@ function TransactionToPublish({ general, functions }: Props) {
         disabled={!publishEnabled}
         type="button"
         id='toPublishPublish'
-        className="btn btn-default"
+        className="btn btn-primary"
         onClick={()=>{
           functions.dispatch({ type: 'publishTransaction' })
           functions.setStep(18)

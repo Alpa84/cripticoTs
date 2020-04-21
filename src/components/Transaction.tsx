@@ -54,7 +54,7 @@ function Transaction({ general, blockIndex, functions, transactionIndex }: Props
           <button
             type="button"
             onClick={() => functions.dispatch({type: 'removeTransaction', blockIndex, index: transactionIndex})}
-            className="btn btn-large btn-block btn-warning">Remove Transaction</button>
+            className="btn btn-warning">Remove Transaction</button>
 
         </div>
       ) : (

@@ -18,12 +18,14 @@ function KeyPair({ general, functions }: Props) {
           functions.dispatch({ type: 'generateKeyPair' })
           functions.setStep(3)
         }}
-        className='btn btn-large btn-block btn-primary'>Generate Public Address and Private Key</button>
+        className="btn btn-primary">Generate Public Address and Private Key</button>
       <div className='longString'>Public Address: {keyPair.address}</div>
       <div className='longString'>Private Key: {keyPair.privateKey}</div>
       <TourWrapper general={general} functions={functions} tutName={"alias"}>
-        <div className="input-group">
-          <div className="input-group-addon">alias</div>
+        <div className="input-group mb-3">
+          <div className="input-group-prepend">
+            <span className="input-group-text">alias</span>
+          </div>
           <input
             type="text"
             className="form-control"
@@ -35,7 +37,7 @@ function KeyPair({ general, functions }: Props) {
         <button
           type="button"
           id='generateWallet'
-          className="btn btn-large btn-block btn-default"
+          className="btn btn-primary"
           onClick={() => {
             functions.dispatch({ type: 'generateWallet' })
             functions.setStep(4)

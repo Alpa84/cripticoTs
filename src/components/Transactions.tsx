@@ -11,31 +11,28 @@ export interface Props {
 function Transactions({ general, functions, blockIndex }: Props) {
   let transactions = general.editableChain ? general.editableChain[blockIndex].transactions : general.chain[blockIndex].transactions
   return (
-    <div className="Transactions">
+    <div className="Transactions card">
       {general.editableChain && (
         <button
           type="button"
           onClick={() => functions.dispatch({type: 'addTransaction', blockIndex})}
-          className="btn btn-large btn-block btn-default">Add Transaction</button>
+          className="btn btn-primary">Add Transaction</button>
       )}
-      {
-        transactions.map((transaction, transIndex) => (
-          <TourWrapper
-            general={general}
-            functions={functions}
-            key={transIndex}
-            tutName={transIndex === 0 && blockIndex === 0  ? 'transaction' : ''}
-          >
-          <div className="panel panel-default" >
-            <div className="panel-body">
-              <div key={transIndex}>
+      <ul className="list-group list-group-flush">
+        {
+          transactions.map((transaction, transIndex) => (
+            <li className="list-group-item" key={transIndex}>
+              <TourWrapper
+                general={general}
+                functions={functions}
+                tutName={transIndex === 0 && blockIndex === 0  ? 'transaction' : ''}
+              >
                 <Transaction general={general} transactionIndex={transIndex} blockIndex={blockIndex} functions={functions} />
-              </div>
-            </div>
-          </div>
-          </TourWrapper>
-        )).reverse()
-      }
+              </TourWrapper>
+            </li>
+          )).reverse()
+        }
+      </ul>
     </div>
   )
 }

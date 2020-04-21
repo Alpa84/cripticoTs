@@ -38,7 +38,7 @@ function Chain({ general, functions }: Props) {
           type="button"
           onClick={onHackChain}
           id='toggleEditableChain'
-          className="btn btn-large btn-block btn-default"
+          className="btn btn-primary"
         >
           { general.editableChain ? ('Back to Unedited Chain'):('Hack the Chain')}
         </button>
@@ -47,7 +47,7 @@ function Chain({ general, functions }: Props) {
         <button
           type="button"
           onClick={()=> functions.dispatch({type: 'addBlock'})}
-          className="btn btn-large btn-block btn-default">Add Block</button>
+          className="btn btn-primary">Add Block</button>
       )}
       <div onDoubleClick={doubleClick}>
         {
@@ -58,13 +58,14 @@ function Chain({ general, functions }: Props) {
                 general={general}
                 functions={functions}
                 key={index}
+                componentClass="blockTutorial"
                 tutName={index=== 0 ? "block": ''}>
                 <div
                   key={index}
-                  className={`panel panel-${invalidBlockReason ? 'danger' : 'primary'}`}
+                  className={`card ${invalidBlockReason ? 'bg-danger' : ''}`}
                   >
-                  <div className="panel-heading">Block {index + 1}</div>
-                  <div className="panel-body">
+                  <div className="card-header"><h4>Block {index + 1}</h4></div>
+                  <div className="card-body">
                     {invalidBlockReason && (
                       <div className="alert alert-danger">
                         <strong>Invalid Block</strong> {
@@ -79,9 +80,9 @@ function Chain({ general, functions }: Props) {
                       <button
                         type="button"
                         onClick={() => { functions.dispatch( {type:'removeBlock', index })}}
-                        className="btn btn-large btn-block btn-warning">Remove Block</button>
+                        className="btn btn-warning">Remove Block</button>
                     )}
-                    <p>hash: <span className='blockHash'>{hashBlock(block)}</span></p>
+                    <div>hash: <span className='blockHash'>{hashBlock(block)}</span></div>
                     {general.editableChain ? (
                       <div>
                         <Input text='nonce' value={general.editableChain[index].nonce} onChange={
@@ -91,14 +92,14 @@ function Chain({ general, functions }: Props) {
                             blockIndex: index,
                           })
                         } />
-                        <button type="button" className="btn btn-info" onClick={() => functions.findNonce(block, index)}>Search Nonce</button>
+                        <button type="button" className="btn btn-primary" onClick={() => functions.findNonce(block, index)}>Search Nonce</button>
                       </div>
                     ) : (
                         <div>
-                          <p>nonce: {block.nonce}</p>
+                          nonce: {block.nonce}
                         </div>
                       )}
-                    <h3>transactions</h3>
+                    <div>transactions:</div>
                     <Transactions general={general} blockIndex={index} functions={functions} />
                     {general.editableChain ? (
                       <div>
@@ -111,9 +112,7 @@ function Chain({ general, functions }: Props) {
                         } />
                       </div>
                     ) : (
-                      <div>
-                        <p>previous block hash: {block.previousBlockHash}</p>
-                      </div>
+                      <div>previous block hash: {block.previousBlockHash}</div>
                     )}
                   </div>
                 </div>

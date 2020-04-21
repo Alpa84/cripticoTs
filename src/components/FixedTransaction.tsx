@@ -13,7 +13,7 @@ function FixedTransaction({ general, transaction }: Props) {
       {prefferName(transaction.gives, general)} <span className="glyphicon glyphicon-arrow-right" aria-hidden="true" />
       {prefferName(transaction.receives, general)}  $: {transaction.amount}
       {transaction.signature && (
-        <p className='longString'>signature: {transaction.signature}</p>
+        <div className='longString'>signature: {transaction.signature}</div>
       )}
     </div>
   )

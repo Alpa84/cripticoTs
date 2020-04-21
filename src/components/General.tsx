@@ -26,62 +26,70 @@ function General({ general, functions, isSmallScreen }: Props) {
     <div className="General">
       <div className="container">
         <div className="row">
-          <TourWrapper general={general} functions={functions} tutName='header'>
-            <h1>Toy Coin</h1>
-            <h3>
-              An an interactive demo of a crypto currency. (Including blockchain, digital signatures and more)
-            </h3>
-          </TourWrapper>
-          <button type="button" className="btn btn-default"
-            onClick={functions.joinTour}
-          >
-            {isSmallScreen && general.mobileStep !== 0 ?  (
-              'Resume the Tour'
-            ) : (
-                'Join the Tour'
-            )}
-          </button>
+          <div className="col-sm-12 section" >
+            <TourWrapper general={general} functions={functions} tutName='header'>
+              <h1>Toy Coin</h1>
+              <h3>
+                An an interactive demo of a crypto currency. (Including blockchain, digital signatures and more.)
+              </h3>
+            </TourWrapper>
+            <button type="button" className="btn btn-primary"
+              onClick={functions.joinTour}
+            >
+              {isSmallScreen && general.mobileStep !== 0 ?  (
+                'Resume the Tour'
+              ) : (
+                  'Join the Tour'
+              )}
+            </button>
+          </div>
         </div>
         <div className="row">
           <div className="col-sm-5">
-            <KeyPair general={general} functions={functions}/>
-            <h2>Transfer Generator</h2>
-            <TransactionToPublish general={general} functions={functions} />
+            <div className="section">
+              <KeyPair general={general} functions={functions} />
+            </div>
+            <div className="section">
+              <TransactionToPublish general={general} functions={functions} />
+            </div>
             <TourWrapper general={general} functions={functions} tutName='notPublishedYet'>
               { general.pendingTransactions.length >0  && (
-                <div>
+                <div className="section">
                   <h2>Published Transactions not yet included in the Blockchain</h2>
                   <PendingTransactions general={general} />
                 </div>
               )}
               <TourWrapper general={general} functions={functions} tutName='mining'>
-                <h2>Mining Zone</h2>
-                <div className="input-group">
-                  <div className="input-group-addon">Miner</div>
-                  <select
-                    name="minedDir"
-                    id="selectDirToAddMined"
-                    className="form-control"
-                    onChange={(event) => functions.dispatch({ type: 'changeDirToAddMined', dir: event.target.value })}
-                    value={general.dirToAddMined}
-                    data-key='dirToAddMined'
-                  >
-                    {givesOptions}
-                  </select>
+                <div className='section'>
+                  <h2>Mining Zone</h2>
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <label className="input-group-text">Miner</label>
+                    </div>
+                    <select
+                      name="minedDir"
+                      id="selectDirToAddMined"
+                      className="custom-select"
+                      onChange={(event) => functions.dispatch({ type: 'changeDirToAddMined', dir: event.target.value })}
+                      value={general.dirToAddMined}
+                      data-key='dirToAddMined'
+                    >
+                      {givesOptions}
+                    </select>
+                  </div>
+                  <button
+                    type="button"
+                    id="startMining"
+                    className="btn btn-primary"
+                    onClick={functions.mine}>Start Mining</button>
                 </div>
-                <button
-                  type="button"
-                  id="startMining"
-                  className="btn btn-info"
-                  onClick={functions.mine}>Start Mining</button>
               </TourWrapper>
-
-
-              <br />
               <TourWrapper general={general} functions={functions} tutName={"blockchain"}>
-                <h2>Blockchain</h2>
-                <MinedBlock general={general} functions={functions} />
-                <Chain general={general} functions={functions} />
+                <div className='section'>
+                  <h2>Blockchain</h2>
+                  <MinedBlock general={general} functions={functions} />
+                  <Chain general={general} functions={functions} />
+                </div>
               </TourWrapper>
             </TourWrapper>
           </div>
@@ -91,6 +99,12 @@ function General({ general, functions, isSmallScreen }: Props) {
         </div>
         <div className="row">
           <div className="col-sm-5">
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span className="input-group-text">$</span>
+                <span className="input-group-text">0.00</span>
+              </div>
+            </div>
             <h2>Features</h2>
             <p><b>Blockchain:</b></p>
             <p> The data of every block is hashed, including the hash of the previous block. Every block is checked to have the correct previous block hash.</p>
@@ -104,8 +118,8 @@ function General({ general, functions, isSmallScreen }: Props) {
             </p>
             <p>Try changing the amount of a transaction.</p>
             <p><b>Key Pair Generation and Digital Signatures:</b></p>
-            <p>The key pair is generated using a basic implementation of the RSA algorithm <a target="_blank" href="https://github.com/denysdovhan/rsa-labwork"> taken from this repo.</a><div className="">
-              Digital signature checking was also <a target="_blank" href="<https://github.com/Alpa84/cripticoTs/blob/mobile_tour/src/utils/blockchain.tsx#L86">artisanally implemented.</a></div></p>
+            <p>The key pair is generated using a basic implementation of the RSA algorithm <a target="_blank" href="https://github.com/denysdovhan/rsa-labwork"> taken from this repo.</a></p>
+            <p> Digital signature checking was also <a target="_blank" href="<https://github.com/Alpa84/cripticoTs/blob/mobile_tour/src/utils/blockchain.tsx#L86">artisanally implemented.</a></p>
             <h2>Missing Features</h2>
             <p><b>Auto-adjustment of the mining difficulty:</b></p>
             <p>The amount of zeros required for the block to be valid will always be two.</p>

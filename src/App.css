@@ -24,12 +24,28 @@
 .tourExplanation {
   border-style: solid;
   border-color: grey;
+  padding: 24px 30px;
 }
 .activeTut {
   border-style: dashed;
   border-color: sienna;
 }
-.panel-danger {
-  background-color: #F8C471;
+.tourArrow {
+  width: 32px;
+  height: 24px;
+}
+.tourArrows {
+  display: flex;
+  justify-content: space-between;
+}
+.closeButton {
+  padding: 14px;
+  float: right;
+}
+.blockTutorial + .blockTutorial {
+  margin-top: 1ex;
 }
 
+.section {
+  padding-bottom: 30px;
+}

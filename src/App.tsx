@@ -16,6 +16,7 @@ function App() {
   const SmallScreenSize = 700
   const isSmallScreen = window.innerWidth < SmallScreenSize
   useEffect(() => {
+    // if (!isSmallScreen) { setTour(false) } // TODO: change to true!!!
     if (!isSmallScreen) { setTour(true) }
   }, []) // used to fire dispatch just once on open
 
