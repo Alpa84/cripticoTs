@@ -63,7 +63,9 @@ function TourWrapper({children, functions, general, tutName, componentClass}: Pr
           </div>
         </>
       )}
-      {children}
+      <div className={show ? 'tourActiveChild' : ''}>
+        {children}
+      </div>
     </div>
   )
 }

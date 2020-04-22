@@ -1,32 +1,33 @@
-.App {
-  text-align: center;
+
+body {
+  background-color: gainsboro;
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, sans-serif;
+  font-size: medium;
+  color: #41403d
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+
+h1 {
+  font-family: Barlow, sans-serif;
+  font-size: 70px;
+}
+h2, h3 {
+  font-family: Barlow, sans-serif;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.longString {
+  overflow-x: scroll;
+  white-space: nowrap;
 }
 
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
 .tourExplanation {
   border-style: solid;
   border-color: grey;
   padding: 24px 30px;
 }
-.activeTut {
+.tourActiveChild {
   border-style: dashed;
   border-color: sienna;
 }
@@ -44,6 +45,9 @@
 }
 .blockTutorial + .blockTutorial {
   margin-top: 1ex;
+}
+.fixed {
+  background-color: #e9ecef;
 }
 
 .section {

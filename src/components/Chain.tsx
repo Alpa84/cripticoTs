@@ -38,7 +38,7 @@ function Chain({ general, functions }: Props) {
           type="button"
           onClick={onHackChain}
           id='toggleEditableChain'
-          className="btn btn-primary"
+          className="btn btn-secondary"
         >
           { general.editableChain ? ('Back to Unedited Chain'):('Hack the Chain')}
         </button>
@@ -47,7 +47,7 @@ function Chain({ general, functions }: Props) {
         <button
           type="button"
           onClick={()=> functions.dispatch({type: 'addBlock'})}
-          className="btn btn-primary">Add Block</button>
+          className="btn btn-secondary">Add Block</button>
       )}
       <div onDoubleClick={doubleClick}>
         {

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { KeyPair, Functions, GeneralType } from '../Types'
 import TourWrapper from './TourWrapper'
+import FixedInput from './FixedInput'
 export interface Props {
   general: GeneralType
   functions: Functions
@@ -19,8 +20,8 @@ function KeyPair({ general, functions }: Props) {
           functions.setStep(3)
         }}
         className="btn btn-primary">Generate Public Address and Private Key</button>
-      <div className='longString'>Public Address: {keyPair.address}</div>
-      <div className='longString'>Private Key: {keyPair.privateKey}</div>
+      <FixedInput text='Public Address' value={keyPair.address} />
+      <FixedInput text='Private Key' value={keyPair.privateKey} />
       <TourWrapper general={general} functions={functions} tutName={"alias"}>
         <div className="input-group mb-3">
           <div className="input-group-prepend">

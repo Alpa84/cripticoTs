@@ -10,13 +10,14 @@ import MinedBlock from './MinedBlock'
 import TourWrapper from './TourWrapper';
 
 export interface Props {
+  isBigScreenTourOpen: boolean,
   isSmallScreen: boolean
   general: GeneralType
   functions: Functions
 }
 
 
-function General({ general, functions, isSmallScreen }: Props) {
+function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Props) {
 
   let givesOptions = _.map(general.wallets, (value, key) => (
     <option key={key} value={key} >{value.alias}</option>
@@ -35,6 +36,7 @@ function General({ general, functions, isSmallScreen }: Props) {
             </TourWrapper>
             <button type="button" className="btn btn-primary"
               onClick={functions.joinTour}
+              disabled={isBigScreenTourOpen}
             >
               {isSmallScreen && general.mobileStep !== 0 ?  (
                 'Resume the Tour'
@@ -99,12 +101,6 @@ function General({ general, functions, isSmallScreen }: Props) {
         </div>
         <div className="row">
           <div className="col-sm-5">
-            <div className="input-group mb-3">
-              <div className="input-group-prepend">
-                <span className="input-group-text">$</span>
-                <span className="input-group-text">0.00</span>
-              </div>
-            </div>
             <h2>Features</h2>
             <p><b>Blockchain:</b></p>
             <p> The data of every block is hashed, including the hash of the previous block. Every block is checked to have the correct previous block hash.</p>

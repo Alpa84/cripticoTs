@@ -124,6 +124,7 @@ function CoinArena({all } : Props) {
     <General
       general={general}
       functions={functions}
+      isBigScreenTourOpen={all.isTourOpen}
       isSmallScreen={all.isSmallScreen}/>
   )
 }

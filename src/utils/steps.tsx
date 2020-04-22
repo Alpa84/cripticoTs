@@ -18,11 +18,13 @@ export const steps = [
     content: () => (
     <div>
       <p>In this tour we are going to: </p>
-      <p>steal some coin,</p>
-      <p>make a transaction,</p>
-      <p>publish it,</p>
-      <p>do some mining,</p>
-      <p>and explore how the blockchain works.</p>
+      <ul>
+        <li>steal some coin,</li>
+        <li>make a transaction,</li>
+        <li>publish it,</li>
+        <li>do some mining,</li>
+        <li>explore how the blockchain works.</li>
+      </ul>
     </div>
     ),
     selector: '[data-tut="header"]',

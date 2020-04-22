@@ -10,7 +10,7 @@ export interface Props {
 function FixedTransaction({ general, transaction }: Props) {
   return (
     <div>
-      {prefferName(transaction.gives, general)} <span className="glyphicon glyphicon-arrow-right" aria-hidden="true" />
+      {prefferName(transaction.gives, general)}<b> => </b>
       {prefferName(transaction.receives, general)}  $: {transaction.amount}
       {transaction.signature && (
         <div className='longString'>signature: {transaction.signature}</div>

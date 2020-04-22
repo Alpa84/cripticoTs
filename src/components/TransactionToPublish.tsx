@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import { Functions, GeneralType } from '../Types'
 import TourWrapper from './TourWrapper'
+import FixedInput from './FixedInput'
 export interface Props {
   general: GeneralType
   functions: Functions
@@ -75,8 +76,8 @@ function TransactionToPublish({ general, functions }: Props) {
           value={general.transactionToPublish.secretKey}
           onChange={(event) => functions.dispatch({ type: 'changeTransactionSecretKey', secretKey: event.target.value })} />
       </div>
-      <p className='longString'>Transaction Signature: {general.transactionToPublish.signature}</p>
-      <p>to add in Block number: {general.chain.length + 1}</p>
+      <FixedInput text='Transaction Signature' value={general.transactionToPublish.signature} />
+      <FixedInput text='to add in Block number' value={ general.chain.length + 1 } />
       {general.signatureError && (
         <div>{general.signatureError}</div>
       )}
