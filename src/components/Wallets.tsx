@@ -26,23 +26,33 @@ function Wallets({ general, functions }: Props) {
                 <div className='card'>
                   <div className='card-body'>
                     <h3 className='card-title'>{general.wallets[dir].alias}</h3>
-                    <div>
-                      <b>$: </b>
-                      <span className='coins'>{calculateOwnerCoinsFromChain(general.chain, dir)}</span>
-                    </div>
-                    <div><b>Public address:</b>
-                      <div className='longString'>
-                        {dir}
-                      </div>
-                    </div>
+                    <table className="table">
+                      <tbody>
+                        <tr>
+                          <th scope="row">$</th>
+                          <td>
+                            {calculateOwnerCoinsFromChain(general.chain, dir)}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Public address</th>
+                          <td><div className='longString'>{dir}</div></td>
+                        </tr>
+                      </tbody>
+                    </table>
                     <TourWrapper
                       general={general}
                       functions={functions}
                       tutName={dir === CreatorPublicAddress ? 'creatorPrivateKey' : ''}
                     >
-                      <div className='privateKey'><b>Private Key (shhhhhh!):</b>
-                        <div className='longString'> {general.wallets[dir].privateKey} </div>
-                      </div>
+                      <table className="table">
+                        <tbody>
+                          <tr>
+                            <th scope="row">Private Key (shhhhhh!)</th>
+                            <td><div className='longString'>{general.wallets[dir].privateKey}</div></td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </TourWrapper>
                   </div>
                 </div>

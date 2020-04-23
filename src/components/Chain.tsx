@@ -92,7 +92,7 @@ function Chain({ general, functions }: Props) {
                             blockIndex: index,
                           })
                         } />
-                        <button type="button" className="btn btn-primary" onClick={() => functions.findNonce(block, index)}>Search Nonce</button>
+                        <button type="button" className="btn btn-secondary" onClick={() => functions.findNonce(block, index)}>Search Nonce</button>
                       </div>
                     ) : (
                         <div>

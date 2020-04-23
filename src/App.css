@@ -18,8 +18,8 @@ h2, h3 {
 }
 
 .longString {
-  overflow-x: scroll;
-  white-space: nowrap;
+  overflow: scroll;
+  overflow-y: hidden;
 }
 
 .tourExplanation {
@@ -53,3 +53,13 @@ h2, h3 {
 .section {
   padding-bottom: 30px;
 }
+.table {
+  margin-bottom: 0rem;
+  table-layout: fixed;
+  width: 100%;
+}
+.table .inside > tbody > tr:first-child > td {
+    border: none;
+}
+
+
