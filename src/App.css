@@ -23,14 +23,15 @@ h2, h3 {
 }
 
 .tourExplanation {
-  border-style: solid;
-  border-color: grey;
+  /* border-style: solid;
+  border-color: grey; */
   padding: 24px 30px;
+  background-color: wheat;
 }
-.tourActiveChild {
-  border-style: dashed;
-  border-color: sienna;
+.activeTut {
+box-shadow: 30px 30px 30px grey;
 }
+
 .tourArrow {
   width: 32px;
   height: 24px;
@@ -59,6 +60,10 @@ h2, h3 {
 .fixedTable {
   table-layout: fixed;
   width: 100%;
+}
+.chainTable > tbody > tr > th {
+  width: 150px;
+  overflow: hidden;
 }
 .table .inside > tbody > tr:first-child > td {
     border: none;

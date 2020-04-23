@@ -47,7 +47,7 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-5">
+          <div className="col-md-6">
             <div className="section">
               <KeyPair general={general} functions={functions} />
             </div>
@@ -95,12 +95,12 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
               </TourWrapper>
             </TourWrapper>
           </div>
-          <div className="col-sm-4">
+          <div className="col-md-4">
             <Directory general={general} functions={functions}/>
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-5">
+          <div className="col-md-5">
             <h2>Features</h2>
             <p><b>Blockchain:</b></p>
             <p> The data of every block is hashed, including the hash of the previous block. Every block is checked to have the correct previous block hash.</p>

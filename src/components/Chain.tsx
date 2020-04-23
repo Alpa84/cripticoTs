@@ -101,15 +101,15 @@ function Chain({ general, functions }: Props) {
                         } />
                       </>
                     ) : (
-                      <table className="table">
+                      <table className="table fixedTable chainTable">
                         <tbody>
                           <tr>
                             <th scope="row">Hash</th>
-                            <td>{hashBlock(block)}</td>
+                            <td><div className='longString'>{hashBlock(block)}</div></td>
                           </tr>
                           <tr>
                             <th scope="row">Nonce</th>
-                            <td>{block.nonce}</td>
+                            <td><div className='longString'>{block.nonce}</div></td>
                           </tr>
                           <tr>
                             <th scope="row">Transactions</th>
@@ -131,7 +131,7 @@ function Chain({ general, functions }: Props) {
                           </tr>
                           <tr>
                             <th scope="row">previous block hash</th>
-                            <td>{block.previousBlockHash}</td>
+                            <td><div className='longString'>{block.previousBlockHash}</div></td>
                           </tr>
                         </tbody>
                       </table>
