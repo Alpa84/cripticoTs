@@ -5,6 +5,8 @@ import Input from './Input'
 import Transactions from './Transactions';
 import { isInvalidBlock, hashBlock } from 'src/utils/blockchain';
 import TourWrapper from './TourWrapper';
+import FixedInput from './FixedInput';
+import FixedTransaction from './FixedTransaction';
 export interface Props {
   general: GeneralType
   functions: Functions
@@ -22,11 +24,6 @@ function Chain({ general, functions }: Props) {
   } else {
     onHackChain = () => {
       functions.setStep(22)
-      functions.dispatch({ type: 'toggleEditableChain' })
-    }
-  }
-  const doubleClick = () => {
-    if (!general.editableChain) {
       functions.dispatch({ type: 'toggleEditableChain' })
     }
   }
@@ -49,7 +46,7 @@ function Chain({ general, functions }: Props) {
           onClick={()=> functions.dispatch({type: 'addBlock'})}
           className="btn btn-secondary">Add Block</button>
       )}
-      <div onDoubleClick={doubleClick}>
+      <div onDoubleClick={()=> functions.dispatch({ type: 'toggleEditableChain' })}>
         {
           chain.map((block, index) => {
             let invalidBlockReason = isInvalidBlock(block, index, chain)
@@ -62,7 +59,7 @@ function Chain({ general, functions }: Props) {
                 tutName={index=== 0 ? "block": ''}>
                 <div
                   key={index}
-                  className={`card ${invalidBlockReason ? 'bg-danger' : ''}`}
+                  className={`card border-primary ${invalidBlockReason ? 'bg-danger' : ''}`}
                   >
                   <div className="card-header"><h4>Block {index + 1}</h4></div>
                   <div className="card-body">
@@ -76,15 +73,13 @@ function Chain({ general, functions }: Props) {
                       </div>
 
                     )}
-                    { general.editableChain && (
-                      <button
-                        type="button"
-                        onClick={() => { functions.dispatch( {type:'removeBlock', index })}}
-                        className="btn btn-warning">Remove Block</button>
-                    )}
-                    <div>hash: <span className='blockHash'>{hashBlock(block)}</span></div>
-                    {general.editableChain ? (
-                      <div>
+                    { general.editableChain ? (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => { functions.dispatch( {type:'removeBlock', index })}}
+                          className="btn btn-warning">Remove Block</button>
+                        <FixedInput text="hash" value={hashBlock(block)}/>
                         <Input text='nonce' value={general.editableChain[index].nonce} onChange={
                           (event) => functions.dispatch({
                             type: 'changeChainNonce',
@@ -93,16 +88,10 @@ function Chain({ general, functions }: Props) {
                           })
                         } />
                         <button type="button" className="btn btn-secondary" onClick={() => functions.findNonce(block, index)}>Search Nonce</button>
-                      </div>
-                    ) : (
-                        <div>
-                          nonce: {block.nonce}
+                        <div className='card'>
+                          <div className="card-header">Transactions</div>
+                          <Transactions general={general} blockIndex={index} functions={functions} />
                         </div>
-                      )}
-                    <div>transactions:</div>
-                    <Transactions general={general} blockIndex={index} functions={functions} />
-                    {general.editableChain ? (
-                      <div>
                         <Input text='previous block hash' value={general.editableChain[index].previousBlockHash} onChange={
                           (event) => functions.dispatch({
                             type: 'changeChainPrevHash',
@@ -110,9 +99,42 @@ function Chain({ general, functions }: Props) {
                             blockIndex: index,
                           })
                         } />
-                      </div>
+                      </>
                     ) : (
-                      <div>previous block hash: {block.previousBlockHash}</div>
+                      <table className="table">
+                        <tbody>
+                          <tr>
+                            <th scope="row">Hash</th>
+                            <td>{hashBlock(block)}</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Nonce</th>
+                            <td>{block.nonce}</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">Transactions</th>
+                            <td>
+                              <table className="table inside fixedTable">
+                                <tbody>
+                                  { block.transactions.map( (transaction, tIndex) => { return (
+                                    <tr key={tIndex} >
+                                      <td>
+                                        <FixedTransaction
+                                          general={general}
+                                          transaction={transaction}/>
+                                      </td>
+                                    </tr>
+                                  )}).reverse() }
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                          <tr>
+                            <th scope="row">previous block hash</th>
+                            <td>{block.previousBlockHash}</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     )}
                   </div>
                 </div>

@@ -26,7 +26,7 @@ function Wallets({ general, functions }: Props) {
                 <div className='card'>
                   <div className='card-body'>
                     <h3 className='card-title'>{general.wallets[dir].alias}</h3>
-                    <table className="table">
+                    <table className="table fixedTable">
                       <tbody>
                         <tr>
                           <th scope="row">$</th>
@@ -45,7 +45,7 @@ function Wallets({ general, functions }: Props) {
                       functions={functions}
                       tutName={dir === CreatorPublicAddress ? 'creatorPrivateKey' : ''}
                     >
-                      <table className="table">
+                      <table className="table fixedTable">
                         <tbody>
                           <tr>
                             <th scope="row">Private Key (shhhhhh!)</th>

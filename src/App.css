@@ -55,6 +55,8 @@ h2, h3 {
 }
 .table {
   margin-bottom: 0rem;
+}
+.fixedTable {
   table-layout: fixed;
   width: 100%;
 }
