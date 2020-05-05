@@ -76,21 +76,21 @@ function TransactionToPublish({ general, functions }: Props) {
           value={general.transactionToPublish.secretKey}
           onChange={(event) => functions.dispatch({ type: 'changeTransactionSecretKey', secretKey: event.target.value })} />
       </div>
+      <button
+        disabled={!signEnabled}
+        type="button"
+        id='toPublishSign'
+        className="btn btn-primary"
+        onClick={() => {
+          functions.dispatch({ type: 'signTransaction' })
+          functions.setStep(15)
+        }}
+      >Sign with private Key</button>
       <FixedInput text='Transaction Signature' value={general.transactionToPublish.signature} />
       <FixedInput text='to add in Block number' value={ general.chain.length + 1 } />
       {general.signatureError && (
         <div>{general.signatureError}</div>
       )}
-      <button
-        disabled={!signEnabled }
-        type="button"
-        id='toPublishSign'
-        className="btn btn-primary"
-        onClick={()=>{
-          functions.dispatch({ type: 'signTransaction' })
-          functions.setStep(16)
-        } }
-        >Sign with private Key</button>
       <button
         disabled={!publishEnabled}
         type="button"
@@ -98,7 +98,7 @@ function TransactionToPublish({ general, functions }: Props) {
         className="btn btn-primary"
         onClick={()=>{
           functions.dispatch({ type: 'publishTransaction' })
-          functions.setStep(18)
+          functions.setStep(17)
         } }
         >Publish Transaction</button>
     </TourWrapper>
