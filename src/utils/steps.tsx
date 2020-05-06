@@ -335,8 +335,16 @@ export const steps = [
         <p>That is how far we are going to go with this tour, but there are a bunch of things you can explore by yourself.</p>
         <p>The <b>Blockchain</b> is fully editable.</p>
         <p>You can try modifying the chain info and reading the warnings at the top of each <b>block</b> to get a feel of the security measures implemented in the blockchain.</p>
-        <p>Thanks for joining! If you want to check <a href="/en">other weird projects</a> or know more about me check the links at the bottom.</p>
-        <p>Good Luck!</p>
+        <p>Thanks for joining!</p>
+        <ul>
+          <li>
+            <a href="/AlePan">About me</a>
+          </li>
+          <li>
+            <a href="/en">Other projects</a>
+
+          </li>
+        </ul>
       </div>
     ),
     altSelector: '[data-tut="userWallet"]',
