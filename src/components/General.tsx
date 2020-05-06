@@ -6,8 +6,8 @@ import PendingTransactions from './PendingTransactions'
 import TransactionToPublish, { Empty } from './TransactionToPublish'
 import KeyPair from './KeyPair'
 import Directory from './Wallets'
-import MinedBlock from './MinedBlock'
 import TourWrapper from './TourWrapper';
+import FixedBlock from './FixedBlock';
 
 export interface Props {
   isBigScreenTourOpen: boolean,
@@ -31,7 +31,7 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
             <TourWrapper general={general} functions={functions} tutName='header'>
               <h1>Toy Coin</h1>
               <h3>
-                An an interactive demo of a crypto currency. (Including blockchain, digital signatures and more.)
+                An interactive demo of a crypto currency. (Including blockchain, digital signatures and more.)
               </h3>
             </TourWrapper>
             <button type="button" className="btn btn-primary"
@@ -83,13 +83,23 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
                     type="button"
                     id="startMining"
                     className="btn btn-primary"
+                    disabled={!general.dirToAddMined}
                     onClick={functions.mine}>Start Mining</button>
                 </div>
               </TourWrapper>
               <TourWrapper general={general} functions={functions} tutName={"blockchain"}>
                 <div className='section'>
                   <h2>Blockchain</h2>
-                  <MinedBlock general={general} functions={functions} />
+                  { general.minedBlock && (
+                    <div className='card border-warning'>
+                      <div className='card-header'>
+                        <h4>Trying to add block {general.chain.length + 1} ...</h4>
+                      </div>
+                      <div className='card-body'>
+                        <FixedBlock general={general} functions={functions} block={general.minedBlock}/>
+                      </div>
+                    </div>
+                  )}
                   <Chain general={general} functions={functions} />
                 </div>
               </TourWrapper>
