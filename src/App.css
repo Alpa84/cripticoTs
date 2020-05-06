@@ -65,7 +65,7 @@ box-shadow: 30px 30px 30px grey;
   width: 150px;
   overflow: hidden;
 }
-.table .inside > tbody > tr:first-child > td {
+.inside > tbody > tr:first-child > td {
     border: none;
 }
 

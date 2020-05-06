@@ -8,18 +8,24 @@ export interface Props {
 function PendingTransactions({ general }: Props) {
 
   return (
-    <div className="PendingTransactions">
-      {
-        general.pendingTransactions.map((transaction, transIndex) => (
-          <div className="panel panel-default" key={transIndex}>
-            <div className="panel-body" id='pendingTransactionsPanel'>
-              <div key={transIndex}>
-                <FixedTransaction general={general} transaction={transaction} />
-              </div>
-            </div>
-          </div>
-        ))
-      }
+    <div className='card'>
+      <div className='card-body'>
+        <table className='table inside fixedTable'>
+          <tbody>
+            {
+              general.pendingTransactions.map((transaction, transIndex) => (
+                <tr key={transIndex}>
+                  <td scope="row">
+                    <div key={transIndex}>
+                      <FixedTransaction general={general} transaction={transaction} />
+                    </div>
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 
