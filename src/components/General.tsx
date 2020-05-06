@@ -137,6 +137,8 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
             </p>
             <h2>Take a look at the code</h2>
             <p>The crypto-coin code is written to be as simple to understand as possible and it is <a target="_blank" href="https://github.com/Alpa84/cripticoTs/blob/mobile_tour/src/utils/blockchain.tsx#L18">only 220 lines of code</a>.</p>
+            <h2><a href="/AlePan">About Me</a></h2>
+            <h2><a href="/">Other Projects</a></h2>
           </div>
         </div>
       </div>
