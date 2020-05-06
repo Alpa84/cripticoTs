@@ -50,7 +50,6 @@ box-shadow: 30px 30px 30px grey;
 .fixed {
   background-color: #e9ecef;
 }
-
 .section {
   padding-bottom: 30px;
 }
@@ -66,7 +65,10 @@ box-shadow: 30px 30px 30px grey;
   overflow: hidden;
 }
 .inside > tbody > tr:first-child > td {
-    border: none;
+  border: none;
+}
+.btn {
+  margin-bottom: 15px;
 }
 
 
