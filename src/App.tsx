@@ -1,5 +1,4 @@
 import * as React from 'react'
-import './App.css'
 import * as _ from 'lodash'
 import { useState, useEffect } from 'react'
 import Tour from 'reactour'

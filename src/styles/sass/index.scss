@@ -1,0 +1,6 @@
+// Override default variables before the import
+$primary: orange;
+
+@import "node_modules/bootstrap/scss/bootstrap";
+@import 'app';
+@import 'sty';
