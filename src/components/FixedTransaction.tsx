@@ -12,7 +12,7 @@ function FixedTransaction({ general, transaction }: Props) {
     <div>
       {prefferName(transaction.gives, general)}
       {'  '}
-      <svg version="1.1" className="arrow" x="0px" y="0px" width="22px" height="22px"
+      <svg version="1.1" className="arrow" x="0px" y="0px" width="18px" height="18px"
 	 viewBox="0 0 492.004 492.004" >
       <g>
         <g>
