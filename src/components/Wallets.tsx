@@ -3,6 +3,7 @@ import { GeneralType, Functions } from '../Types'
 import { calculateOwnerCoinsFromChain } from 'src/utils/blockchain';
 import { CreatorPublicAddress } from 'src/utils/defaultChain';
 import TourWrapper from './TourWrapper';
+import PrivateKey from './PrivateKey'
 
 export interface Props {
   general: GeneralType
@@ -45,14 +46,7 @@ function Wallets({ general, functions }: Props) {
                       functions={functions}
                       tutName={dir === CreatorPublicAddress ? 'creatorPrivateKey' : ''}
                     >
-                      <table className="table fixedTable">
-                        <tbody>
-                          <tr>
-                            <th scope="row">Private Key (shhhhhh!)</th>
-                            <td><div className='longString'>{general.wallets[dir].privateKey}</div></td>
-                          </tr>
-                        </tbody>
-                      </table>
+                      <PrivateKey  pKey={general.wallets[dir].privateKey}/>
                     </TourWrapper>
                   </div>
                 </div>

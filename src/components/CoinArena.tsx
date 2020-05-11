@@ -46,6 +46,9 @@ function CoinArena({all } : Props) {
 
   let refList: { [name: string]: HTMLElement } = {}
   const setStepMobile = async(step: number) => {
+    if ( !( step === general.mobileStep + 1 || step === general.mobileStep - 1)) {
+      return
+    } // avoid jumping to a diff step while doing an unrelated action. Can be improved
     dispatch({ type: 'changeMobileStep', step })
     await delay(10)
     let stepProp = steps[step]
@@ -62,7 +65,7 @@ function CoinArena({all } : Props) {
       })
     }
   }
-  const setStep = (step:number) => {
+  const setStep = (step: number) => {
     if (all.isSmallScreen && general.mobileTourOpen) {
       setStepMobile(step)
     } else if (!all.isSmallScreen && all.isTourOpen) {

@@ -143,7 +143,7 @@ export const steps = [
   {
     content: () => (
       <div>
-        <p>Double click to select the secret key and copy it</p>
+        <p>Click <b>Copy Private Key</b></p>
       </div>
     ),
     selector: '[data-tut="creatorPrivateKey"]',
@@ -196,7 +196,7 @@ export const steps = [
   {
     content: () => (
       <div>
-        <p>So they just include it in the blockchain?</p>
+        <p>So they just include the pending transactions block in the chain?</p>
         <p>Of course not, there is a catch.</p>
       </div>
     ),
@@ -347,6 +347,6 @@ export const steps = [
         </ul>
       </div>
     ),
-    altSelector: '[data-tut="userWallet"]',
+    altSelector: 'userWallet',
   },
 ]

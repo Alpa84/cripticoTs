@@ -51,5 +51,11 @@ box-shadow: 30px 30px 30px grey;
 .attribution {
   float: right;
 }
-
+.hide {
+  position:absolute;
+  left:-9999px;
+}
+.tourExplanation b {
+  font-weight: 900;
+}
 
