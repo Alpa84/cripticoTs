@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useEffect, useState } from 'react'
 import { GeneralType, Functions } from '../Types'
 import { steps } from 'src/utils/steps';
 
@@ -19,6 +20,14 @@ function TourWrapper({children, functions, general, tutName, componentClass}: Pr
   } else if (step.altSelector) {
     selectorName = step.altSelector
   }
+  const [doFlash, setFlash] =  useState(false)
+
+  useEffect(() => {
+    setFlash(true)
+    setTimeout(() =>{
+      setFlash(false)
+    }, 1000)
+  }, [general.mobileStep])
 
   let show =  general.mobileTourOpen && selectorName === tutName
 
@@ -38,7 +47,7 @@ function TourWrapper({children, functions, general, tutName, componentClass}: Pr
               <path fill="currentColor" d="M5.9 4.5l2.8-2.8c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0L4.5 3.1 1.7.3C1.3-.1.7-.1.3.3c-.4.4-.4 1 0 1.4l2.8 2.8L.3 7.4c-.4.4-.4 1 0 1.4.2.2.4.3.7.3s.5-.1.7-.3L4.5 6l2.8 2.8c.3.2.5.3.8.3s.5-.1.7-.3c.4-.4.4-1 0-1.4L5.9 4.5z" />
             </svg>
           </div>
-          <div className='tourExplanation'>
+          <div className={doFlash ? 'tourExplanation tourFlash' : 'tourExplanation'}>
             {step.content()}
             <div className='tourArrows'>
               {general.mobileStep > 0 && (

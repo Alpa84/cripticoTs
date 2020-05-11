@@ -49,6 +49,20 @@ h2, h3 {
   background-color: wheat;
 }
 
+@-o-keyframes fadeIt {
+  0%  { background-color: rgb(243, 122, 92); }
+  100% { background-color: wheat; }
+}
+@keyframes fadeIt {
+  0%  { background-color: rgb(243, 122, 92); }
+  100% { background-color: wheat; }
+}
+
+.tourFlash{
+    background-image:none !important;
+         -o-animation: fadeIt 0.5s ease-in-out;
+            animation: fadeIt 0.5s ease-in-out;
+}
 
 body {
   background-color: gainsboro;
