@@ -111,6 +111,7 @@ function CoinArena({all } : Props) {
     general.minedBlock = blockWithoutNonce
     let nonce = await tryDifferentNonces(blockWithoutNonce, -1) //// -1 means we are changing the mined block
     dispatch({ type: 'changeMinedBlockNonce', nonce: nonce.toString() })
+    await addDelay(3000)
     dispatch({ type: 'addMinedBlockToChain' })
   }
 

@@ -8,6 +8,7 @@ import KeyPair from './KeyPair'
 import Directory from './Wallets'
 import TourWrapper from './TourWrapper';
 import FixedBlock from './FixedBlock';
+import { startsWithZeros, hashBlock } from 'src/utils/blockchain';
 
 export interface Props {
   isBigScreenTourOpen: boolean,
@@ -25,10 +26,11 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
   givesOptions.unshift(Empty())
   let miningHint
   if (!general.dirToAddMined) {
-    miningHint = 'you have to select a miner'
+    miningHint = 'select a miner'
   } else if (general.pendingTransactions.length === 0) {
     miningHint = 'there are no published transactions, the miner will just mine it own coin'
   }
+
   return (
     <div className="General">
       <div className="container">
@@ -102,7 +104,12 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
                   { general.minedBlock && (
                     <div className='card border-warning'>
                       <div className='card-header'>
-                        <h4>Trying to add block {general.chain.length + 1} ...</h4>
+                        {general.minedBlock && startsWithZeros(hashBlock(general.minedBlock)) ?(
+                            <h4 className='nonceFound'>Nonce found, adding block {general.chain.length + 1} ...</h4>
+                          ):(
+                            <h4>Trying to add block {general.chain.length + 1} ...</h4>
+                          )
+                        }
                       </div>
                       <div className='card-body'>
                         <FixedBlock general={general} functions={functions} block={general.minedBlock}/>

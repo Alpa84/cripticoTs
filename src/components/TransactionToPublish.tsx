@@ -26,7 +26,7 @@ function TransactionToPublish({ general, functions }: Props) {
   } else if (!toPub.receives) {
     signHint = 'choose a receiver'
   } else if (!toPub.amount) {
-    signHint = 'input an amount'
+    signHint = 'enter an amount'
   } else if (!toPub.secretKey) {
     signHint = "paste the giver's secret key"
   }
