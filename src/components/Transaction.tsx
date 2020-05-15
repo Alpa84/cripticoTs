@@ -16,6 +16,11 @@ function Transaction({ general, blockIndex, functions, transactionIndex }: Props
   return (
     <div>
       <div>
+        {general.wallets[transaction.gives]? (
+          <span className='hint' >{`(${general.wallets[transaction.gives].alias})`}</span>
+        ):(
+            <span className='hint' >{`(no wallet with that address)`}</span>
+        )}
         <Input text='gives address' value={transaction.gives} onChange={
           (event) => functions.dispatch({
             type: 'changeChainTGives',
@@ -24,6 +29,11 @@ function Transaction({ general, blockIndex, functions, transactionIndex }: Props
             index: transactionIndex
           })
         } />
+        {general.wallets[transaction.receives] ? (
+          <span className='hint' >{`(${general.wallets[transaction.receives].alias})`}</span>
+        ) : (
+            <span className='hint' >{`(no wallet with that address)`}</span>
+          )}
         <Input text='receives address' value={transaction.receives} onChange={
           (event) => functions.dispatch({
             type: 'changeChainTReceives',
