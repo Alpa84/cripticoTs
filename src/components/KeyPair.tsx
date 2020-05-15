@@ -23,8 +23,8 @@ function KeyPair({ general, functions }: Props) {
         id='generateKeys'
         type='button'
         onClick={() => {
-          functions.dispatch({ type: 'generateKeyPair' })
           setWorking(true)
+          functions.dispatch({ type: 'generateKeyPair' })
           functions.setStep(3)
         }}
         className="btn btn-primary">Generate Public Address and Private Key</button>
