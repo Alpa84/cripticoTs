@@ -20,7 +20,18 @@ function TransactionToPublish({ general, functions }: Props) {
   receivesOptions.unshift(Empty())
   let toPub = general.transactionToPublish
   let signEnabled = toPub.gives && toPub.receives && toPub.amount && toPub.secretKey
+  let signHint
+  if (! toPub.gives) {
+    signHint = 'first choose a giver above'
+  } else if (!toPub.receives) {
+    signHint = 'choose a receiver'
+  } else if (!toPub.amount) {
+    signHint = 'input an amount'
+  } else if (!toPub.secretKey) {
+    signHint = "paste the giver's secret key"
+  }
   let publishEnabled = signEnabled && toPub.signature
+
   return (
     <TourWrapper general={general} functions={functions} tutName='publish'>
       <h2>Transfer Generator</h2>
@@ -86,6 +97,8 @@ function TransactionToPublish({ general, functions }: Props) {
           functions.setStep(15)
         }}
       >Sign with private Key</button>
+      {!signEnabled &&
+        <span className='hint'> {signHint}</span>}
       <FixedInput text='Transaction Signature' value={general.transactionToPublish.signature} />
       <FixedInput text='to add in Block number' value={ general.chain.length + 1 } />
       {general.signatureError && (
@@ -101,6 +114,8 @@ function TransactionToPublish({ general, functions }: Props) {
           functions.setStep(17)
         } }
         >Publish Transaction</button>
+      {!publishEnabled &&
+        <span className='hint'> first sign the transaction</span>}
     </TourWrapper>
   )
 }

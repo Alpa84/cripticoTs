@@ -2,6 +2,7 @@ import * as React from 'react'
 import { KeyPair, Functions, GeneralType } from '../Types'
 import TourWrapper from './TourWrapper'
 import FixedInput from './FixedInput'
+import { useState, useEffect } from 'react'
 export interface Props {
   general: GeneralType
   functions: Functions
@@ -9,6 +10,12 @@ export interface Props {
 
 function KeyPair({ general, functions }: Props) {
   let keyPair = general.keyPair
+  const [isWorking, setWorking] = useState(false)
+
+  useEffect(() => {
+    setWorking(false)
+  }, [general.keyPair])
+
   return (
     <TourWrapper general={general} functions={functions} tutName={"keyPair"}>
       <h2>Wallet Generator</h2>
@@ -17,10 +24,11 @@ function KeyPair({ general, functions }: Props) {
         type='button'
         onClick={() => {
           functions.dispatch({ type: 'generateKeyPair' })
+          setWorking(true)
           functions.setStep(3)
         }}
         className="btn btn-primary">Generate Public Address and Private Key</button>
-      <FixedInput text='Public Address' value={keyPair.address} />
+      <FixedInput text='Public Address' value={isWorking ? 'generating...' : keyPair.address} />
       <FixedInput text='Private Key' value={keyPair.privateKey} />
       <TourWrapper general={general} functions={functions} tutName={"alias"}>
         <div className="input-group mb-3">
@@ -47,6 +55,8 @@ function KeyPair({ general, functions }: Props) {
         >
           Generate Wallet
         </button>
+        {(general.keyPair.address === '' || general.alias === '') &&
+        <span className='hint'> first, generate a Public Address above </span> }
       </TourWrapper>
 
     </TourWrapper>

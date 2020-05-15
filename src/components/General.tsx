@@ -23,6 +23,12 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
     <option key={key} value={key} >{value.alias}</option>
   ))
   givesOptions.unshift(Empty())
+  let miningHint
+  if (!general.dirToAddMined) {
+    miningHint = 'you have to select a miner'
+  } else if (general.pendingTransactions.length === 0) {
+    miningHint = 'there are no published transactions, the miner will just mine it own coin'
+  }
   return (
     <div className="General">
       <div className="container">
@@ -85,6 +91,9 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
                     className="btn btn-primary"
                     disabled={!general.dirToAddMined}
                     onClick={functions.mine}>Start Mining</button>
+                  {(!general.dirToAddMined || general.pendingTransactions.length === 0) && (
+                    <span className='hint'> {miningHint}</span>
+                  )}
                 </div>
               </TourWrapper>
               <TourWrapper general={general} functions={functions} tutName={"blockchain"}>
