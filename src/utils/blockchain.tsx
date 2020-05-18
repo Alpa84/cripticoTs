@@ -42,7 +42,7 @@ export function isInvalidBlock(block: Block, blockIndex: number, receivedChain: 
           return { transactions: `the transaction for the amount of ${transaction.amount} does not have a valid signature` }
         }
       } catch (error) {
-        return { transactions: `there is an error with a signature` }
+        return { transactions: `there is an invalid transaction signature` }
       }
       if (checkIfGiverHasFunds(transaction, previousTransactions)) {
         reviewedTransactions.push(transaction)
@@ -54,7 +54,7 @@ export function isInvalidBlock(block: Block, blockIndex: number, receivedChain: 
   }
   let hash = hashBlock(block)
   if (!startsWithZeros(hash)) {
-    return { hash: 'does not start with the required amount of zeros' }
+    return { hash: 'the hash does not start with the required amount of zeros' }
   }
 
   return false

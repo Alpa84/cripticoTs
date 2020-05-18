@@ -338,10 +338,10 @@ export const steps = [
         <p>Thanks for joining!</p>
         <ul>
           <li>
-            <a href="/AlePan">About me</a>
+            <a href="/AlePan" target="_blank">About me</a>
           </li>
           <li>
-            <a href="/en">Other projects</a>
+            <a href="/en" target="_blank">Other projects</a>
 
           </li>
         </ul>

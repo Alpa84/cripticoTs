@@ -3,6 +3,7 @@ import * as _ from 'lodash'
 import { Functions, GeneralType } from '../Types'
 import TourWrapper from './TourWrapper'
 import FixedInput from './FixedInput'
+import { calculateOwnerCoinsFromChain } from 'src/utils/blockchain'
 export interface Props {
   general: GeneralType
   functions: Functions
@@ -31,10 +32,12 @@ function TransactionToPublish({ general, functions }: Props) {
     signHint = "paste the giver's secret key"
   }
   let publishEnabled = signEnabled && toPub.signature
-
+  let giverFunds = calculateOwnerCoinsFromChain(general.chain, toPub.gives)
+  let showAmountWarning = !!toPub.amount && !!toPub.gives && toPub.amount > giverFunds
   return (
     <TourWrapper general={general} functions={functions} tutName='publish'>
-      <h2>Transfer Generator</h2>
+      <h2>Transaction Generator</h2>
+      <p>Declare that you want to transfer some coins.</p>
       <div className="input-group mb-3">
         <div className="input-group-prepend">
           <label className="input-group-text" >gives</label>
@@ -75,6 +78,11 @@ function TransactionToPublish({ general, functions }: Props) {
           value={general.transactionToPublish.amount}
         />
       </div>
+      { showAmountWarning && (
+        <div className="alert alert-danger">
+          The giver only has ${giverFunds}. You can create the transaction anyway but the miners will ignore it.
+        </div>
+      )}
       <div className="input-group mb-3">
         <div className="input-group-prepend">
             <span className="input-group-text">giver's private Key</span>

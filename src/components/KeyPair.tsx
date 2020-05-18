@@ -19,6 +19,7 @@ function KeyPair({ general, functions }: Props) {
   return (
     <TourWrapper general={general} functions={functions} tutName={"keyPair"}>
       <h2>Wallet Generator</h2>
+      <p>Be someone in the crypto-word, generate your wallet.</p>
       <button
         id='generateKeys'
         type='button'
