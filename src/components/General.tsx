@@ -28,7 +28,7 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
   if (!general.dirToAddMined) {
     miningHint = 'select a miner'
   } else if (general.pendingTransactions.length === 0) {
-    miningHint = 'there are no published transactions, the miner will just mine it own coin'
+    miningHint = "there are no published transactions, the miner will just generate it's own coin"
   }
 
   return (
@@ -72,6 +72,7 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
               <TourWrapper general={general} functions={functions} tutName='mining'>
                 <div className='section'>
                   <h2>Mining Zone</h2>
+                  <p>Include published transactions in the blockchain and generate some coins for the miner at the same time.</p>
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">
                       <label className="input-group-text">Miner</label>
@@ -101,6 +102,7 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
               <TourWrapper general={general} functions={functions} tutName={"blockchain"}>
                 <div className='section'>
                   <h2>Blockchain</h2>
+                  <p>Holds the ground truth about every transaction.</p>
                   { general.minedBlock && (
                     <div className='card border-warning'>
                       <div className='card-header'>
@@ -140,8 +142,8 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
             </p>
             <p>Try changing the amount of a transaction.</p>
             <p><b>Key Pair Generation and Digital Signatures:</b></p>
-            <p>The key pair is generated using a basic implementation of the RSA algorithm <a target="_blank" href="https://github.com/denysdovhan/rsa-labwork"> taken from this repo.</a></p>
-            <p> Digital signature checking was also <a target="_blank" href="<https://github.com/Alpa84/cripticoTs/blob/mobile_tour/src/utils/blockchain.tsx#L86">artisanally implemented.</a></p>
+            <p>The key pair is generated using a basic implementation of the RSA algorithm <a href="https://github.com/denysdovhan/rsa-labwork" target="_blank" > taken from this repo.</a></p>
+            <p> Digital signature checking was also <a href="<https://github.com/Alpa84/cripticoTs/blob/mobile_tour/src/utils/blockchain.tsx#L86" target="_blank" >artisanally implemented.</a></p>
             <h2>Missing Features</h2>
             <p><b>Auto-adjustment of the mining difficulty:</b></p>
             <p>The amount of zeros required for the block to be valid will always be two.</p>
@@ -152,13 +154,13 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
                It would be cool to connect browsers in a p2p manner using WebRTC messages to see transactions published by other users and receive extended chains. This may be implemented in the future.
             </p>
             <h2>Take a look at the code</h2>
-            <p>The crypto-coin code is written to be as simple to understand as possible and it is <a target="_blank" href="https://github.com/Alpa84/cripticoTs/blob/mobile_tour/src/utils/blockchain.tsx#L18">only 220 lines of code</a>.</p>
-            <h2><a href="/AlePan">About Me</a></h2>
-            <h2><a href="/">Other Projects</a></h2>
+            <p>The crypto-coin code is written to be as simple to understand as possible and it is <a href="https://github.com/Alpa84/cripticoTs/blob/mobile_tour/src/utils/blockchain.tsx#L18" target="_blank">only 220 lines of code</a>.</p>
+            <h2><a href="/AlePan" target="_blank">About Me</a></h2>
+            <h2><a href="/" target="_blank">Other Projects</a></h2>
           </div>
         </div>
       </div>
-      <div className='attribution'>Icons made by <a href="https://www.flaticon.com/authors/roundicons" title="Roundicons">Roundicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+      <div className='attribution'>Icons made by <a href="https://www.flaticon.com/authors/roundicons" target="_blank" title="Roundicons">Roundicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
     </div>
   )
 }
