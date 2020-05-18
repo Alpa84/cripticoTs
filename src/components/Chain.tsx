@@ -39,6 +39,9 @@ function Chain({ general, functions }: Props) {
         >
           { general.editableChain ? ('Back to Unedited Chain'):('Hack the Chain')}
         </button>
+        {!general.editableChain && (
+          <p>Alter the data to experience the blockchain security features.</p>
+        )}
       </TourWrapper>
       { general.editableChain && (
         <button
@@ -75,10 +78,10 @@ function Chain({ general, functions }: Props) {
                     )}
                     { general.editableChain ? (
                       <>
-                        <button
+                        {/* <button
                           type="button"
                           onClick={() => { functions.dispatch( {type:'removeBlock', index })}}
-                          className="btn btn-warning">Remove Block</button>
+                          className="btn btn-warning">Remove Block</button> */}
                         <FixedInput text="hash" value={hashBlock(block)}/>
                         <Input text='nonce' value={general.editableChain[index].nonce} onChange={
                           (event) => functions.dispatch({
