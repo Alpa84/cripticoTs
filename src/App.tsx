@@ -1,10 +1,19 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import { useState, useEffect } from 'react'
-import Tour from 'reactour'
+import Tour, { ReactourStep } from 'reactour'
 import { steps } from './utils/steps'
+import { logBigScreenStepChange } from './utils/misc'
 import CoinArena from './components/CoinArena'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
+
+
+let stepsWithAction = steps.map( (step: ReactourStep, stepInd: number)=> {
+  step.action = () => {
+    logBigScreenStepChange(stepInd)
+  }
+  return step
+})
 
 function App() {
   const [tourOpen, setTour] = useState(false)
@@ -15,7 +24,6 @@ function App() {
   const SmallScreenSize = 700
   const isSmallScreen = window.innerWidth < SmallScreenSize
   useEffect(() => {
-    // if (!isSmallScreen) { setTour(false) } // TODO: change to true!!!
     if (!isSmallScreen) { setTour(true) }
   }, []) // used to fire dispatch just once on open
 
@@ -25,7 +33,7 @@ function App() {
       <Tour
         onAfterOpen={disableBody}
         onBeforeClose={enableBody}
-        steps={steps}
+        steps={stepsWithAction}
         showNumber={false}
         scrollDuration={100}
         showNavigation={false}

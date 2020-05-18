@@ -7,11 +7,11 @@ import { hashBlockWithoutNonce, startsWithZeros, validateTransactions } from '..
 import General from './General'
 import { reducer } from 'src/utils/reducer'
 import { steps } from 'src/utils/steps'
-import { addDelay } from 'src/utils/misc'
+import { addDelay, logGeneralChange } from 'src/utils/misc'
 
 let emptyTransactionToPublish = { gives: '', receives: '', amount: 0, signature: '', secretKey: '' }
 let emptyKeyPair = { address: '', privateKey: '' }
-const defaultGeneral: GeneralType = {
+export const defaultGeneral: GeneralType = {
   mobileTourOpen: false,
   mobileStep: 0,
   alias: '',
@@ -43,6 +43,10 @@ function CoinArena({all } : Props) {
   useEffect(() => {
     if ( all.isSmallScreen) { dispatch({ type: 'changeMobileTourOpen', on: true }) }
   }, []) // used to fire dispatch just once on open
+
+  useEffect(() => {
+    logGeneralChange(general)
+  }, [general])
 
   let refList: { [name: string]: HTMLElement } = {}
   const setStepMobile = async(step: number) => {

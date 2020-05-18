@@ -67,6 +67,14 @@ export interface GeneralType {
     wallets: Wallets
     minedBlock?: Block
 }
+export interface Log {
+    general: GeneralType,
+    sessionId: string,
+    bigScreenStep: number,
+    path: string,
+    ipData: string,
+    timestamp: number,
+}
 export interface WalletDetails {
     alias: string,
     privateKey: string,
