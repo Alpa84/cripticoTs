@@ -2,6 +2,7 @@ import { GeneralType, Log } from "src/Types"
 import { defaultGeneral } from 'src/components/CoinArena'
 import * as axios from 'axios'
 import { getAuth } from './rep'
+import * as _ from 'lodash'
 
 
 export const prefferName = (dir: string, general: GeneralType) => {
@@ -41,7 +42,7 @@ const initLogging = async() => {
   setInterval(() => {
     if (unstoredDataPresent) {
       storedLog.timestamp = + new Date()
-      post(storedLog, Auth, counter)
+      post(_.cloneDeep(storedLog), Auth, counter)
       unstoredDataPresent = false
       storedLog.newEvents = []
       counter += 1
