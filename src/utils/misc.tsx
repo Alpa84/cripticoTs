@@ -13,6 +13,7 @@ export function addDelay(ms: number) {
 }
 
 let storedLog: Log = {
+  newEvents: [],
   timestamp: 0,
   sessionId: '',
   path: '',
@@ -42,6 +43,7 @@ const initLogging = async() => {
       storedLog.timestamp = + new Date()
       post(storedLog, Auth, counter)
       unstoredDataPresent = false
+      storedLog.newEvents = []
       counter += 1
     }
   }, 5000)
@@ -53,6 +55,10 @@ export const logGeneralChange = (general: GeneralType)=> {
 }
 export const logBigScreenStepChange = (stepNumber: number)=> {
   storedLog.bigScreenStep = stepNumber
+  unstoredDataPresent = true
+}
+export const logEvent = (event: string)=> {
+  storedLog.newEvents.push(event)
   unstoredDataPresent = true
 }
 

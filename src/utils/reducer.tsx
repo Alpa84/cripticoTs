@@ -151,6 +151,8 @@ export const reducer = (general: GeneralType, action: Action) => {
                 clonedTransactionSign.signatureError = 'There was an error generating the signature, please check the private key'
             }
             return clonedTransactionSign
+        case "changeGeneral":
+            return _.cloneDeep(action.general)
         default:
             throw new Error();
     }

@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import { useState, useEffect } from 'react'
 import Tour, { ReactourStep } from 'reactour'
 import { steps } from './utils/steps'
-import { logBigScreenStepChange } from './utils/misc'
+import { logBigScreenStepChange, logEvent, } from './utils/misc'
 import CoinArena from './components/CoinArena'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 
@@ -19,8 +19,15 @@ function App() {
   const [tourOpen, setTour] = useState(false)
   const [step, setStep] = useState(0)
   const accentColor = "#a9a9a9"
-  const disableBody = (target: HTMLElement) => disableBodyScroll(target)
-  const enableBody = (target: HTMLElement) => enableBodyScroll(target)
+  const disableBodyAndNotify = (target: HTMLElement) => {
+    logEvent('Tour Opened')
+    disableBodyScroll(target)
+  }
+  const enableBodyAndNotify = (target: HTMLElement) => {
+    logEvent('Tour Closed')
+    enableBodyScroll(target)
+  }
+
   const SmallScreenSize = 700
   const isSmallScreen = window.innerWidth < SmallScreenSize
   useEffect(() => {
@@ -31,8 +38,8 @@ function App() {
     <>
       <CoinArena all={{ setStep, setTour, isSmallScreen, isTourOpen: tourOpen}} />
       <Tour
-        onAfterOpen={disableBody}
-        onBeforeClose={enableBody}
+        onAfterOpen={disableBodyAndNotify}
+        onBeforeClose={enableBodyAndNotify}
         steps={stepsWithAction}
         showNumber={false}
         scrollDuration={100}

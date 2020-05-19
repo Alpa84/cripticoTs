@@ -43,6 +43,7 @@ export type Action =
     | { type: 'generateKeyPair'}
     | { type: 'generateWallet'}
     | { type: 'signTransaction'}
+    | { type: 'changeGeneral', general: GeneralType}
 
 export interface Transaction {
     gives: string
@@ -71,6 +72,7 @@ export interface Log {
     general: GeneralType,
     sessionId: string,
     bigScreenStep: number,
+    newEvents: string[],
     path: string,
     ipData: string,
     timestamp: number,
