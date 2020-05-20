@@ -8,21 +8,38 @@ import CoinArena from './components/CoinArena'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 
 
-let stepsWithAction = steps.map( (step: ReactourStep, stepInd: number)=> {
-  step.action = () => {
+let stepsWithAction = steps.map((stepI: ReactourStep, stepInd: number) => {
+  stepI.action = () => {
     logBigScreenStepChange(stepInd)
   }
-  return step
+  return stepI
 })
 
 function App() {
   const [tourOpen, setTour] = useState(false)
-  const [step, setStep] = useState(0)
+  const [currentStep, setCurrentStep] = useState(0)
+  const [stepGoTo, setStepToGoTo] = useState(0)
   const accentColor = "#a9a9a9"
   const disableBodyAndNotify = (target: HTMLElement) => {
     logEvent('Tour Opened')
     disableBodyScroll(target)
   }
+  const setBigScreenStep = (stepI: number) => {
+    if (currentStep === stepI -1 ) {
+      setStepToGoTo(stepI)
+      setCurrentStep(stepI)
+    }
+  }
+  const adjacentStep = (next: boolean) => {
+    if (next) {
+      setStepToGoTo(currentStep + 1)
+      setCurrentStep(currentStep + 1)
+    } else {
+      setStepToGoTo(currentStep - 1)
+      setCurrentStep(currentStep - 1)
+    }
+  }
+
   const enableBodyAndNotify = (target: HTMLElement) => {
     logEvent('Tour Closed')
     enableBodyScroll(target)
@@ -36,17 +53,19 @@ function App() {
 
   return  (
     <>
-      <CoinArena all={{ setStep, setTour, isSmallScreen, isTourOpen: tourOpen}} />
+      <CoinArena all={{ setBigScreenStep, setTour, isSmallScreen, isTourOpen: tourOpen}} />
       <Tour
         onAfterOpen={disableBodyAndNotify}
         onBeforeClose={enableBodyAndNotify}
+        nextStep={() => adjacentStep(true)}
+        prevStep={() => adjacentStep(false)}
         steps={stepsWithAction}
         showNumber={false}
         scrollDuration={100}
         showNavigation={false}
         accentColor={accentColor}
         rounded={0}
-        goToStep={step}
+        goToStep={stepGoTo}
         isOpen={tourOpen}
         onRequestClose={() => setTour(false)} />
     </>

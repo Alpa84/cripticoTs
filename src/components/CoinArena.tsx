@@ -24,7 +24,7 @@ export const defaultGeneral: GeneralType = {
 }
 export interface Props {
   all: {
-    setStep: (step: number) => void
+    setBigScreenStep: (step: number) => void
     setTour: (on: boolean) => void
     isTourOpen: boolean
     isSmallScreen: boolean
@@ -50,9 +50,6 @@ function CoinArena({all } : Props) {
 
   let refList: { [name: string]: HTMLElement } = {}
   const setStepMobile = async(step: number) => {
-    if ( !( step === general.mobileStep + 1 || step === general.mobileStep - 1)) {
-      return
-    } // avoid jumping to a diff step while doing an unrelated action. Can be improved
     dispatch({ type: 'changeMobileStep', step })
     await delay(10)
     let stepProp = steps[step]
@@ -70,12 +67,20 @@ function CoinArena({all } : Props) {
     }
   }
   const setStep = (step: number) => {
-    if (all.isSmallScreen && general.mobileTourOpen) {
+    if (all.isSmallScreen && general.mobileTourOpen && general.mobileStep === step - 1) {
       setStepMobile(step)
-    } else if (!all.isSmallScreen && all.isTourOpen) {
-      all.setStep(step)
+    } else if (!all.isSmallScreen && all.isTourOpen ) { //  we take care of no unintended jumps in the parent component
+      all.setBigScreenStep(step)
     }
   }
+  const setStepFromTour = (step: number) => {
+    if (all.isSmallScreen && general.mobileTourOpen ) {
+      setStepMobile(step)
+    } else if (!all.isSmallScreen && all.isTourOpen ) {
+      all.setBigScreenStep(step)
+    }
+  }
+
   const joinTour = () => {
     if (all.isSmallScreen) {
       functions.dispatch({ type: 'changeMobileTourOpen', on: true })
@@ -126,6 +131,7 @@ function CoinArena({all } : Props) {
     findNonce,
     mine,
     setStep,
+    setStepFromTour,
     setRef,
   }
   return  (
