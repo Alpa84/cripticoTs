@@ -1,4 +1,4 @@
-import { Block, Transaction } from "src/Types"
+import { Block, Transaction, InvalidBlockReason } from "src/Types"
 import * as md5 from 'md5'
 import * as _ from 'lodash'
 import * as bigInt from 'big-integer'
@@ -9,13 +9,13 @@ const MinedAmount = 100
 
 function isInvalidChain(receivedChain: Block[]) {
   for (let [blockIndex, block] of receivedChain.entries()) {
-    let reason = isInvalidBlock(block, blockIndex, receivedChain)
-    if (reason) { return { [blockIndex]: reason } }
+    let reason = checkValidBlock(block, blockIndex, receivedChain)
+    if (!reason.isValid) { return { [blockIndex]: reason } }
   }
   return false
 }
 
-export function isInvalidBlock(block: Block, blockIndex: number, receivedChain: Block[]) {
+export function checkValidBlock(block: Block, blockIndex: number, receivedChain: Block[]): InvalidBlockReason {
   let chainUntilThisBlock = receivedChain.slice(0, blockIndex)
   let chainTransactions = chainToTransactions(chainUntilThisBlock)
   let reviewedTransactions = []
@@ -28,10 +28,10 @@ export function isInvalidBlock(block: Block, blockIndex: number, receivedChain: 
   for (const [index, transaction] of block.transactions.entries()) {
     if (index === 0) {
       if (transaction.gives !== 'mined') {
-        return { transactions: `The first transaction has to be a mined coin, (gives: mined)` }
+        return { transactions: { 0: { gives: `The first transaction has to be a mined coin, (gives: mined)` }} }
       }
       if (transaction.amount !== MinedAmount) {
-        return { transactions: `The first transaction has to be a mined coin, and it has to have a value of ${MinedAmount} and it has a value of : ${transaction.amount}` }
+        return { transactions: { 0: { amount: `The first transaction has to be a mined coin, and it has to have a value of ${MinedAmount} and it has a value of : ${transaction.amount}` }} }
       }
       reviewedTransactions.push(transaction)
     } else {
@@ -39,15 +39,15 @@ export function isInvalidBlock(block: Block, blockIndex: number, receivedChain: 
       try {
         let transactionSignatureValid = hasValidTransactionSignature(transaction, block.previousBlockHash)
         if (!transactionSignatureValid) {
-          return { transactions: `the transaction for the amount of ${transaction.amount} does not have a valid signature` }
+          return { transactions:{ [index]: {signature: `the transaction does not have a valid signature`}} }
         }
       } catch (error) {
-        return { transactions: `there is an invalid transaction signature` }
+        return { transactions: { general: `there is an invalid transaction signature`} }
       }
       if (checkIfGiverHasFunds(transaction, previousTransactions)) {
         reviewedTransactions.push(transaction)
       } else {
-        return { transactions: `A giver does not have ${transaction.amount} simplecoins to give` }
+        return { transactions: { [index]: { signature: `the giver does not have ${transaction.amount} simplecoins to give` } } }
       }
 
     }
@@ -57,7 +57,7 @@ export function isInvalidBlock(block: Block, blockIndex: number, receivedChain: 
     return { hash: 'the hash does not start with the required amount of zeros' }
   }
 
-  return false
+  return {isValid: true}
 }
 
 export function hashBlock(block: Block) {
@@ -73,12 +73,12 @@ function transactionsToStrings(transactions: Transaction[]) {
 }
 
 function chainToTransactions(chain: Block[]) {
-  let chainTransactions = []
-  for (let block of chain) {
-    for (let transaction of block.transactions) {
+  let chainTransactions = [] as Transaction[]
+  chain.map( (block, blockIndex)=> {
+    block.transactions.map( (transaction, transactionIndex)=> {
       chainTransactions.push(transaction)
-    }
-  }
+    })
+  })
   return chainTransactions
 }
 

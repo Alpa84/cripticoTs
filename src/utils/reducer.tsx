@@ -41,7 +41,7 @@ export const reducer = (general: GeneralType, action: Action) => {
         case 'changeChainTReceives':
             let clonedChainTReceives = _.cloneDeep(general)
             if (clonedChainTReceives.editableChain) {
-                clonedChainTReceives.editableChain[action.blockIndex].transactions[action.index].gives = action.receives
+                clonedChainTReceives.editableChain[action.blockIndex].transactions[action.index].receives = action.receives
             }
             return clonedChainTReceives
         case 'changeChainTAmount':

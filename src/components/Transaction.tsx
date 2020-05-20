@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { GeneralType, Functions } from '../Types'
+import { GeneralType, Functions, SingleTransactionValidation } from '../Types'
 import Input from './Input'
 import InputNumber from './InputNumber'
 export interface Props {
@@ -8,9 +8,10 @@ export interface Props {
   blockIndex: number
   transactionIndex: number
   functions: Functions
+  validation?: SingleTransactionValidation
 }
 
-function Transaction({ general, blockIndex, functions, transactionIndex }: Props) {
+function Transaction({ general, blockIndex, functions, transactionIndex, validation }: Props) {
   let block = general.editableChain ? general.editableChain[blockIndex] : general.chain[blockIndex]
   let transaction = block.transactions[transactionIndex]
   return (
@@ -29,6 +30,12 @@ function Transaction({ general, blockIndex, functions, transactionIndex }: Props
             index: transactionIndex
           })
         } />
+        {(validation && validation.gives) && (
+          <div className="alert alert-danger">
+            <strong>Invalid Transaction </strong>
+            <span >{validation.gives}</span>
+          </div>
+        )}
         {general.wallets[transaction.receives] ? (
           <span className='hint' >{`(${general.wallets[transaction.receives].alias})`}</span>
         ) : (
@@ -42,6 +49,12 @@ function Transaction({ general, blockIndex, functions, transactionIndex }: Props
             index: transactionIndex
           })
         } />
+        {(validation && validation.receives) && (
+          <div className="alert alert-danger">
+            <strong>Invalid Transaction </strong>
+            <span >{validation.receives}</span>
+          </div>
+        )}
         <InputNumber text='amount' value={transaction.amount} onChange={
           (event) => functions.dispatch({
             type: 'changeChainTAmount',
@@ -50,6 +63,12 @@ function Transaction({ general, blockIndex, functions, transactionIndex }: Props
             index: transactionIndex
           })
         } />
+        {(validation && validation.amount) && (
+          <div className="alert alert-danger">
+            <strong>Invalid Transaction </strong>
+            <span >{validation.amount}</span>
+          </div>
+        )}
         <Input text='signature' value={transaction.signature ? transaction.signature : ''} onChange={
           (event) => functions.dispatch({
             type: 'changeChainTSignature',
@@ -58,6 +77,12 @@ function Transaction({ general, blockIndex, functions, transactionIndex }: Props
             index: transactionIndex
           })
         } />
+        {(validation && validation.signature) && (
+          <div className="alert alert-danger">
+            <strong>Invalid Transaction </strong>
+            <span >{validation.signature}</span>
+          </div>
+        )}
 
         <button
           type="button"

@@ -3,7 +3,7 @@ import { GeneralType, Functions} from '../Types'
 import * as _ from 'lodash'
 import Input from './Input'
 import Transactions from './Transactions';
-import { isInvalidBlock, hashBlock } from 'src/utils/blockchain';
+import { checkValidBlock, hashBlock } from 'src/utils/blockchain';
 import TourWrapper from './TourWrapper';
 import FixedInput from './FixedInput';
 import FixedBlock from './FixedBlock';
@@ -27,6 +27,11 @@ function Chain({ general, functions }: Props) {
       functions.dispatch({ type: 'toggleEditableChain' })
     }
   }
+  const toggleIfNonEditable = () => {
+      if (!general.editableChain) {
+        functions.dispatch({ type: 'toggleEditableChain' })
+      }
+  }
 
   return (
     <div className="Chain">
@@ -49,10 +54,10 @@ function Chain({ general, functions }: Props) {
           onClick={()=> functions.dispatch({type: 'addBlock'})}
           className="btn btn-secondary">Add Block</button>
       )}
-      <div onDoubleClick={()=> functions.dispatch({ type: 'toggleEditableChain' })}>
+      <div onDoubleClick={ toggleIfNonEditable}>
         {
           chain.map((block, index) => {
-            let invalidBlockReason = isInvalidBlock(block, index, chain)
+            let blockValidation = checkValidBlock(block, index, chain)
             return (
               <TourWrapper
                 general={general}
@@ -62,27 +67,24 @@ function Chain({ general, functions }: Props) {
                 tutName={index=== 0 ? "block": ''}>
                 <div
                   key={index}
-                  className={`card border-primary ${invalidBlockReason ? 'bg-danger' : ''}`}
+                  className={`card border-primary ${!blockValidation.isValid ? 'bg-danger' : ''}`}
                   >
                   <div className="card-header"><h4>Block {index + 1}</h4></div>
                   <div className="card-body">
-                    {invalidBlockReason && (
-                      <div className="alert alert-danger">
-                        <strong>Invalid Block</strong> {
-                          _.map(invalidBlockReason, (value, key) => (
-                            <span key={key}>{value}</span>
-                          ))
-                        }
-                      </div>
-
-                    )}
                     { general.editableChain ? (
                       <>
-                        {/* <button
+                        {/* the following is working but was hidden for pedagogic reasons */}
+                        <button
                           type="button"
                           onClick={() => { functions.dispatch( {type:'removeBlock', index })}}
-                          className="btn btn-warning">Remove Block</button> */}
+                          className="btn btn-warning remove">Remove Block</button>
                         <FixedInput text="hash" value={hashBlock(block)}/>
+                        {blockValidation.hash && (
+                          <div className="alert alert-danger">
+                            <strong>Invalid Block </strong>
+                            <span >{blockValidation.hash}</span>
+                          </div>
+                        )}
                         <Input text='nonce' value={general.editableChain[index].nonce} onChange={
                           (event) => functions.dispatch({
                             type: 'changeChainNonce',
@@ -93,7 +95,11 @@ function Chain({ general, functions }: Props) {
                         <button type="button" className="btn btn-secondary" onClick={() => functions.findNonce(block, index)}>Search Nonce</button>
                         <div className='card'>
                           <div className="card-header">Transactions</div>
-                          <Transactions general={general} blockIndex={index} functions={functions} />
+                          <Transactions
+                            general={general}
+                            blockIndex={index}
+                            functions={functions}
+                            validations={blockValidation.transactions} />
                         </div>
                         <Input text='previous block hash' value={general.editableChain[index].previousBlockHash} onChange={
                           (event) => functions.dispatch({
@@ -102,6 +108,12 @@ function Chain({ general, functions }: Props) {
                             blockIndex: index,
                           })
                         } />
+                        {blockValidation && blockValidation.previousBlockHash && (
+                          <div className="alert alert-danger">
+                            <strong>Invalid Block </strong>
+                            <span >{blockValidation.previousBlockHash}</span>
+                          </div>
+                        )}
                       </>
                     ) : (
                       <FixedBlock general={general} functions={functions} block={block} />
