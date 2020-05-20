@@ -6,6 +6,7 @@ export interface Block  {
     transactions: Transaction[]
 }
 export interface Functions {
+    loadingAndGenerateKeyPair: () => void
     setTour: (on: boolean) =>void
     dispatch: Dispatch<Action>
     findNonce: (block: Block, blockIndex: number) => Promise<void>
@@ -41,7 +42,7 @@ export type Action =
     | { type: 'addMinedBlockToChain'}
     | { type: 'publishTransaction'}
     | { type: 'toggleEditableChain'}
-    | { type: 'generateKeyPair'}
+    | { type: 'changeKeyPair', keyPair: KeyPair}
     | { type: 'generateWallet'}
     | { type: 'signTransaction'}
     | { type: 'changeGeneral', general: GeneralType}

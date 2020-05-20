@@ -2,14 +2,19 @@
 
 import * as bigInt from 'big-integer'
 import {BigInteger} from 'big-integer'
-import {Keys} from '../Types'
+import {Keys, KeyPair} from '../Types'
 
 const keyLength = 256
 
+
 export const generateKeyPair = () => {
-  let keys = RSA.generate(keyLength)
-  return keysToPrivateKey(keys)
+  return new Promise<KeyPair>(resolve => {
+    let keys = RSA.generate(keyLength)
+    let privateKeys =  keysToPrivateKey(keys)
+    return resolve(privateKeys)
+  })
 }
+
 const keysToPrivateKey = (keys: Keys) => {
   return {
     address: `${keys.d.toString()},${keys.n.toString()}`,

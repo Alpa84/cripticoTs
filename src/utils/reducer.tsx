@@ -1,7 +1,6 @@
 import { GeneralType, Action, Transaction, WalletDetails, Block } from 'src/Types'
 import * as _ from 'lodash'
 import { DefaultEmptyTransaction, DefaultEmptyBlock } from './defaultChain'
-import { generateKeyPair } from './rsa'
 import { hashBlock, createTransactionSignature } from './blockchain'
 
 let emptyTransactionToPublish = { gives: '', receives: '', amount: 0, signature: '', secretKey: '' }
@@ -130,9 +129,8 @@ export const reducer = (general: GeneralType, action: Action) => {
                 clonedToggledChain.editableChain = _.cloneDeep(clonedToggledChain.chain)
             }
             return clonedToggledChain
-        case 'generateKeyPair':
-            let keyPair = generateKeyPair()
-            return { ...general, keyPair }
+        case 'changeKeyPair':
+            return { ...general, keyPair: action.keyPair }
         case 'generateWallet':
             let clonedWallet = _.cloneDeep(general)
             let details: WalletDetails = { alias: clonedWallet.alias, privateKey: clonedWallet.keyPair.privateKey }

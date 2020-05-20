@@ -8,6 +8,7 @@ import General from './General'
 import { reducer } from 'src/utils/reducer'
 import { steps } from 'src/utils/steps'
 import { addDelay, logGeneralChange } from 'src/utils/misc'
+import { generateKeyPair } from 'src/utils/rsa'
 
 let emptyTransactionToPublish = { gives: '', receives: '', amount: 0, signature: '', secretKey: '' }
 let emptyKeyPair = { address: '', privateKey: '' }
@@ -123,8 +124,13 @@ function CoinArena({all } : Props) {
     await addDelay(3000)
     dispatch({ type: 'addMinedBlockToChain' })
   }
-
+  const loadingAndGenerateKeyPair = async() => {
+    dispatch({ type: 'changeKeyPair', keyPair: {address:'generating...', privateKey: 'generating...' }})
+    let keyPair =  await generateKeyPair()
+    dispatch({ type: 'changeKeyPair', keyPair })
+  }
   const functions: Functions = {
+    loadingAndGenerateKeyPair,
     setTour: all.setTour,
     joinTour,
     dispatch,
