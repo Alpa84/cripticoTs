@@ -42,6 +42,7 @@ export type Action =
   | { type: 'addMinedBlockToChain'}
   | { type: 'publishTransaction'}
   | { type: 'toggleEditableChain'}
+  | { type: 'backToUneditedChain'}
   | { type: 'changeKeyPair', keyPair: KeyPair}
   | { type: 'generateWallet'}
   | { type: 'signTransaction'}
@@ -73,6 +74,7 @@ export interface GeneralType {
 export interface Log {
   general: GeneralType,
   sessionId: string,
+  windowSize ?: { innerHeight: number, innerWidth: number}
   bigScreenStep: number,
   newEvents: string[],
   path: string,

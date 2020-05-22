@@ -129,6 +129,12 @@ export const reducer = (general: GeneralType, action: Action) => {
                 clonedToggledChain.editableChain = _.cloneDeep(clonedToggledChain.chain)
             }
             return clonedToggledChain
+        case 'backToUneditedChain':
+            let clonedUneditedChain = _.cloneDeep(general)
+            if (clonedUneditedChain.editableChain) {
+                delete clonedUneditedChain.editableChain
+            }
+            return clonedUneditedChain
         case 'changeKeyPair':
             return { ...general, keyPair: action.keyPair }
         case 'generateWallet':

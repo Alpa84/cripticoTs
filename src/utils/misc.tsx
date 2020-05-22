@@ -19,6 +19,7 @@ let storedLog: Log = {
   sessionId: '',
   path: '',
   ipData: '',
+  windowSize: { innerHeight: 0 , innerWidth: 0 },
   general: defaultGeneral,
   bigScreenStep: 0,
 }
@@ -35,8 +36,9 @@ const getIP = async () => {
 const initLogging = async() => {
   let counter = 0
   storedLog.ipData = await getIP()
+  storedLog.windowSize = {innerHeight: window.innerHeight, innerWidth: window.innerWidth}
   storedLog.sessionId = (+ new Date()).toString()
-  storedLog.path = window.location.pathname
+  storedLog.path = window.location.href
   const Auth = await getAuth()
 
   setInterval(() => {
@@ -63,8 +65,9 @@ export const logEvent = (event: string)=> {
   unstoredDataPresent = true
 }
 
-
-initLogging()
+if (window.location.host !== 'localhost:3000' || window.location.pathname === "/log") {
+  initLogging()
+}
 
 const post = async (log: Log, auth: string, counter: number) => {
   try {

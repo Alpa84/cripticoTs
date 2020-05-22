@@ -117,6 +117,7 @@ function CoinArena({all } : Props) {
   }
   const mine = async () => {
     let blockWithoutNonce = validateTransactions(general.pendingTransactions, general.chain, general.dirToAddMined)
+    dispatch({ type:'backToUneditedChain'})
     dispatch({type:'changeMinedBlock', block: blockWithoutNonce})
     general.minedBlock = blockWithoutNonce
     let nonce = await tryDifferentNonces(blockWithoutNonce, -1) //// -1 means we are changing the mined block
