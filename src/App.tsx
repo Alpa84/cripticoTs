@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import { useState, useEffect } from 'react'
 import Tour, { ReactourStep } from 'reactour'
 import { steps } from './utils/steps'
-import { logBigScreenStepChange, logEvent, logTourOpen, } from './utils/misc'
+import { logBigScreenStepChange, logTourOpen, } from './utils/misc'
 import CoinArena from './components/CoinArena'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 
