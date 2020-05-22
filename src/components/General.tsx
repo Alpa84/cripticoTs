@@ -9,6 +9,7 @@ import Directory from './Wallets'
 import TourWrapper from './TourWrapper';
 import FixedBlock from './FixedBlock';
 import { startsWithZeros, hashBlock } from 'src/utils/blockchain';
+import Link from './Link';
 
 export interface Props {
   isBigScreenTourOpen: boolean,
@@ -142,8 +143,8 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
             </p>
             <p>Try changing the amount of a transaction.</p>
             <p><b>Key Pair Generation and Digital Signatures:</b></p>
-            <p>The key pair is generated using a basic implementation of the RSA algorithm <a href="https://github.com/denysdovhan/rsa-labwork" target="_blank" > taken from this repo.</a></p>
-            <p> Digital signature checking was also <a href="<https://github.com/Alpa84/cripticoTs/blob/mobile_tour/src/utils/blockchain.tsx#L86" target="_blank" >artisanally implemented.</a></p>
+            <p>The key pair is generated using a basic implementation of the RSA algorithm <Link href="https://github.com/denysdovhan/rsa-labwork" text=" taken from this repo." /></p>
+            <p> Digital signature checking was also <Link href="https://github.com/Alpa84/cripticoTs/blob/mobile_tour/src/utils/blockchain.tsx#L86" text="artisanally implemented." /></p>
             <h2>Missing Features</h2>
             <p><b>Auto-adjustment of the mining difficulty:</b></p>
             <p>The amount of zeros required for the block to be valid will always be two.</p>
@@ -154,9 +155,9 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
                It would be cool to connect browsers in a p2p manner using WebRTC messages to see transactions published by other users and receive extended chains. This may be implemented in the future.
             </p>
             <h2>Take a look at the code</h2>
-            <p>The crypto-coin code is written to be as simple to understand as possible and it is <a href="https://github.com/Alpa84/cripticoTs/blob/mobile_tour/src/utils/blockchain.tsx#L18" target="_blank">only 220 lines of code</a>.</p>
-            <h2><a href="/AlePan" target="_blank">About Me</a></h2>
-            <h2><a href="/" target="_blank">Other Projects</a></h2>
+            <p>The crypto-coin code is written to be as simple to understand as possible and it is <Link href="https://github.com/Alpa84/cripticoTs/blob/mobile_tour/src/utils/blockchain.tsx#L18" text="only 220 lines of code" />.</p>
+            <h2><Link href="/AlePan" text="About Me"/></h2>
+            <h2><Link href="/" text="Other Projects"/></h2>
           </div>
         </div>
       </div>

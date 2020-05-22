@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-// tslint:disable-next-line:interface-name
 export interface Props {
   text: string
   value: number

@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Link from 'src/components/Link';
 
 type StepPosition = 'top' | 'right' | 'bottom' | 'left' | 'center'
 let top: string = "top";
@@ -338,11 +339,10 @@ export const steps = [
         <p>Thanks for joining!</p>
         <ul>
           <li>
-            <a href="/AlePan" target="_blank">About me</a>
+            <Link href="/AlePan" text="About me" />
           </li>
           <li>
-            <a href="/en" target="_blank">Other projects</a>
-
+            <Link href="/en" text="Other projects" />
           </li>
         </ul>
       </div>
