@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import { useState, useEffect } from 'react'
 import Tour, { ReactourStep } from 'reactour'
 import { steps } from './utils/steps'
-import { logBigScreenStepChange, logEvent, } from './utils/misc'
+import { logBigScreenStepChange, logEvent, logTourOpen, } from './utils/misc'
 import CoinArena from './components/CoinArena'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 
@@ -20,8 +20,12 @@ function App() {
   const [currentStep, setCurrentStep] = useState(0)
   const [stepGoTo, setStepToGoTo] = useState(0)
   const accentColor = "#a9a9a9"
+  const setTourAndLog = (doOpen: boolean) => {
+    setTour(doOpen)
+    logTourOpen(doOpen)
+  }
   const disableBodyAndNotify = (target: HTMLElement) => {
-    logEvent('Tour Opened')
+    logTourOpen(true)
     disableBodyScroll(target)
   }
   const setBigScreenStep = (stepI: number) => {
@@ -41,19 +45,19 @@ function App() {
   }
 
   const enableBodyAndNotify = (target: HTMLElement) => {
-    logEvent('Tour Closed')
+    logTourOpen(false)
     enableBodyScroll(target)
   }
 
   const SmallScreenSize = 700
   const isSmallScreen = window.innerWidth < SmallScreenSize
   useEffect(() => {
-    if (!isSmallScreen) { setTour(true) }
+    if (!isSmallScreen) { setTourAndLog(true) }
   }, []) // used to fire dispatch just once on open
 
   return  (
     <>
-      <CoinArena all={{ setBigScreenStep, setTour, isSmallScreen, isTourOpen: tourOpen}} />
+      <CoinArena all={{ setBigScreenStep, setTour: setTourAndLog, isSmallScreen, isTourOpen: tourOpen}} />
       <Tour
         onAfterOpen={disableBodyAndNotify}
         onBeforeClose={enableBodyAndNotify}

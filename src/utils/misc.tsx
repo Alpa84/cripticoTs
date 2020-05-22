@@ -14,6 +14,7 @@ export function addDelay(ms: number) {
 }
 
 let storedLog: Log = {
+  tourOpened: false,
   newEvents: [],
   timestamp: 0,
   sessionId: '',
@@ -54,6 +55,10 @@ const initLogging = async() => {
 
 export const logGeneralChange = (general: GeneralType)=> {
   storedLog.general = general
+  unstoredDataPresent = true
+}
+export const logTourOpen = (isOpen: boolean)=> {
+  storedLog.tourOpened = isOpen
   unstoredDataPresent = true
 }
 export const logBigScreenStepChange = (stepNumber: number)=> {

@@ -74,6 +74,7 @@ export interface GeneralType {
 export interface Log {
   general: GeneralType,
   sessionId: string,
+  tourOpened: boolean,
   windowSize ?: { innerHeight: number, innerWidth: number}
   bigScreenStep: number,
   newEvents: string[],
