@@ -57,7 +57,12 @@ function App() {
 
   return  (
     <>
-      <CoinArena all={{ setBigScreenStep, setTour: setTourAndLog, isSmallScreen, isTourOpen: tourOpen}} />
+      <CoinArena all={{
+        setBigScreenStep,
+        setTour: setTourAndLog,
+        isSmallScreen,
+        isTourOpen: tourOpen
+      }} />
       <Tour
         onAfterOpen={disableBodyAndNotify}
         onBeforeClose={enableBodyAndNotify}
