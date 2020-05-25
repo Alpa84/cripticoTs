@@ -76,7 +76,7 @@ export interface ActionLog {
   timestamp: number,
 }
 
-enum Event {
+export enum EventE {
   tourOpened= 'tourOpened',
   tourClosed = 'tourClosed',
 }
@@ -93,10 +93,15 @@ export interface StatusLog extends StatusPure {
   timestamp: number
 }
 export interface EventLog {
-  event: Event
+  event: EventE
+  timestamp: number
+}
+export interface TourStepChange {
+  step: number
   timestamp: number
 }
 export interface ChronoLog {
+  tourStepChange?: TourStepChange
   event?: EventLog,
   status?: StatusLog
   linkOpened?: LinkOpened

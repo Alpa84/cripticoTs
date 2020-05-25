@@ -1,4 +1,4 @@
-import { GeneralType, LogChunk, InitialLog, ChronoLog, Action, StatusPure } from "src/Types"
+import { GeneralType, LogChunk, InitialLog, ChronoLog, Action, StatusPure, EventE } from "src/Types"
 import * as axios from 'axios'
 import * as _ from 'lodash'
 
@@ -94,16 +94,22 @@ export const logLinkOpened = (link: string)=> {
   dataToPush.push(chrono)
 }
 export const logTourOpen = (isOpen: boolean)=> {
-  // storedLog.tourOpened = isOpen
-  // unstoredDataPresent = true
+  let chrono: ChronoLog = {
+    event: {
+      event: isOpen? EventE.tourOpened : EventE.tourClosed,
+      timestamp: generateTimestamp()
+    }
+  }
+  dataToPush.push(chrono)
 }
 export const logBigScreenStepChange = (stepNumber: number)=> {
-  // storedLog.bigScreenStep = stepNumber
-  // unstoredDataPresent = true
-}
-export const logEvent = (event: string)=> {
-  // storedLog.newEvents.push(event)
-  // unstoredDataPresent = true
+  let chrono: ChronoLog = {
+    tourStepChange: {
+      step: stepNumber,
+      timestamp: generateTimestamp()
+    }
+  }
+  dataToPush.push(chrono)
 }
 
 if (window.location.host !== 'localhost:3000' || window.location.pathname === "/log") {
