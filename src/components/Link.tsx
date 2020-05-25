@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { logEvent } from 'src/utils/misc'
+import { logLinkOpened } from 'src/utils/misc'
 
 export interface Props {
   text: string
@@ -11,7 +11,7 @@ function Link({ text, href }: Props) {
     <a
       href={href}
       target="_blank"
-      onClick={() => logEvent(href)}
+      onClick={() => logLinkOpened(href)}
     >{text}</a>
   )
 }

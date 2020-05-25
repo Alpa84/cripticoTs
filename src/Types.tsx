@@ -71,17 +71,51 @@ export interface GeneralType {
   wallets: Wallets
   minedBlock?: Block
 }
-export interface Log {
-  general: GeneralType,
-  sessionId: string,
-  tourOpened: boolean,
-  windowSize ?: { innerHeight: number, innerWidth: number}
-  bigScreenStep: number,
-  newEvents: string[],
+export interface ActionLog {
+  action: Action,
+  timestamp: number,
+}
+
+enum Event {
+  tourOpened= 'tourOpened',
+  tourClosed = 'tourClosed',
+}
+
+export interface LinkOpened {
+  timestamp: number
+  link: string
+}
+export interface StatusPure {
+  scrollYPosition: number
+  scrollXPosition: number
+}
+export interface StatusLog extends StatusPure {
+  timestamp: number
+}
+export interface EventLog {
+  event: Event
+  timestamp: number
+}
+export interface ChronoLog {
+  event?: EventLog,
+  status?: StatusLog
+  linkOpened?: LinkOpened
+  action?: ActionLog
+}
+export interface InitialLog {
+  windowSize?: { innerHeight: number, innerWidth: number }
   path: string,
   ipData: string,
   timestamp: number,
 }
+export interface LogChunk {
+  sessionId : string
+  check: string
+  chronoLog?: ChronoLog[]
+  initialLog?: InitialLog
+}
+export type MasterLog = LogChunk[]
+
 export interface WalletDetails {
   alias: string,
   privateKey: string,

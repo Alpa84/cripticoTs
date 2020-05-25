@@ -1,9 +1,10 @@
-import { GeneralType, Log } from "src/Types"
-import { defaultGeneral } from 'src/components/CoinArena'
+import { GeneralType, LogChunk, InitialLog, ChronoLog, Action, StatusPure } from "src/Types"
 import * as axios from 'axios'
-import { getAuth } from './rep'
 import * as _ from 'lodash'
 
+const Check = '23847823h'
+const Endpoint = 'http://localhost:5000/'
+// const Endpoint = 'https://toycoin.herokuapp.com/'
 
 export const prefferName = (dir: string, general: GeneralType) => {
   let name = general.wallets[dir]
@@ -13,18 +14,11 @@ export function addDelay(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-let storedLog: Log = {
-  tourOpened: false,
-  newEvents: [],
-  timestamp: 0,
-  sessionId: '',
-  path: '',
-  ipData: '',
-  windowSize: { innerHeight: 0 , innerWidth: 0 },
-  general: defaultGeneral,
-  bigScreenStep: 0,
+let dataToPush : ChronoLog[] = []
+let lastStatus: StatusPure = {
+  scrollYPosition: 0,
+  scrollXPosition: 0,
 }
-let unstoredDataPresent = false
 
 const getIP = async () => {
   let res =   await axios.default({
@@ -33,61 +27,101 @@ const getIP = async () => {
   })
   return res.data as string
 }
-
+const generateTimestamp = () => (+ new Date())
+let sessionId : string
 const initLogging = async() => {
-  let counter = 0
-  storedLog.ipData = await getIP()
-  storedLog.windowSize = {innerHeight: window.innerHeight, innerWidth: window.innerWidth}
-  storedLog.sessionId = (+ new Date()).toString()
-  storedLog.path = window.location.href
-  const Auth = await getAuth()
-
-  setInterval(() => {
-    if (unstoredDataPresent) {
-      storedLog.timestamp = + new Date()
-      post(_.cloneDeep(storedLog), Auth, counter)
-      unstoredDataPresent = false
-      storedLog.newEvents = []
-      counter += 1
+  let timestamp = generateTimestamp()
+  sessionId = timestamp.toString()
+  let ipData = await getIP()
+  let initialLog : InitialLog= {
+    windowSize: { innerHeight: window.innerHeight, innerWidth: window.innerWidth },
+    ipData,
+    path: window.location.href,
+    timestamp,
+  }
+  let logChunk: LogChunk = {
+    initialLog,
+    check: Check,
+    sessionId,
+  }
+  await post(logChunk)
+  let pushNeeded = false
+  setInterval(async() => {
+    let chronoLogChunk: LogChunk = {
+      chronoLog: dataToPush,
+      check: Check,
+      sessionId,
     }
+    let currentStatus = getStatus()
+    if ( !_.isEqual(currentStatus, lastStatus)) {
+      let currentStatusTime = {
+        ...currentStatus,
+        timestamp: generateTimestamp(),
+      }
+      dataToPush.push({
+        status: currentStatusTime,
+      })
+      pushNeeded = true
+    }
+    if (dataToPush.length !== 0 ) {
+      pushNeeded = true
+    }
+    if (pushNeeded) {
+      await post(chronoLogChunk)
+    }
+    dataToPush =  []
+    pushNeeded = false
+    lastStatus = currentStatus
   }, 5000)
 }
 
-export const logGeneralChange = (general: GeneralType)=> {
-  storedLog.general = general
-  unstoredDataPresent = true
+const getStatus = (): StatusPure => {
+  return {
+    scrollYPosition: window.pageYOffset || document.documentElement.scrollTop,
+    scrollXPosition: window.pageXOffset || document.documentElement.scrollLeft,
+  }
+}
+export const logActionChange = (action: Action)=> {
+  let chrono : ChronoLog = {
+    action: {action, timestamp: generateTimestamp()},
+  }
+  dataToPush.push(chrono)
+}
+export const logLinkOpened = (link: string)=> {
+  let chrono : ChronoLog = {
+    linkOpened: {link, timestamp: generateTimestamp()},
+  }
+  dataToPush.push(chrono)
 }
 export const logTourOpen = (isOpen: boolean)=> {
-  storedLog.tourOpened = isOpen
-  unstoredDataPresent = true
+  // storedLog.tourOpened = isOpen
+  // unstoredDataPresent = true
 }
 export const logBigScreenStepChange = (stepNumber: number)=> {
-  storedLog.bigScreenStep = stepNumber
-  unstoredDataPresent = true
+  // storedLog.bigScreenStep = stepNumber
+  // unstoredDataPresent = true
 }
 export const logEvent = (event: string)=> {
-  storedLog.newEvents.push(event)
-  unstoredDataPresent = true
+  // storedLog.newEvents.push(event)
+  // unstoredDataPresent = true
 }
 
 if (window.location.host !== 'localhost:3000' || window.location.pathname === "/log") {
   initLogging()
 }
 
-const post = async (log: Log, auth: string, counter: number) => {
+const post = async (logChunk: LogChunk ) => {
   try {
     await axios.default({
       method: 'post',
-      url: `https://jsonbin.org/alpa84/${log.sessionId}/${counter}`,
+      url: Endpoint,
       headers: {
-        'authorization': auth,
-        'Content-Type': 'application/ json',
-        'accept': 'application/json',
+        'sessionId': logChunk.sessionId,
+        'Content-Type': 'application/json',
       },
-      data: log,
+      data: logChunk,
     })
   } catch (error) {
     console.log(error)
   }
-
 }

@@ -2,11 +2,13 @@ import { GeneralType, Action, Transaction, WalletDetails, Block } from 'src/Type
 import * as _ from 'lodash'
 import { DefaultEmptyTransaction, DefaultEmptyBlock } from './defaultChain'
 import { hashBlock, createTransactionSignature } from './blockchain'
+import { logActionChange } from './misc'
 
 let emptyTransactionToPublish = { gives: '', receives: '', amount: 0, signature: '', secretKey: '' }
 let emptyKeyPair = { address: '', privateKey: '' }
 
-export const reducer = (general: GeneralType, action: Action) => {
+const reducer = (general: GeneralType, action: Action) => {
+    logActionChange(action)
     switch (action.type) {
         case 'changeAlias':
             return {...general, alias: action.alias}
@@ -159,5 +161,11 @@ export const reducer = (general: GeneralType, action: Action) => {
             return _.cloneDeep(action.general)
         default:
             throw new Error();
+
     }
+}
+export const reducerAndLog = (general: GeneralType, action: Action) => {
+    let bypass = reducer(general, action)
+    logActionChange(action)
+    return bypass
 }
