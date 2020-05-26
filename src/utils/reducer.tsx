@@ -8,7 +8,6 @@ let emptyTransactionToPublish = { gives: '', receives: '', amount: 0, signature:
 let emptyKeyPair = { address: '', privateKey: '' }
 
 const reducer = (general: GeneralType, action: Action) => {
-    logActionChange(action)
     switch (action.type) {
         case 'changeAlias':
             return {...general, alias: action.alias}
