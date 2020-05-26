@@ -55,12 +55,10 @@ const initLogging = async() => {
     let currentStatus = getStatus()
     if ( !_.isEqual(currentStatus, lastStatus)) {
       let currentStatusTime = {
-        ...currentStatus,
+        status: {...currentStatus},
         timestamp: generateTimestamp(),
       }
-      dataToPush.push({
-        status: currentStatusTime,
-      })
+      dataToPush.push(currentStatusTime)
       pushNeeded = true
     }
     if (dataToPush.length !== 0 ) {
@@ -83,31 +81,29 @@ const getStatus = (): StatusPure => {
 }
 export const logActionChange = (action: Action)=> {
   let chrono : ChronoLog = {
-    action: {action, timestamp: generateTimestamp()},
+    action,
+    timestamp: generateTimestamp()
   }
   dataToPush.push(chrono)
 }
 export const logLinkOpened = (link: string)=> {
   let chrono : ChronoLog = {
-    linkOpened: {link, timestamp: generateTimestamp()},
+    linkOpened: link,
+    timestamp: generateTimestamp()
   }
   dataToPush.push(chrono)
 }
 export const logTourOpen = (isOpen: boolean)=> {
   let chrono: ChronoLog = {
-    event: {
-      event: isOpen? EventE.tourOpened : EventE.tourClosed,
-      timestamp: generateTimestamp()
-    }
+    event: isOpen? EventE.tourOpened : EventE.tourClosed,
+    timestamp: generateTimestamp()
   }
   dataToPush.push(chrono)
 }
 export const logBigScreenStepChange = (stepNumber: number)=> {
   let chrono: ChronoLog = {
-    tourStepChange: {
-      step: stepNumber,
-      timestamp: generateTimestamp()
-    }
+    tourStepChange: stepNumber,
+    timestamp: generateTimestamp()
   }
   dataToPush.push(chrono)
 }

@@ -71,41 +71,23 @@ export interface GeneralType {
   wallets: Wallets
   minedBlock?: Block
 }
-export interface ActionLog {
-  action: Action,
-  timestamp: number,
-}
 
 export enum EventE {
   tourOpened= 'tourOpened',
   tourClosed = 'tourClosed',
 }
 
-export interface LinkOpened {
-  timestamp: number
-  link: string
-}
 export interface StatusPure {
   scrollYPosition: number
   scrollXPosition: number
 }
-export interface StatusLog extends StatusPure {
-  timestamp: number
-}
-export interface EventLog {
-  event: EventE
-  timestamp: number
-}
-export interface TourStepChange {
-  step: number
-  timestamp: number
-}
 export interface ChronoLog {
-  tourStepChange?: TourStepChange
-  event?: EventLog,
-  status?: StatusLog
-  linkOpened?: LinkOpened
-  action?: ActionLog
+  tourStepChange?: number
+  event?: EventE,
+  status?: StatusPure
+  linkOpened?: string
+  action?: Action
+  timestamp: number
 }
 export interface InitialLog {
   windowSize?: { innerHeight: number, innerWidth: number }
