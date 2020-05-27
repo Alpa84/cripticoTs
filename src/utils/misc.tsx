@@ -6,6 +6,9 @@ const Check = '23847823h'
 // const Endpoint = 'http://localhost:5000/'
 const Endpoint = 'https://toycoin.herokuapp.com/'
 
+const PushInterval = 5000
+const ScrollInterval = 1000
+
 export const prefferName = (dir: string, general: GeneralType) => {
   let name = general.wallets[dir]
   return name ? name.alias : dir
@@ -46,21 +49,26 @@ const initLogging = async() => {
   }
   await post(logChunk)
   let pushNeeded = false
-  setInterval(async() => {
-    let chronoLogChunk: LogChunk = {
-      chronoLog: dataToPush,
-      check: Check,
-      sessionId,
-    }
+
+  setInterval( async ()=> {
     let currentStatus = getStatus()
-    if ( !_.isEqual(currentStatus, lastStatus)) {
+    if (!_.isEqual(currentStatus, lastStatus)) {
       let currentStatusTime = {
         status: {...currentStatus},
         timestamp: generateTimestamp(),
       }
       dataToPush.push(currentStatusTime)
       pushNeeded = true
+      lastStatus = currentStatus
     }
+  }, ScrollInterval)
+  setInterval(async() => {
+    let chronoLogChunk: LogChunk = {
+      chronoLog: dataToPush,
+      check: Check,
+      sessionId,
+    }
+
     if (dataToPush.length !== 0 ) {
       pushNeeded = true
     }
@@ -69,8 +77,7 @@ const initLogging = async() => {
     }
     dataToPush =  []
     pushNeeded = false
-    lastStatus = currentStatus
-  }, 5000)
+  }, PushInterval)
 }
 
 const getStatus = (): StatusPure => {
