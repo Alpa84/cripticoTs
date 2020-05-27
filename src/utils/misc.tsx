@@ -3,8 +3,8 @@ import * as axios from 'axios'
 import * as _ from 'lodash'
 
 const Check = '23847823h'
-const Endpoint = 'http://localhost:5000/'
-// const Endpoint = 'https://toycoin.herokuapp.com/'
+// const Endpoint = 'http://localhost:5000/'
+const Endpoint = 'https://toycoin.herokuapp.com/'
 
 export const prefferName = (dir: string, general: GeneralType) => {
   let name = general.wallets[dir]
