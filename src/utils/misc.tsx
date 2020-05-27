@@ -107,8 +107,7 @@ export const logBigScreenStepChange = (stepNumber: number)=> {
   }
   dataToPush.push(chrono)
 }
-
-if (window.location.host !== 'localhost:3000' || window.location.pathname === "/log") {
+if (window.location.host !== 'localhost:3000' || window.location.pathname.startsWith("/log") ) {
   initLogging()
 }
 

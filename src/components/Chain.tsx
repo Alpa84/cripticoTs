@@ -67,7 +67,7 @@ function Chain({ general, functions }: Props) {
                 tutName={index=== 0 ? "block": ''}>
                 <div
                   key={index}
-                  className={`card border-primary ${!blockValidation.isValid ? 'bg-danger' : ''}`}
+                  className={`card border-primary ${!blockValidation.isValid ? 'invalidBlock' : ''}`}
                   >
                   <div className="card-header"><h4>Block {index + 1}</h4></div>
                   <div className="card-body">
