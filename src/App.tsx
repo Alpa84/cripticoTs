@@ -49,7 +49,7 @@ function App() {
     enableBodyScroll(target)
   }
 
-  const SmallScreenSize = 700
+  const SmallScreenSize = 720
   const isSmallScreen = window.innerWidth < SmallScreenSize
   useEffect(() => {
     if (!isSmallScreen) { setTourAndLog(true) }
