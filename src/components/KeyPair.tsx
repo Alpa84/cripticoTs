@@ -9,6 +9,12 @@ export interface Props {
 
 function KeyPair({ general, functions }: Props) {
   let keyPair = general.keyPair
+  let hint: string
+  if (general.keyPair.address === '') {
+    hint = 'first, generate a Public Address above'
+  } else if (general.alias === ''){
+    hint = 'type an alias for your wallet'
+  } else { hint = ''}
 
   return (
     <TourWrapper general={general} functions={functions} tutName={"keyPair"}>
@@ -49,8 +55,8 @@ function KeyPair({ general, functions }: Props) {
         >
           Generate Wallet
         </button>
-        {(general.keyPair.address === '' || general.alias === '') &&
-        <span className='hint'> first, generate a Public Address above </span> }
+        {hint &&
+        <span className='hint'> {hint} </span> }
       </TourWrapper>
 
     </TourWrapper>

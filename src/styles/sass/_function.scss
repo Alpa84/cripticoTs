@@ -59,6 +59,13 @@
 .inside > tbody > tr:first-child > td {
   border: none;
 }
+.inside > tbody > tr:first-child > th {
+  border: none;
+}
+.slim {
+  padding-top: 0rem;
+  padding-bottom: 0rem;
+}
 .btn {
   margin-bottom: 15px;
 }

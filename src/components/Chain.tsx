@@ -70,7 +70,7 @@ function Chain({ general, functions }: Props) {
                   className={`card border-primary ${!blockValidation.isValid ? 'invalidBlock' : ''}`}
                   >
                   <div className="card-header"><h4>Block {index + 1}</h4></div>
-                  <div className="card-body">
+                  <div className={`card-body ${general.editableChain ? '' :'slim'}`}>
                     { general.editableChain ? (
                       <>
                         {/* the following is working but was hidden for pedagogic reasons */}

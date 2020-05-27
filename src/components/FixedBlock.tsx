@@ -11,7 +11,7 @@ export interface Props {
 
 function FixedBlock({ general, functions, block }: Props) {
   return (
-    <table className="table fixedTable chainTable">
+    <table className="table fixedTable  inside chainTable">
       <tbody>
         <tr>
           <th scope="row">Hash</th>

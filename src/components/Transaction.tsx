@@ -3,6 +3,7 @@ import * as _ from 'lodash'
 import { GeneralType, Functions, SingleTransactionValidation } from '../Types'
 import Input from './Input'
 import InputNumber from './InputNumber'
+import { Mined } from 'src/utils/defaultChain'
 export interface Props {
   general: GeneralType
   blockIndex: number
@@ -14,14 +15,15 @@ export interface Props {
 function Transaction({ general, blockIndex, functions, transactionIndex, validation }: Props) {
   let block = general.editableChain ? general.editableChain[blockIndex] : general.chain[blockIndex]
   let transaction = block.transactions[transactionIndex]
+  let hint = general.wallets[transaction.gives] ? `(${general.wallets[transaction.gives].alias})`
+   : `(no wallet with that address)`
   return (
     <div>
       <div>
-        {general.wallets[transaction.gives]? (
-          <span className='hint' >{`(${general.wallets[transaction.gives].alias})`}</span>
-        ):(
-            <span className='hint' >{`(no wallet with that address)`}</span>
-        )}
+
+        {(transaction.gives !== Mined)  &&
+          (<span className='hint' >{hint}</span>)
+        }
         <Input text='gives address' value={transaction.gives} onChange={
           (event) => functions.dispatch({
             type: 'changeChainTGives',

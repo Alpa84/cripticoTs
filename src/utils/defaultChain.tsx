@@ -13,7 +13,7 @@ export const DefaultWallets = {
     [FirstUserPublicAddress]: { alias: 'Athena', privateKey: FirstUserPrivateKey },
     [CreatorPublicAddress]: { alias: 'AlePan', privateKey: CreatorPrivateKey },
 }
-
+export const Mined = 'mined'
 export const DefaultChain: Block[] = [
     {
         nonce: '433',
@@ -21,7 +21,7 @@ export const DefaultChain: Block[] = [
         transactions: [
             {
                 amount: 100,
-                gives: 'mined',
+                gives: Mined,
                 receives: CreatorPublicAddress,
                 signature: ''
                 // a mined coin does not require signature
@@ -34,7 +34,7 @@ export const DefaultChain: Block[] = [
         transactions: [
             {
                 amount: 100,
-                gives: 'mined',
+                gives: Mined,
                 receives: MinerPublicAddress,
                 signature: ''
             },

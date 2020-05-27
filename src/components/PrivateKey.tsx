@@ -39,7 +39,7 @@ function PrivateKey({ pKey }: Props) {
         type="button"
         className="btn btn-secondary btn-sm">Copy Private Key</button>
         {isCopied && (
-          'Copied!'
+          ' Copied!'
         )}
     </>
   )

@@ -35,7 +35,7 @@ export const steps = [
     <div>
       To do anything with a crypto coin you have to have a wallet. For that, you have to generate a Public Address and a Private Key.
       Your public address is like an email address. If anyone wants to send you a crypto-coin all they need to know is your public address.
-      Your private key is like a password.You have to keep it secret.Anyone with your private key will be able to sell all your coins.
+      Your private key is like a password.You have to keep it secret. Anyone with your private key will be able to sell all your coins.
       Go ahead and click <b>generate a Public Address and a Private Key</b>
     </div>
     ),
@@ -106,7 +106,7 @@ export const steps = [
   {
     content: () => (
       <div>
-        <p>They have everybody's private keys! Private keys should not be shared with anyone you don't trust. We are only storing them here for showing how it all works.</p>
+        <p>They have everybody's private keys! You shouldn't share Private Keys with people you don't trust. We are only storing them here for showing how it all works.</p>
         <p>In fact, everything about crypto currencies is about trusting no one.</p>
       </div>
     ),
@@ -206,7 +206,7 @@ export const steps = [
   {
     content: () => (
       <div>
-        <p>Notice how every block on the blockchain has funny number called a <b>"hash"</b> </p>
+        <p>Notice how every block on the blockchain has curious number called a <b>"hash"</b> </p>
       </div>
     ),
     selector: '[data-tut="blockchain"]',
@@ -238,8 +238,8 @@ export const steps = [
     },
     content: () => (
       <div>
-        <p>Instead of user aliases, you will see user addresses. Blochains usually store user addresses, we show the aliases to make it more readable </p>
-        <p>Change any field of the block and watch the <b>hash</b> change as you change the data. For the moment, never mind the warnings you are going to see.</p>
+        <p>Instead of user aliases, you will see user addresses. Blochains usually store user addresses,in this case we show the aliases to make it more readable.</p>
+        <p>Change any field on the block and watch the <b>hash</b> change as you change the data. For the moment, never mind the warnings you are going to see.</p>
       </div>
     ),
     selector: '[data-tut="block"]',
@@ -250,7 +250,7 @@ export const steps = [
     },
     content: () => (
       <div>
-        <p>All that the miner does is try to guess different changes to make that <b>hash</b> start with two zeros (or more). </p><p> How? </p><p>He just tries different numbers in a place specifically meant for that, called the <b>"nonce"</b> until the block <b>hash</b> starts with '00'.</p>
+        <p>All that the miner does is try to guess different numbers to make that <b>hash</b> start with two zeros (or more). </p><p> How? </p><p>He just tries different numbers in a place specifically meant for that, called the <b>"nonce"</b> until the block <b>hash</b> starts with '00'.</p>
       </div>
     ),
     selector: '[data-tut="block"]',
@@ -325,7 +325,7 @@ export const steps = [
   {
     content: () => (
       <div>
-        <p>How much everyone has can also be seen in the wallets, but the ground truth is always in the blockchain </p>
+        <p>How much everyone has can also be seen in the wallets, but the ground truth is always in the blockchain.</p>
       </div>
     ),
     selector: '[data-tut="userWallet"]',
@@ -335,7 +335,7 @@ export const steps = [
       <div>
         <p>That is how far we are going to go with this tour, but there are a bunch of things you can explore by yourself.</p>
         <p>The <b>Blockchain</b> is fully editable.</p>
-        <p>You can try modifying the chain info and reading the warnings at the top of each <b>block</b> to get a feel of the security measures implemented in the blockchain.</p>
+        <p>You can try modifying the chain info and reading the warnings that will appear to get a feel of the security measures implemented in the blockchain.</p>
         <p>Thanks for joining!</p>
         <ul>
           <li>
