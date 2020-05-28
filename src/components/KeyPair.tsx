@@ -15,7 +15,8 @@ function KeyPair({ general, functions }: Props) {
   } else if (general.alias === ''){
     hint = 'type an alias for your wallet'
   } else { hint = ''}
-
+  let aliasList = Object.keys(general.wallets).map( key => general.wallets[key].alias)
+  let isAliasTaken = aliasList.indexOf(general.alias) >= 0
   return (
     <TourWrapper general={general} functions={functions} tutName={"keyPair"}>
       <h2>Wallet Generator</h2>
@@ -43,6 +44,12 @@ function KeyPair({ general, functions }: Props) {
             key='newAlias'
             onChange={(event) => functions.dispatch({ type: 'changeAlias', alias: event.target.value })} />
         </div>
+        {isAliasTaken && (
+          <div className="alert alert-danger">
+            <strong>That alias already exists, </strong>
+            <span >please select another one.</span>
+          </div>
+        )}
         <button
           type="button"
           id='generateWallet'
