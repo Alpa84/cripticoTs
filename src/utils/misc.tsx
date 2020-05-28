@@ -3,8 +3,9 @@ import * as axios from 'axios'
 import * as _ from 'lodash'
 
 const Check = '23847823h'
-// const Endpoint = 'http://localhost:5000/'
-const Endpoint = 'https://toycoin.herokuapp.com/'
+export const LocalServer = 'http://localhost:5000'
+export const ProdServer = 'https://toycoin.herokuapp.com'
+export const ServerEndpoint = process.env.NODE_ENV === 'development'? LocalServer : ProdServer
 
 const PushInterval = 5000
 const ScrollInterval = 1000
@@ -122,7 +123,7 @@ const post = async (logChunk: LogChunk ) => {
   try {
     await axios.default({
       method: 'post',
-      url: Endpoint,
+      url: ServerEndpoint,
       headers: {
         'sessionId': logChunk.sessionId,
         'Content-Type': 'application/json',
