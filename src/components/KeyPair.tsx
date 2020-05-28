@@ -1,4 +1,5 @@
 import * as React from 'react'
+import {useState} from 'react'
 import { KeyPair, Functions, GeneralType } from '../Types'
 import TourWrapper from './TourWrapper'
 import FixedInput from './FixedInput'
@@ -6,8 +7,10 @@ export interface Props {
   general: GeneralType
   functions: Functions
 }
+const ShowGeneratedPeriod = 4000
 
 function KeyPair({ general, functions }: Props) {
+  const [showGenerated, setShowGenerated] = useState(false)
   let keyPair = general.keyPair
   let hint: string
   if (general.keyPair.address === '') {
@@ -17,6 +20,12 @@ function KeyPair({ general, functions }: Props) {
   } else { hint = ''}
   let aliasList = Object.keys(general.wallets).map( key => general.wallets[key].alias)
   let isAliasTaken = aliasList.indexOf(general.alias) >= 0
+  const handleGenerateClick = () => {
+    setShowGenerated(true)
+    functions.dispatch({ type: 'generateWallet' })
+    functions.setStep(4)
+    setTimeout(()=> {setShowGenerated(false)}, ShowGeneratedPeriod)
+  }
   return (
     <TourWrapper general={general} functions={functions} tutName={"keyPair"}>
       <h2>Wallet Generator</h2>
@@ -54,16 +63,19 @@ function KeyPair({ general, functions }: Props) {
           type="button"
           id='generateWallet'
           className="btn btn-primary"
-          onClick={() => {
-            functions.dispatch({ type: 'generateWallet' })
-            functions.setStep(4)
-          }}
+          onClick={handleGenerateClick}
           disabled={general.keyPair.address === '' || general.alias === ''}
         >
           Generate Wallet
         </button>
         {hint &&
         <span className='hint'> {hint} </span> }
+        {showGenerated && (
+          <div className="alert alert-success">
+            <strong>Wallet Generated. </strong>
+            <span >You will find it the Wallets section.</span>
+          </div>
+        )}
       </TourWrapper>
 
     </TourWrapper>
