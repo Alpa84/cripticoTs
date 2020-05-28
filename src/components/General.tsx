@@ -26,7 +26,9 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
   ))
   givesOptions.unshift(Empty())
   let miningHint
-  if (!general.dirToAddMined) {
+  if (general.minedBlock) {
+    miningHint = 'Mining in progress.. '
+  } else if (!general.dirToAddMined) {
     miningHint = 'select a miner'
   } else if (general.pendingTransactions.length === 0) {
     miningHint = "there are no published transactions, the miner will just generate it's own coin"
@@ -93,7 +95,7 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
                     type="button"
                     id="startMining"
                     className="btn btn-primary"
-                    disabled={!general.dirToAddMined}
+                    disabled={!general.dirToAddMined || !!general.minedBlock}
                     onClick={functions.mine}>Start Mining</button>
                   {(!general.dirToAddMined || general.pendingTransactions.length === 0) && (
                     <span className='hint'> {miningHint}</span>
