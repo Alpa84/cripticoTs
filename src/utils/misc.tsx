@@ -22,6 +22,7 @@ let dataToPush : ChronoLog[] = []
 let lastStatus: StatusPure = {
   scrollYPosition: 0,
   scrollXPosition: 0,
+  hidden: false,
 }
 
 const getIP = async () => {
@@ -52,6 +53,7 @@ const initLogging = async() => {
   let pushNeeded = false
 
   setInterval( async ()=> {
+    console.log(document.hidden)
     let currentStatus = getStatus()
     if (!_.isEqual(currentStatus, lastStatus)) {
       let currentStatusTime = {
@@ -85,6 +87,7 @@ const getStatus = (): StatusPure => {
   return {
     scrollYPosition: window.pageYOffset || document.documentElement.scrollTop,
     scrollXPosition: window.pageXOffset || document.documentElement.scrollLeft,
+    hidden: document.hidden
   }
 }
 export const logActionChange = (action: Action)=> {

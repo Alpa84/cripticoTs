@@ -80,6 +80,7 @@ export enum EventE {
 export interface StatusPure {
   scrollYPosition: number
   scrollXPosition: number
+  hidden: boolean
 }
 export interface ChronoLog {
   tourStepChange?: number
