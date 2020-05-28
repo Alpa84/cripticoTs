@@ -119,11 +119,18 @@ function TransactionToPublish({ general, functions }: Props) {
         className="btn btn-primary"
         onClick={()=>{
           functions.dispatch({ type: 'publishTransaction' })
+          functions.showNotification('transactionPublished')
           functions.setStep(17)
         } }
         >Publish Transaction</button>
       {!publishEnabled &&
         <span className='hint'> first sign the transaction</span>}
+      {general.notifications.transactionPublished && (
+        <div className="alert alert-success">
+          <strong>Transaction Published.</strong>
+          <span >You will find it in the next section.</span>
+        </div>
+      )}
     </TourWrapper>
   )
 }

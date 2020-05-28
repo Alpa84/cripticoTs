@@ -7,6 +7,7 @@ export interface Block  {
 }
 export interface Functions {
   loadingAndGenerateKeyPair: () => void
+  showNotification: (area:keyof Notifications, milliseconds?: number) => void
   setTour: (on: boolean) =>void
   dispatch: Dispatch<Action>
   findNonce: (block: Block, blockIndex: number) => Promise<void>
@@ -46,6 +47,7 @@ export type Action =
   | { type: 'changeKeyPair', keyPair: KeyPair}
   | { type: 'generateWallet'}
   | { type: 'signTransaction'}
+  | { type: 'changeNotification', on: boolean, area: keyof Notifications }
   | { type: 'changeGeneral', general: GeneralType}
 
 export interface Transaction {
@@ -69,9 +71,13 @@ export interface GeneralType {
   keyPair: KeyPair
   alias: string
   wallets: Wallets
+  notifications: Notifications
   minedBlock?: Block
 }
-
+export interface Notifications {
+  walletGenerated: boolean
+  transactionPublished: boolean
+}
 export enum EventE {
   tourOpened= 'tourOpened',
   tourClosed = 'tourClosed',

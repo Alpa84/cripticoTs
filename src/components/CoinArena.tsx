@@ -10,10 +10,12 @@ import { steps } from 'src/utils/steps'
 import { addDelay } from 'src/utils/misc'
 import { generateKeyPair } from 'src/utils/rsa'
 
+const DefaultNotificationDuration = 4000
 let emptyTransactionToPublish = { gives: '', receives: '', amount: 0, signature: '', secretKey: '' }
 let emptyKeyPair = { address: '', privateKey: '' }
 export const defaultGeneral: GeneralType = {
   mobileTourOpen: false,
+  notifications: { walletGenerated: false, transactionPublished: false},
   mobileStep: 0,
   alias: '',
   chain: DefaultChain,
@@ -127,8 +129,16 @@ function CoinArena({all } : Props) {
     let keyPair =  await generateKeyPair()
     dispatch({ type: 'changeKeyPair', keyPair })
   }
+  const showNotification: Functions["showNotification"] = (area, milliseconds) => {
+    dispatch({ type: 'changeNotification', area, on: true})
+    setTimeout( ()=> {
+      dispatch({type:'changeNotification', area, on:false})
+    }, milliseconds || DefaultNotificationDuration)
+
+  }
   const functions: Functions = {
     loadingAndGenerateKeyPair,
+    showNotification,
     setTour: all.setTour,
     joinTour,
     dispatch,
