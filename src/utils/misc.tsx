@@ -53,7 +53,6 @@ const initLogging = async() => {
   let pushNeeded = false
 
   setInterval( async ()=> {
-    console.log(document.hidden)
     let currentStatus = getStatus()
     if (!_.isEqual(currentStatus, lastStatus)) {
       let currentStatusTime = {
@@ -118,8 +117,10 @@ export const logBigScreenStepChange = (stepNumber: number)=> {
   }
   dataToPush.push(chrono)
 }
-if (window.location.host !== 'localhost:3000' || window.location.pathname.startsWith("/log") ) {
-  initLogging()
+if (window.location.search !== "?do_not_log") {
+  if (window.location.host !== 'localhost:3000' || window.location.pathname.startsWith("/log") ) {
+    initLogging()
+  }
 }
 
 const post = async (logChunk: LogChunk ) => {
