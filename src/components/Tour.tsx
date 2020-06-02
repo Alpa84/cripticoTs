@@ -17,6 +17,7 @@ function Tour({ mobileStep, dispatch, mobileTourOpen }: Props) {
     let action = callbackProps.action
     if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].some(x => x === callbackProps.type)) {
       // NOTE: the folloing is to avoid a triggering it twice on an external change of step
+      // using the get helpers prom may help too
       if(callbackProps.index === mobileStep) {
         if (action === 'next') {
           dispatch({ type: 'changeMobileStep', step: mobileStep + 1 })
