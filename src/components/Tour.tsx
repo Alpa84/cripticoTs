@@ -39,7 +39,8 @@ function Tour({ mobileStep, dispatch, mobileTourOpen }: Props) {
       spotlightClicks={true}
       steps={steps}
       floaterProps={
-        {disableFlip: true} as FloaterProps
+        {disableFlip: true,
+        disableAnimation: true} as FloaterProps
       }
       disableOverlayClose={true}
       run={mobileTourOpen}
