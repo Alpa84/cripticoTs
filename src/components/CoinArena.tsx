@@ -1,14 +1,14 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { useReducer, useEffect } from 'react'
+import { useReducer } from 'react'
 import { DefaultChain, DefaultWallets } from '../utils/defaultChain'
 import { GeneralType, Functions, Block } from '../Types'
 import { hashBlockWithoutNonce, startsWithZeros, validateTransactions } from '../utils/blockchain'
 import General from './General'
 import { reducerAndLog } from 'src/utils/reducer'
-import { steps } from 'src/utils/steps'
 import { addDelay } from 'src/utils/misc'
 import { generateKeyPair } from 'src/utils/rsa'
+import Tour from './Tour'
 
 const DefaultNotificationDuration = 4000
 let emptyTransactionToPublish = { gives: '', receives: '', amount: 0, signature: '', secretKey: '' }
@@ -25,69 +25,29 @@ export const defaultGeneral: GeneralType = {
   transactionToPublish: _.cloneDeep(emptyTransactionToPublish),
   wallets: DefaultWallets,
 }
-export interface Props {
-  all: {
-    setBigScreenStep: (step: number) => void
-    setTour: (on: boolean) => void
-    isTourOpen: boolean
-    isSmallScreen: boolean
-  }
-}
-const delay = (time = 1500) => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(true)
-    }, time)
-  })
-}
-function CoinArena({all } : Props) {
+
+function CoinArena({} : {}) {
   const [general, dispatch] = useReducer(reducerAndLog, defaultGeneral)
 
-  useEffect(() => {
-    if ( all.isSmallScreen) { dispatch({ type: 'changeMobileTourOpen', on: true }) }
+  React.useEffect(() => {
+    setTimeout(() => {
+      functions.dispatch({ type: 'changeMobileTourOpen', on: true })
+    }, 1000)
   }, []) // used to fire dispatch just once on open
-
 
   let refList: { [name: string]: HTMLElement } = {}
   const setStepMobile = async(step: number) => {
     dispatch({ type: 'changeMobileStep', step })
-    await delay(10)
-    let stepProp = steps[step]
-    let tutName
-    if (stepProp.selector){
-      tutName = stepProp.selector.split('"')[1]
-    } else if (stepProp.altSelector) {
-      tutName = stepProp.altSelector
-    }
-    if (tutName) {
-      refList[tutName].scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      })
-    }
   }
   const setStep = (step: number) => {
-    if (all.isSmallScreen && general.mobileTourOpen && general.mobileStep === step - 1) {
+    if (general.mobileTourOpen && general.mobileStep === step - 1) {
       setStepMobile(step)
-    } else if (!all.isSmallScreen && all.isTourOpen ) { //  we take care of no unintended jumps in the parent component
-      all.setBigScreenStep(step)
-    }
-  }
-  const setStepFromTour = (step: number) => {
-    if (all.isSmallScreen && general.mobileTourOpen ) {
-      setStepMobile(step)
-    } else if (!all.isSmallScreen && all.isTourOpen ) {
-      all.setBigScreenStep(step)
     }
   }
 
   const joinTour = () => {
-    if (all.isSmallScreen) {
-      functions.dispatch({ type: 'changeMobileTourOpen', on: true })
-      setStepMobile(general.mobileStep)
-    } else {
-      functions.setTour(true)
-    }
+    setStepMobile(general.mobileStep)
+    functions.dispatch({ type: 'changeMobileTourOpen', on: true })
   }
 
   const setRef = (refName: string, ref: HTMLElement) => {
@@ -139,21 +99,24 @@ function CoinArena({all } : Props) {
   const functions: Functions = {
     loadingAndGenerateKeyPair,
     showNotification,
-    setTour: all.setTour,
     joinTour,
     dispatch,
     findNonce,
     mine,
     setStep,
-    setStepFromTour,
     setRef,
   }
   return  (
-    <General
-      general={general}
-      functions={functions}
-      isBigScreenTourOpen={all.isTourOpen}
-      isSmallScreen={all.isSmallScreen}/>
+    <>
+      <General
+        general={general}
+        functions={functions}/>
+      <Tour
+        mobileStep={general.mobileStep}
+        mobileTourOpen={general.mobileTourOpen}
+        dispatch={functions.dispatch}
+        />
+    </>
   )
 }
 

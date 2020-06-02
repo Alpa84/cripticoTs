@@ -4,7 +4,6 @@ import * as _ from 'lodash'
 import Input from './Input'
 import Transactions from './Transactions';
 import { checkValidBlock, hashBlock } from 'src/utils/blockchain';
-import TourWrapper from './TourWrapper';
 import FixedInput from './FixedInput';
 import FixedBlock from './FixedBlock';
 export interface Props {
@@ -35,7 +34,7 @@ function Chain({ general, functions }: Props) {
 
   return (
     <div className="Chain">
-      <TourWrapper general={general} functions={functions} tutName='toggleHackTheChain'>
+      <div data-tut='toggleHackTheChain'>
         <button
           type="button"
           onClick={onHackChain}
@@ -47,7 +46,7 @@ function Chain({ general, functions }: Props) {
         {!general.editableChain && (
           <p>Alter the data to experience the blockchain security features.</p>
         )}
-      </TourWrapper>
+      </div>
       { general.editableChain && (
         <button
           type="button"
@@ -59,12 +58,11 @@ function Chain({ general, functions }: Props) {
           chain.map((block, index) => {
             let blockValidation = checkValidBlock(block, index, chain)
             return (
-              <TourWrapper
-                general={general}
-                functions={functions}
+              <div
+                className="blockTutorial"
                 key={index}
-                componentClass="blockTutorial"
-                tutName={index=== 0 ? "block": ''}>
+                data-tut={index === 0 ? "block" : ''}
+                >
                 <div
                   key={index}
                   className={`card border-primary ${(general.editableChain && !blockValidation.isValid) ? 'invalidBlock' : ''}`}
@@ -120,7 +118,7 @@ function Chain({ general, functions }: Props) {
                     )}
                   </div>
                 </div>
-              </TourWrapper>
+              </div>
             )
           }).reverse()
         }

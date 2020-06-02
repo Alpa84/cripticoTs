@@ -6,20 +6,17 @@ import PendingTransactions from './PendingTransactions'
 import TransactionToPublish, { Empty } from './TransactionToPublish'
 import KeyPair from './KeyPair'
 import Directory from './Wallets'
-import TourWrapper from './TourWrapper';
 import FixedBlock from './FixedBlock';
 import { startsWithZeros, hashBlock } from 'src/utils/blockchain';
 import Link from './Link';
 
 export interface Props {
-  isBigScreenTourOpen: boolean,
-  isSmallScreen: boolean
   general: GeneralType
   functions: Functions
 }
 
 
-function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Props) {
+function General({ general, functions }: Props) {
 
   let givesOptions = _.map(general.wallets, (value, key) => (
     <option key={key} value={key} >{value.alias}</option>
@@ -35,21 +32,21 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
   }
 
   return (
-    <div className="General">
+    <div id='General' className="General">
       <div className="container">
         <div className="row">
           <div className="col-sm-12 section" >
-            <TourWrapper general={general} functions={functions} tutName='header'>
+            <div data-tut="header">
               <h1>Toy Coin</h1>
               <h3>
                 An interactive demo of a crypto currency. (Including blockchain, digital signatures and more.)
               </h3>
-            </TourWrapper>
+            </div>
             <button type="button" className="btn btn-primary"
               onClick={functions.joinTour}
-              disabled={isBigScreenTourOpen}
+              disabled={general.mobileTourOpen}
             >
-              {isSmallScreen && general.mobileStep !== 0 ?  (
+              { general.mobileStep !== 0 ?  (
                 'Resume the Tour'
               ) : (
                   'Join the Tour'
@@ -65,14 +62,14 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
             <div className="section">
               <TransactionToPublish general={general} functions={functions} />
             </div>
-            <TourWrapper general={general} functions={functions} tutName='notPublishedYet'>
+            <div data-tut='notPublishedYet'>
               { general.pendingTransactions.length >0  && (
                 <div className="section">
                   <h2>Published Transactions not yet included in the Blockchain</h2>
                   <PendingTransactions general={general} />
                 </div>
               )}
-              <TourWrapper general={general} functions={functions} tutName='mining'>
+              <div data-tut='mining'>
                 <div className='section'>
                   <h2>Mining Zone</h2>
                   <p>Include published transactions in the blockchain and generate some coins for the miner at the same time.</p>
@@ -101,8 +98,8 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
                     <span className='hint'> {miningHint}</span>
                   )}
                 </div>
-              </TourWrapper>
-              <TourWrapper general={general} functions={functions} tutName={"blockchain"}>
+              </div>
+              <div data-tut="blockchain">
                 <div className='section'>
                   <h2>Blockchain</h2>
                   <p>Holds the ground truth about every transaction.</p>
@@ -123,8 +120,8 @@ function General({ general, functions, isSmallScreen, isBigScreenTourOpen }: Pro
                   )}
                   <Chain general={general} functions={functions} />
                 </div>
-              </TourWrapper>
-            </TourWrapper>
+              </div>
+            </div>
           </div>
           <div className="col-md-4">
             <Directory general={general} functions={functions}/>

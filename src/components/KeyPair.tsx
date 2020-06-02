@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { KeyPair, Functions, GeneralType } from '../Types'
-import TourWrapper from './TourWrapper'
 import FixedInput from './FixedInput'
 export interface Props {
   general: GeneralType
@@ -23,7 +22,7 @@ function KeyPair({ general, functions }: Props) {
     functions.setStep(4)
   }
   return (
-    <TourWrapper general={general} functions={functions} tutName={"keyPair"}>
+    <div data-tut={"keyPair"}>
       <h2>Wallet Generator</h2>
       <p>Be someone in the crypto-word, generate your wallet.</p>
       <button
@@ -36,7 +35,7 @@ function KeyPair({ general, functions }: Props) {
         className="btn btn-primary">Generate Public Address and Private Key</button>
       <FixedInput text='Public Address' value={keyPair.address} />
       <FixedInput text='Private Key' value={keyPair.privateKey} />
-      <TourWrapper general={general} functions={functions} tutName={"alias"}>
+      <div data-tut="alias">
         <div className="input-group mb-3">
           <div className="input-group-prepend">
             <span className="input-group-text">alias</span>
@@ -72,9 +71,9 @@ function KeyPair({ general, functions }: Props) {
             <span >You will find it the Wallets section.</span>
           </div>
         )}
-      </TourWrapper>
+      </div>
 
-    </TourWrapper>
+    </div>
   )
 }
 

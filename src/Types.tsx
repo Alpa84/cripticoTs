@@ -8,12 +8,10 @@ export interface Block  {
 export interface Functions {
   loadingAndGenerateKeyPair: () => void
   showNotification: (area:keyof Notifications, milliseconds?: number) => void
-  setTour: (on: boolean) =>void
   dispatch: Dispatch<Action>
   findNonce: (block: Block, blockIndex: number) => Promise<void>
   mine: ()=> void
   setStep: (step: number) => void
-  setStepFromTour: (step: number) => void
   joinTour: ()=> void
   setRef: (refName: string, ref: HTMLElement) => void
 }

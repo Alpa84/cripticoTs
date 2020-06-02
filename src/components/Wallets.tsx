@@ -2,7 +2,6 @@ import * as React from 'react'
 import { GeneralType, Functions } from '../Types'
 import { calculateOwnerCoinsFromChain } from 'src/utils/blockchain';
 import { CreatorPublicAddress } from 'src/utils/defaultChain';
-import TourWrapper from './TourWrapper';
 import PrivateKey from './PrivateKey'
 
 export interface Props {
@@ -12,17 +11,15 @@ export interface Props {
 
 function Wallets({ general, functions }: Props) {
   return (
-    <TourWrapper general={general} functions={functions} tutName={"wallets"}>
+    <div data-tut="wallets">
       <h2>Wallets</h2>
       <div className="panel panel-default">
         <div className="panel-body">
           {
             Object.keys(general.wallets).map((dir, index) => (
-              <TourWrapper
-                general={general}
-                functions={functions}
+              <div
                 key={'walletsTut' + index}
-                tutName={index + 1 === Object.keys(general.wallets).length? 'userWallet': ''}
+                data-tut={index + 1 === Object.keys(general.wallets).length? 'userWallet': ''}
                 >
                 <div className='card'>
                   <div className='card-body'>
@@ -41,21 +38,19 @@ function Wallets({ general, functions }: Props) {
                         </tr>
                       </tbody>
                     </table>
-                    <TourWrapper
-                      general={general}
-                      functions={functions}
-                      tutName={dir === CreatorPublicAddress ? 'creatorPrivateKey' : ''}
+                    <div
+                      data-tut={dir === CreatorPublicAddress ? 'creatorPrivateKey' : ''}
                     >
                       <PrivateKey  pKey={general.wallets[dir].privateKey}/>
-                    </TourWrapper>
+                    </div>
                   </div>
                 </div>
-              </TourWrapper>
+              </div>
             )).reverse()
           }
         </div>
       </div>
-    </TourWrapper>
+    </div>
   )
 }
 

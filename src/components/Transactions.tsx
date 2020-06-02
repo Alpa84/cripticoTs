@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { GeneralType, Functions, TransactionValidation } from '../Types'
 import Transaction from './Transaction';
-import TourWrapper from './TourWrapper';
 export interface Props {
   general: GeneralType,
   blockIndex: number
@@ -28,10 +27,8 @@ function Transactions({ general, functions, blockIndex, validations }: Props) {
                   onClick={() => functions.dispatch({ type: 'addTransaction', blockIndex })}
                   className="btn btn-primary ">Add Transaction</button>
               )}
-              <TourWrapper
-                general={general}
-                functions={functions}
-                tutName={transIndex === 0 && blockIndex === 0  ? 'transaction' : ''}
+              <div
+                data-tut={transIndex === 0 && blockIndex === 0  ? 'transaction' : ''}
               >
                 <h5 className="card-title">transaction {transIndex + 1}</h5>
                 <Transaction
@@ -40,7 +37,7 @@ function Transactions({ general, functions, blockIndex, validations }: Props) {
                   blockIndex={blockIndex}
                   validation={validations ? validations[transIndex]: {}}
                   functions={functions} />
-              </TourWrapper>
+              </div>
             </li>
           )).reverse()
         }

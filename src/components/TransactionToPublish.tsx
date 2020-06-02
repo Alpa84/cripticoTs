@@ -1,7 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import { Functions, GeneralType } from '../Types'
-import TourWrapper from './TourWrapper'
 import FixedInput from './FixedInput'
 import { calculateOwnerCoinsFromChain } from 'src/utils/blockchain'
 export interface Props {
@@ -35,7 +34,7 @@ function TransactionToPublish({ general, functions }: Props) {
   let giverFunds = calculateOwnerCoinsFromChain(general.chain, toPub.gives)
   let showAmountWarning = !!toPub.amount && !!toPub.gives && toPub.amount > giverFunds
   return (
-    <TourWrapper general={general} functions={functions} tutName='publish'>
+    <div data-tut='publish'>
       <h2>Transaction Generator</h2>
       <p>Declare that you want to transfer some coins.</p>
       <div className="input-group mb-3">
@@ -131,7 +130,7 @@ function TransactionToPublish({ general, functions }: Props) {
           <span >You will find it in the next section.</span>
         </div>
       )}
-    </TourWrapper>
+    </div>
   )
 }
 
