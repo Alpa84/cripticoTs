@@ -11,7 +11,7 @@ const stepsPre: Step[] = [
     </div>
     ),
     target: '[data-tut="header"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -27,7 +27,7 @@ const stepsPre: Step[] = [
     </div>
     ),
     target: '[data-tut="header"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -39,7 +39,7 @@ const stepsPre: Step[] = [
     </div>
     ),
     target: '[data-tut="keyPair"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -48,7 +48,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="keyPair"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -59,6 +59,7 @@ const stepsPre: Step[] = [
     ),
     target: '[data-tut="wallets"]',
     placement: 'top',
+    // placement: 'left-start',
   },
   {
     content: (
@@ -73,7 +74,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="wallets"]', // free
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -83,7 +84,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="blockchain"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -93,7 +94,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="blockchain"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -103,7 +104,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="blockchain"]', // free
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -113,7 +114,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="wallets"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -122,7 +123,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="wallets"]', // Free
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -132,7 +133,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="publish"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -142,7 +143,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="publish"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -151,7 +152,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="creatorPrivateKey"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -160,7 +161,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="publish"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -170,7 +171,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="publish"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -181,7 +182,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="publish"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -191,7 +192,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="notPublishedYet"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -201,7 +202,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="notPublishedYet"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -210,7 +211,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="blockchain"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -221,7 +222,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="block"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -230,7 +231,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="toggleHackTheChain"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -240,7 +241,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="block"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -249,7 +250,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="block"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -259,7 +260,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="block"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -268,7 +269,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="block"]', // free
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -277,7 +278,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="toggleHackTheChain"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -286,7 +287,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="blockchain"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -297,7 +298,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="notPublishedYet"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -307,7 +308,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="notPublishedYet"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -317,7 +318,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="blockchain"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -326,7 +327,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="userWallet"]',
-    placement: 'top',
+    placement: 'auto',
   },
   {
     content: (
@@ -346,7 +347,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="userWallet"]', // free
-    placement: 'top',
+    placement: 'auto',
   },
 ]
 
