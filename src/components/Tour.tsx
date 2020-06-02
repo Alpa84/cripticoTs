@@ -40,6 +40,7 @@ function Tour({ mobileStep, dispatch, mobileTourOpen }: Props) {
       floaterProps={
         {disableFlip: true} as FloaterProps
       }
+      disableOverlayClose={true}
       run={mobileTourOpen}
       stepIndex={mobileStep}
       callback={joyrideCallback}
