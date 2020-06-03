@@ -39,7 +39,7 @@ function Wallets({ general, functions }: Props) {
                       </tbody>
                     </table>
                     <div
-                      data-tut={dir === CreatorPublicAddress ? 'creatorPrivateKey' : ''}
+                      data-tut={dir === CreatorPublicAddress ? 'creatorPrivateKey' : 'otherPrivateKey'}
                     >
                       <PrivateKey  pKey={general.wallets[dir].privateKey}/>
                     </div>

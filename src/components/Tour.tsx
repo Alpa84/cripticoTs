@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Joyride, { CallBackProps, EVENTS, STATUS, FloaterProps } from 'react-joyride';
+import Joyride, { CallBackProps, EVENTS, STATUS, FloaterProps, Styles } from 'react-joyride';
 import {  } from 'react-joyride';
 import { steps } from 'src/utils/steps';
 import { Dispatch } from 'react'
@@ -40,8 +40,21 @@ function Tour({ mobileStep, dispatch, mobileTourOpen }: Props) {
       steps={steps}
       floaterProps={
         {disableFlip: true,
+        hideArrow: true,
         disableAnimation: true} as FloaterProps
       }
+      styles={{
+        options: {
+        primaryColor: '#00ffac',
+        },
+        tooltip: {
+          opacity: 1,
+          borderRadius: 0,
+        },
+        tooltipContainer: {
+          textAlign: 'left',
+        }
+      } as Styles}
       disableOverlayClose={true}
       run={mobileTourOpen}
       stepIndex={mobileStep}

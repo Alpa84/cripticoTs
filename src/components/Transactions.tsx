@@ -28,6 +28,7 @@ function Transactions({ general, functions, blockIndex, validations }: Props) {
                   className="btn btn-primary ">Add Transaction</button>
               )}
               <div
+                className='transactionGeneric'
                 data-tut={transIndex === 0 && blockIndex === 0  ? 'transaction' : ''}
               >
                 <h5 className="card-title">transaction {transIndex + 1}</h5>

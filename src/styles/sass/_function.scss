@@ -83,4 +83,12 @@
 .remove {
   display: none;
 }
-
+// to solve a react-joyride bug
+[data-tut] {
+  background-color: gainsboro;
+}
+[data-tut="creatorPrivateKey"],
+.transactionGeneric,
+[data-tut="otherPrivateKey"] {
+  background-color: white;
+}
