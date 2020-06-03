@@ -137,6 +137,7 @@ export const stepsPre: Step[] = [
       <div>
         <p>The first step is to publish the transaction.</p>
         <p>Choose <b>giver</b> (AlePan), <b>receiver</b> (you) and the <b>amount</b> to transfer. Be careful to choose an amount of coin that AlePan does have, if you don't everybody will ignore the transaction because they know how much everyone has.</p>
+        <p>We will get the giver's private key on the next steps.</p>
       </div>
     ),
     target: '[data-tut="publish"]',
@@ -145,8 +146,10 @@ export const stepsPre: Step[] = [
   {
     content: (
       <div>
-        <p>You also have to sign the transaction. To sign it you have to know the giver's private key (which we do, hehe)</p>
-        <p>In the next step we are going to copy AlePan's private key from the wallets.</p>
+        <p>We need the giver's private key to sign the transaction.</p>
+        <p>Signing a transaction is producing a big number that is specific for that transaction, and can only be produced by using the giver's private key. </p>
+        <p>Anyone can check the signature and be sure that it was made by the owner of both the <b>Public Address</b> and the <b>Private Key</b>.</p>
+        <p>Hit <b>Next</b> to go to the wallets to get AlePan's private key.</p>
       </div>
     ),
     target: '[data-tut="publish"]',
@@ -155,7 +158,7 @@ export const stepsPre: Step[] = [
   {
     content: (
       <div>
-        <p>Click <b>Copy Private Key</b></p>
+        <p>Click <b>Copy Private Key</b>.</p>
       </div>
     ),
     target: '[data-tut="creatorPrivateKey"]',
@@ -173,8 +176,7 @@ export const stepsPre: Step[] = [
   {
     content: (
       <div>
-        <p>Signing a transaction is producing a big number that is specific for that transaction and can only be produced by using the owner's private key. The <b>Private Key</b> and the <b>Public Address</b> are linked, so anyone can be sure that that number was produced by the one with that public address (who also has the private key).</p>
-        <p>To see how a signature is specific for a transaction, you can try the following. Change the amount , sign it again and watch the signature change.</p>
+        <p>To see how a signature is specific for a transaction, you can try the following: change the amount , sign it again and watch the signature change.</p>
       </div>
     ),
     target: '[data-tut="publish"]',
