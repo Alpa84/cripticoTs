@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { Step } from 'react-joyride'
 import Link from 'src/components/Link';
+import { Step } from 'react-joyride';
 
-const stepsPre: Step[] = [
+export const stepsPre: Step[] = [
  {
     content: (
     <div>
@@ -11,7 +11,7 @@ const stepsPre: Step[] = [
     </div>
     ),
     target: '[data-tut="header"]',
-    placement: 'auto',
+    placement: 'bottom',
   },
   {
     content: (
@@ -27,7 +27,7 @@ const stepsPre: Step[] = [
     </div>
     ),
     target: '[data-tut="header"]',
-    placement: 'auto',
+    placement: 'bottom',
   },
   {
     content: (
@@ -39,7 +39,7 @@ const stepsPre: Step[] = [
     </div>
     ),
     target: '[data-tut="keyPair"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -48,7 +48,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="keyPair"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -58,8 +58,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="wallets"]',
-    placement: 'top',
-    // placement: 'left-start',
+    placement: 'left-start',
   },
   {
     content: (
@@ -74,7 +73,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="wallets"]', // free
-    placement: 'auto',
+    placement: 'left-start',
   },
   {
     content: (
@@ -84,7 +83,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="blockchain"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -94,7 +93,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="blockchain"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -104,7 +103,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="blockchain"]', // free
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -114,7 +113,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="wallets"]',
-    placement: 'auto',
+    placement: 'left-start',
   },
   {
     content: (
@@ -123,7 +122,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="wallets"]', // Free
-    placement: 'auto',
+    placement: 'left-start',
   },
   {
     content: (
@@ -133,7 +132,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="publish"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -143,7 +142,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="publish"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -152,7 +151,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="creatorPrivateKey"]',
-    placement: 'auto',
+    placement: 'left-start',
   },
   {
     content: (
@@ -161,7 +160,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="publish"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -171,7 +170,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="publish"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -182,7 +181,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="publish"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -192,7 +191,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="notPublishedYet"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -202,7 +201,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="notPublishedYet"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -211,7 +210,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="blockchain"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -222,7 +221,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="block"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -231,7 +230,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="toggleHackTheChain"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -241,7 +240,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="block"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -250,7 +249,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="block"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -260,7 +259,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="block"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -269,7 +268,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="block"]', // free
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -278,7 +277,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="toggleHackTheChain"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -287,7 +286,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="blockchain"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -298,7 +297,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="notPublishedYet"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -308,7 +307,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="notPublishedYet"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -318,7 +317,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="blockchain"]',
-    placement: 'auto',
+    placement: 'right-start',
   },
   {
     content: (
@@ -327,7 +326,7 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="userWallet"]',
-    placement: 'auto',
+    placement: 'left-start',
   },
   {
     content: (
@@ -347,8 +346,6 @@ const stepsPre: Step[] = [
       </div>
     ),
     target: '[data-tut="userWallet"]', // free
-    placement: 'auto',
+    placement: 'left-start',
   },
 ]
-
-export const steps: Step[] = stepsPre.map(step => ({disableBeacon: true, ...step}))
