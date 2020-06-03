@@ -85,11 +85,6 @@
 }
 
 // to solve a react-joyride bug
-[data-tut] {
+.row {
   background-color: gainsboro;
-}
-[data-tut="creatorPrivateKey"],
-.transactionGeneric,
-[data-tut="otherPrivateKey"] {
-  background-color: white;
 }

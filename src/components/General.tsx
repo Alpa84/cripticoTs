@@ -62,13 +62,13 @@ function General({ general, functions }: Props) {
             <div className="section">
               <TransactionToPublish general={general} functions={functions} />
             </div>
-            <div data-tut='notPublishedYet'>
-              { general.pendingTransactions.length >0  && (
-                <div className="section">
-                  <h2>Published Transactions not yet included in the Blockchain</h2>
-                  <PendingTransactions general={general} />
-                </div>
-              )}
+            { general.pendingTransactions.length >0  && (
+                <div className="section" data-tut='notIncludedYet'>
+                <h2>Published Transactions not yet included in the Blockchain</h2>
+                <PendingTransactions general={general} />
+              </div>
+            )}
+            <div data-tut='miningPlusBlockchain'>
               <div data-tut='mining'>
                 <div className='section'>
                   <h2>Mining Zone</h2>
@@ -100,27 +100,27 @@ function General({ general, functions }: Props) {
                 </div>
               </div>
               <div data-tut="blockchain">
-                <div className='section'>
-                  <h2>Blockchain</h2>
-                  <p>Holds the ground truth about every transaction.</p>
-                  { general.minedBlock && (
-                    <div className='card border-warning'>
-                      <div className='card-header'>
-                        {general.minedBlock && startsWithZeros(hashBlock(general.minedBlock)) ?(
-                            <h4 className='nonceFound'>Nonce found, adding block {general.chain.length + 1} ...</h4>
-                          ):(
-                            <h4>Trying to add block {general.chain.length + 1} ...</h4>
-                          )
-                        }
-                      </div>
-                      <div className='card-body'>
-                        <FixedBlock general={general} functions={functions} block={general.minedBlock}/>
-                      </div>
-                    </div>
-                  )}
-                  <Chain general={general} functions={functions} />
+            <div className='section'>
+              <h2>Blockchain</h2>
+              <p>Holds the ground truth about every transaction.</p>
+              { general.minedBlock && (
+                <div className='card border-warning'>
+                  <div className='card-header'>
+                    {general.minedBlock && startsWithZeros(hashBlock(general.minedBlock)) ?(
+                        <h4 className='nonceFound'>Nonce found, adding block {general.chain.length + 1} ...</h4>
+                      ):(
+                        <h4>Trying to add block {general.chain.length + 1} ...</h4>
+                      )
+                    }
+                  </div>
+                  <div className='card-body'>
+                    <FixedBlock general={general} functions={functions} block={general.minedBlock}/>
+                  </div>
                 </div>
-              </div>
+              )}
+              <Chain general={general} functions={functions} />
+            </div>
+            </div>
             </div>
           </div>
           <div className="col-md-4">

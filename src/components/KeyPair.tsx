@@ -19,10 +19,10 @@ function KeyPair({ general, functions }: Props) {
   const handleGenerateClick = () => {
     functions.dispatch({ type: 'generateWallet' })
     functions.showNotification("walletGenerated")
-    functions.setStep(4)
+    functions.setStep(5)
   }
   return (
-    <div data-tut={"keyPair"}>
+    <div data-tut="keyPair">
       <h2>Wallet Generator</h2>
       <p>Be someone in the crypto-word, generate your wallet.</p>
       <button
@@ -33,8 +33,10 @@ function KeyPair({ general, functions }: Props) {
           functions.setStep(3)
         }}
         className="btn btn-primary">Generate Public Address and Private Key</button>
-      <FixedInput text='Public Address' value={keyPair.address} />
-      <FixedInput text='Private Key' value={keyPair.privateKey} />
+      <div data-tut='onlyKeys'>
+        <FixedInput text='Public Address' value={keyPair.address} />
+        <FixedInput text='Private Key' value={keyPair.privateKey} />
+      </div>
       <div data-tut="alias">
         <div className="input-group mb-3">
           <div className="input-group-prepend">

@@ -32,13 +32,21 @@ export const stepsPre: Step[] = [
   {
     content: (
     <div>
-      To do anything with a crypto coin you have to have a wallet. For that, you have to generate a Public Address and a Private Key.
-      Your public address is like an email address. If anyone wants to send you a crypto-coin all they need to know is your public address.
-      Your private key is like a password.You have to keep it secret. Anyone with your private key will be able to sell all your coins.
+      To do anything with a crypto coin you have to have a wallet. For that, you have to create a Public Address and a Private Key for yourself.
       Go ahead and click <b>generate a Public Address and a Private Key</b>
     </div>
     ),
     target: '[data-tut="keyPair"]',
+    placement: 'right-start',
+  },
+  {
+    content: (
+    <div>
+      Your public address is like an email address. If anyone wants to send you a crypto-coin all they need to know is your public address.
+      Your private key is like a password.You have to keep it secret. Anyone with your private key will be able to sell all your coins.
+    </div>
+    ),
+    target: '[data-tut="onlyKeys"]',
     placement: 'right-start',
   },
   {
@@ -186,11 +194,11 @@ export const stepsPre: Step[] = [
   {
     content: (
       <div>
-        <p>How does it get included?</p>
+        <p>OK, once the transaction is published, how does it get included in the blockchain?</p>
         <p>Enter Mining. A Miner takes all the published transactions that haven't already got in the chain and groups them in a block.</p>
       </div>
     ),
-    target: '[data-tut="notPublishedYet"]',
+    target: '[data-tut="notIncludedYet"]',
     placement: 'right-start',
   },
   {
@@ -200,7 +208,7 @@ export const stepsPre: Step[] = [
         <p>Of course not, there is a catch.</p>
       </div>
     ),
-    target: '[data-tut="notPublishedYet"]',
+    target: '[data-tut="notIncludedYet"]',
     placement: 'right-start',
   },
   {
@@ -293,10 +301,10 @@ export const stepsPre: Step[] = [
       <div>
         <p>We are going to watch the miner grabbing the published transactions, packing them in a block and trying different numbers in the nonce until the hash starts with '00'.</p>
         <p>Ready?</p>
-        <p>Select a <b>miner</b> Click <b>Start Mining</b></p>
+        <p>Select a <b>miner</b> and click <b>Start Mining</b></p>
       </div>
     ),
-    target: '[data-tut="notPublishedYet"]',
+    target: '[data-tut="miningPlusBlockchain"]',
     placement: 'right-start',
   },
   {
@@ -306,7 +314,7 @@ export const stepsPre: Step[] = [
         <p>Once the Miner finds the magic number for the <b>nonce</b>, he tells everybody that he has a new block, and everybody adds that new block to the chain.</p>
       </div>
     ),
-    target: '[data-tut="notPublishedYet"]',
+    target: '[data-tut="miningPlusBlockchain"]',
     placement: 'right-start',
   },
   {
