@@ -88,6 +88,7 @@ function CoinArena({} : {}) {
   }
   const loadingAndGenerateKeyPair = async() => {
     dispatch({ type: 'changeKeyPair', keyPair: {address:'generating...', privateKey: 'generating...' }})
+    await addDelay(100)
     let keyPair =  await generateKeyPair()
     dispatch({ type: 'changeKeyPair', keyPair })
   }
