@@ -24,7 +24,7 @@ function Transaction({ general, blockIndex, functions, transactionIndex, validat
         {(transaction.gives !== Mined)  &&
           (<span className='hint' >{hint}</span>)
         }
-        <Input text='gives address' value={transaction.gives} onChange={
+        <Input text="giver's address" value={transaction.gives} onChange={
           (event) => functions.dispatch({
             type: 'changeChainTGives',
             gives: event.target.value,
@@ -43,7 +43,7 @@ function Transaction({ general, blockIndex, functions, transactionIndex, validat
         ) : (
             <span className='hint' >{`(no wallet with that address)`}</span>
           )}
-        <Input text='receives address' value={transaction.receives} onChange={
+        <Input text="receiver's address" value={transaction.receives} onChange={
           (event) => functions.dispatch({
             type: 'changeChainTReceives',
             receives: event.target.value,

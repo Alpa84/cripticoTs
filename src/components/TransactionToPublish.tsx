@@ -39,7 +39,7 @@ function TransactionToPublish({ general, functions }: Props) {
       <p>Declare that you want to transfer some coins.</p>
       <div className="input-group mb-3">
         <div className="input-group-prepend">
-          <label className="input-group-text" >gives</label>
+          <label className="input-group-text" >giver</label>
           </div>
         <select
           name="gives"
@@ -53,7 +53,7 @@ function TransactionToPublish({ general, functions }: Props) {
       </div>
       <div className="input-group mb-3">
         <div className="input-group-prepend">
-            <label className="input-group-text">receives</label>
+            <label className="input-group-text">receiver</label>
           </div>
         <select
           name="receives"
