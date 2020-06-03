@@ -74,7 +74,7 @@ function TransactionToPublish({ general, functions }: Props) {
           type="number"
           className="form-control"
           onChange={(event) => functions.dispatch({type:'changeTransactionAmount' , amount: parseFloat(event.target.value)})}
-          value={general.transactionToPublish.amount}
+          value={general.transactionToPublish.amount || ''}
         />
       </div>
       { showAmountWarning && (

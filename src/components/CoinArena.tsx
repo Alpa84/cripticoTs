@@ -11,7 +11,7 @@ import { generateKeyPair } from 'src/utils/rsa'
 import Tour from './Tour'
 
 const DefaultNotificationDuration = 4000
-let emptyTransactionToPublish = { gives: '', receives: '', amount: 0, signature: '', secretKey: '' }
+export let emptyTransactionToPublish = { gives: '', receives: '', amount: null, signature: '', secretKey: '' }
 let emptyKeyPair = { address: '', privateKey: '' }
 export const defaultGeneral: GeneralType = {
   mobileTourOpen: false,

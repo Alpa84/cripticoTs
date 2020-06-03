@@ -1,10 +1,10 @@
-import { GeneralType, Action, Transaction, WalletDetails, Block } from 'src/Types'
+import { GeneralType, Action, WalletDetails, Block, Transaction } from 'src/Types'
 import * as _ from 'lodash'
 import { DefaultEmptyTransaction, DefaultEmptyBlock } from './defaultChain'
 import { hashBlock, createTransactionSignature } from './blockchain'
 import { logActionChange } from './misc'
+import { emptyTransactionToPublish } from 'src/components/CoinArena'
 
-let emptyTransactionToPublish = { gives: '', receives: '', amount: 0, signature: '', secretKey: '' }
 let emptyKeyPair = { address: '', privateKey: '' }
 
 const reducer = (general: GeneralType, action: Action) => {
@@ -119,7 +119,13 @@ const reducer = (general: GeneralType, action: Action) => {
       return clonedNewBlock
     case 'publishTransaction':
       let clonedPublished = _.cloneDeep(general)
-      clonedPublished.pendingTransactions.push(_.cloneDeep(clonedPublished.transactionToPublish) as Transaction)
+      // security check to ensure amount is not null
+      if (clonedPublished.transactionToPublish.amount === null) { return clonedPublished }
+      let toPublish = {
+        ...clonedPublished.transactionToPublish,
+        amount: clonedPublished.transactionToPublish.amount as number
+      }
+      clonedPublished.pendingTransactions.push(toPublish)
       clonedPublished.transactionToPublish = _.cloneDeep(emptyTransactionToPublish)
       return clonedPublished
     case 'toggleEditableChain':
@@ -149,9 +155,12 @@ const reducer = (general: GeneralType, action: Action) => {
       let clonedTransactionSign = _.cloneDeep(general)
       try {
         let lastBlockHash = hashBlock(_.last(clonedTransactionSign.chain) as Block)
-        let signature = createTransactionSignature(clonedTransactionSign.transactionToPublish, lastBlockHash, clonedTransactionSign.transactionToPublish.secretKey)
-        clonedTransactionSign.transactionToPublish.signature = signature
-        delete clonedTransactionSign.signatureError
+        // security check to ensure amount is not null
+        if (clonedTransactionSign.transactionToPublish.amount !== null) {
+          let signature = createTransactionSignature(clonedTransactionSign.transactionToPublish as Transaction, lastBlockHash, clonedTransactionSign.transactionToPublish.secretKey)
+          clonedTransactionSign.transactionToPublish.signature = signature
+          delete clonedTransactionSign.signatureError
+        }
       } catch (error) {
         clonedTransactionSign.signatureError = 'There was an error generating the signature, please check the private key'
       }

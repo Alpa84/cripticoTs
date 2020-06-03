@@ -54,8 +54,12 @@ export interface Transaction {
   amount: number
   signature: string
 }
-export interface TransactionPlusKey extends Transaction {
+export interface TransactionToPublish {
+  gives: string
+  receives: string
+  signature: string
   secretKey: string
+  amount: number | null
 }
 export interface GeneralType {
   pendingTransactions: Transaction[]
@@ -64,7 +68,7 @@ export interface GeneralType {
   chain: Block[]
   editableChain?: Block[]
   signatureError?: string
-  transactionToPublish: TransactionPlusKey
+  transactionToPublish: TransactionToPublish
   dirToAddMined: string,
   keyPair: KeyPair
   alias: string
