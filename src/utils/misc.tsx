@@ -2,7 +2,9 @@ import { GeneralType, LogChunk, InitialLog, ChronoLog, Action, StatusPure } from
 import * as axios from 'axios'
 import * as _ from 'lodash'
 
+const SmallScreenSize = 720
 const Check = '23847823h'
+
 export const LocalServer = 'http://localhost:5000'
 export const ProdServer = 'https://toycoin.herokuapp.com'
 export const ServerEndpoint = process.env.NODE_ENV === 'development'? LocalServer : ProdServer
@@ -14,6 +16,7 @@ export const prefferName = (dir: string, general: GeneralType) => {
   let name = general.wallets[dir]
   return name ? name.alias : dir
 }
+export let isSmallScreen = () =>(window.innerWidth < SmallScreenSize)
 export function addDelay(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }

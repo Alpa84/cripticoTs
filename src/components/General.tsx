@@ -103,21 +103,23 @@ function General({ general, functions }: Props) {
             <div className='section'>
               <h2>Blockchain</h2>
               <p>Holds the ground truth about every transaction.</p>
-              { general.minedBlock && (
-                <div className='card border-warning'>
-                  <div className='card-header'>
-                    {general.minedBlock && startsWithZeros(hashBlock(general.minedBlock)) ?(
-                        <h4 className='nonceFound'>Nonce found, adding block {general.chain.length + 1} ...</h4>
-                      ):(
-                        <h4>Trying to add block {general.chain.length + 1} ...</h4>
-                      )
-                    }
+              <div ref={(ref) => { if (ref) { functions.setRef('tryingNonces', ref) } }} >
+                { general.minedBlock && (
+                  <div className='card border-warning'>
+                    <div className='card-header'>
+                      {general.minedBlock && startsWithZeros(hashBlock(general.minedBlock)) ?(
+                          <h4 className='nonceFound'>Nonce found, adding block {general.chain.length + 1} ...</h4>
+                        ):(
+                          <h4>Trying to add block {general.chain.length + 1} ...</h4>
+                        )
+                      }
+                    </div>
+                    <div className='card-body'>
+                      <FixedBlock general={general} functions={functions} block={general.minedBlock}/>
+                    </div>
                   </div>
-                  <div className='card-body'>
-                    <FixedBlock general={general} functions={functions} block={general.minedBlock}/>
-                  </div>
-                </div>
-              )}
+                )}
+              </div>
               <Chain general={general} functions={functions} />
             </div>
             </div>

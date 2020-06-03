@@ -3,8 +3,8 @@ import Joyride, { CallBackProps, EVENTS, STATUS, FloaterProps, Styles, Step, Pla
 import { stepsPre } from 'src/utils/steps';
 import { Dispatch, useState, useEffect } from 'react'
 import { Action } from 'src/Types';
+import { isSmallScreen } from 'src/utils/misc';
 
-const SmallScreenSize = 720
 
 export interface Props {
   mobileStep: number
@@ -15,12 +15,12 @@ export interface Props {
 function Tour({ mobileStep, dispatch, mobileTourOpen }: Props) {
   const [steps, setSteps] = useState<Step[]>([])
 
-  let isSmallScreen = window.innerWidth < SmallScreenSize
+  let smallScreen = isSmallScreen()
 
   useEffect( ()=> {
     const stepsAdapted: Step[] = stepsPre.map(step => {
       let placement = step.placement === 'bottom' ? 'bottom' : 'top'
-      if (isSmallScreen) {
+      if (smallScreen) {
         return { ...step, disableBeacon: true, isFixed: true, placement: placement as Placement }
       } else {
         return { disableBeacon: true, ...step }
