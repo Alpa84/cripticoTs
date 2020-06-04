@@ -24,7 +24,7 @@ function General({ general, functions }: Props) {
   givesOptions.unshift(Empty())
   let miningHint
   if (general.minedBlock) {
-    miningHint = 'Mining in progress.. '
+    miningHint = 'mining in progress... watch it below'
   } else if (!general.dirToAddMined) {
     miningHint = 'select a miner'
   } else if (general.pendingTransactions.length === 0) {
