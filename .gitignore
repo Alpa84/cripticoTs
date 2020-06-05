@@ -21,4 +21,3 @@ yarn-debug.log*
 yarn-error.log*
 
 /src/styles/css
-/src/utils/rep.tsx
