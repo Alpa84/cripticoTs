@@ -102,11 +102,12 @@ function CoinArena({} : {}) {
     dispatch({ type: 'changeKeyPair', keyPair })
   }
   const showNotification: Functions["showNotification"] = (area, milliseconds) => {
-    dispatch({ type: 'changeNotification', area, on: true})
-    setTimeout( ()=> {
-      dispatch({type:'changeNotification', area, on:false})
-    }, milliseconds || DefaultNotificationDuration)
-
+    if (! general.mobileTourOpen) {
+      dispatch({ type: 'changeNotification', area, on: true})
+      setTimeout( ()=> {
+        dispatch({type:'changeNotification', area, on:false})
+      }, milliseconds || DefaultNotificationDuration)
+    }
   }
   const functions: Functions = {
     loadingAndGenerateKeyPair,
