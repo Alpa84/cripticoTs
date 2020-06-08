@@ -6,7 +6,7 @@ import { GeneralType, Functions, Block } from '../Types'
 import { hashBlockWithoutNonce, startsWithZeros, validateTransactions } from '../utils/blockchain'
 import General from './General'
 import { reducerAndLog } from 'src/utils/reducer'
-import { addDelay, isSmallScreen } from 'src/utils/misc'
+import { addDelay } from 'src/utils/misc'
 import { generateKeyPair } from 'src/utils/rsa'
 import Tour from './Tour'
 
@@ -79,14 +79,12 @@ function CoinArena({} : {}) {
     dispatch({ type:'backToUneditedChain'})
     dispatch({type:'changeMinedBlock', block: blockWithoutNonce})
     general.minedBlock = blockWithoutNonce
-    if (isSmallScreen() && !general.mobileTourOpen) {
-      await addDelay(500)
-      if (refList.tryingNonces) {
-        refList.tryingNonces.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        })
-      }
+    await addDelay(500)
+    if (refList.tryingNonces) {
+      refList.tryingNonces.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      })
     }
     let nonce = await tryDifferentNonces(blockWithoutNonce, -1) //// -1 means we are changing the mined block
     dispatch({ type: 'changeMinedBlockNonce', nonce: nonce.toString() })
