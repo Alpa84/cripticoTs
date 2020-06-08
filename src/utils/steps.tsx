@@ -245,7 +245,7 @@ export const stepsPre: Step[] = [
   {
     content: (
       <div>
-        <p>Instead of user aliases, you will see user addresses. Blochains usually store user addresses,in this case we show the aliases to make it more readable.</p>
+        <p>Instead of user aliases, you will see user addresses. Blochains usually store user addresses, in this case we show the aliases to make it more readable.</p>
         <p>Change any field on the block and watch the <b>hash</b> change as you change the data. For the moment, never mind the warnings you are going to see.</p>
       </div>
     ),
