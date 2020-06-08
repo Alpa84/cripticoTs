@@ -103,6 +103,7 @@ export interface InitialLog {
   path: string,
   ipData: string,
   timestamp: number,
+  logVersion?: number,
 }
 export interface LogChunk {
   sessionId : string
