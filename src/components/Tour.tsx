@@ -6,6 +6,23 @@ import { Action } from 'src/Types';
 import { isSmallScreen } from 'src/utils/misc';
 
 
+export const tooltipStyles = {
+  options: {
+    primaryColor: '#00ffac',
+  },
+  tooltip: {
+    opacity: 1,
+    borderRadius: 0,
+  },
+  tooltipContainer: {
+    textAlign: 'left',
+  },
+  tooltipFooter: {
+    marginTop: 0,
+  },
+
+} as Styles
+
 export interface Props {
   mobileStep: number
   mobileTourOpen: boolean
@@ -59,22 +76,7 @@ function Tour({ mobileStep, dispatch, mobileTourOpen }: Props) {
         hideArrow: true,
         disableAnimation: true} as FloaterProps
       }
-      styles={{
-        options: {
-        primaryColor: '#00ffac',
-        },
-        tooltip: {
-          opacity: 1,
-          borderRadius: 0,
-        },
-        tooltipContainer: {
-          textAlign: 'left',
-        },
-        tooltipFooter: {
-          marginTop: 0,
-        },
-
-      } as Styles}
+      styles={tooltipStyles}
       disableOverlayClose={true}
       run={mobileTourOpen}
       stepIndex={mobileStep}

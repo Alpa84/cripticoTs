@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Link from 'src/components/Link';
-import { Step } from 'react-joyride';
+import { Step, Styles } from 'react-joyride';
+import { tooltipStyles } from 'src/components/Tour';
 
 export const stepsPre: Step[] = [
  {
@@ -355,6 +356,10 @@ export const stepsPre: Step[] = [
         </ul>
       </div>
     ),
+    styles: {
+      ...tooltipStyles,
+      buttonNext: { display: 'none'}
+    } as Styles,
     target: '[data-tut="userWallet"]', // free
     placement: 'left-start',
   },
