@@ -24,7 +24,7 @@ function KeyPair({ general, functions }: Props) {
   return (
     <div data-tut="keyPair">
       <h2>Wallet Generator</h2>
-      <p>Be someone in the crypto-word, generate your wallet.</p>
+      <p>Be someone in the crypto-word! Generate your wallet.</p>
       <button
         id='generateKeys'
         type='button'
