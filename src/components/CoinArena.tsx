@@ -9,6 +9,7 @@ import { reducerAndLog } from 'src/utils/reducer'
 import { addDelay } from 'src/utils/misc'
 import { generateKeyPair } from 'src/utils/rsa'
 import Tour from './Tour'
+import { stepsPre } from 'src/utils/steps'
 
 const DefaultNotificationDuration = 4000
 export let emptyTransactionToPublish = { gives: '', receives: '', amount: null, signature: '', secretKey: '' }
@@ -45,9 +46,14 @@ function CoinArena({} : {}) {
     }
   }
 
-  const joinTour = () => {
-    setStepMobile(general.mobileStep)
-    functions.dispatch({ type: 'changeMobileTourOpen', on: true })
+  const triggerTour = () => {
+    if (general.mobileStep === stepsPre.length -1){
+      setStepMobile(0)
+      functions.dispatch({ type: 'changeMobileTourOpen', on: true })
+    } else {
+      setStepMobile(general.mobileStep)
+      functions.dispatch({ type: 'changeMobileTourOpen', on: true })
+    }
   }
 
   const setRef = (refName: string, ref: HTMLElement) => {
@@ -110,7 +116,7 @@ function CoinArena({} : {}) {
   const functions: Functions = {
     loadingAndGenerateKeyPair,
     showNotification,
-    joinTour,
+    triggerTour,
     dispatch,
     findNonce,
     mine,
