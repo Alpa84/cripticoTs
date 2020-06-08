@@ -119,8 +119,10 @@ const reducer = (general: GeneralType, action: Action) => {
       return clonedNewBlock
     case 'publishTransaction':
       let clonedPublished = _.cloneDeep(general)
-      // security check to ensure amount is not null
-      if (clonedPublished.transactionToPublish.amount === null) { return clonedPublished }
+      let tran = clonedPublished.transactionToPublish
+      // Note: security check to ensure amount is not null
+      let isTransactionValid = tran.gives !== '' && tran.receives !== '' && tran.amount !== null && tran.signature !== '' && tran.secretKey !== ''
+      if (! isTransactionValid) { return clonedPublished }
       let toPublish = {
         ...clonedPublished.transactionToPublish,
         amount: clonedPublished.transactionToPublish.amount as number
