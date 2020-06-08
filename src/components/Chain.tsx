@@ -61,7 +61,7 @@ function Chain({ general, functions }: Props) {
               <div
                 className="blockTutorial"
                 key={index}
-                data-tut={index === 0 ? "block" : ''}
+                data-tut={index === chain.length -1 ? "block" : ''}
                 >
                 <div
                   key={index}
