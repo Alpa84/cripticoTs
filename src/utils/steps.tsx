@@ -3,8 +3,8 @@ import Link from 'src/components/Link';
 import { Step, Styles } from 'react-joyride';
 import { tooltipStyles } from 'src/components/Tour';
 
-export const stepsPre: Step[] = [
- {
+const stepsObj: {[index: number] : Step} = {
+ 0: {
     content: (
     <div>
       <h2>Welcome!</h2>
@@ -14,7 +14,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="header"]',
     placement: 'bottom',
   },
-  {
+  1: {
     content: (
     <div>
       <p>In this tour we are going to: </p>
@@ -30,7 +30,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="header"]',
     placement: 'bottom',
   },
-  {
+  2: {
     content: (
     <div>
       To do anything with a crypto coin you have to have a wallet. For that, you have to create a Public Address and a Private Key for yourself.
@@ -40,7 +40,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="keyPair"]',
     placement: 'right-start',
   },
-  {
+  3: {
     content: (
     <div>
       Your public address is like an email address. If anyone wants to send you a crypto-coin all they need to know is your public address.
@@ -50,7 +50,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="onlyKeys"]',
     placement: 'right-start',
   },
-  {
+  4: {
     content: (
       <div>
         Now that you have a key pair, choose an < b > alias</b > for your public address and < b > generate a wallet</b >.
@@ -59,7 +59,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="keyPair"]',
     placement: 'right-start',
   },
-  {
+  5: {
     content: (
       <div>
         <p>Excellent!</p>
@@ -69,7 +69,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="wallets"]',
     placement: 'left-start',
   },
-  {
+  6: {
     content: (
       <div>
         <p>
@@ -84,7 +84,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="wallets"]', // free
     placement: 'left-start',
   },
-  {
+  7: {
     content: (
       <div>
         <p>The Blockchain has a list of all the coin generations and all coin transactions for anyone to see.</p>
@@ -94,7 +94,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="blockchain"]',
     placement: 'right-start',
   },
-  {
+  8: {
     content: (
       <div>
         <p>If user AlePan has mined 100 coins ( see <b>block 1</b> ) and has transferred 20 coins to Athena on <b>block 2</b>, how much does he have? </p>
@@ -104,7 +104,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="blockchain"]',
     placement: 'right-start',
   },
-  {
+  9: {
     content: (
       <div>
         <p>So, this AlePan has some coins. Anyone with his private key could make a transaction in his name and steal his coins.</p>
@@ -114,7 +114,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="blockchain"]', // free
     placement: 'right-start',
   },
-  {
+  10: {
     content: (
       <div>
         <p>They have everybody's private keys! You shouldn't share Private Keys with people you don't trust. We are only storing them here for showing how it all works.</p>
@@ -124,7 +124,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="wallets"]',
     placement: 'left-start',
   },
-  {
+  11: {
     content: (
       <div>
         <p>Let's make a transaction from AlePan to your public address.</p>
@@ -133,7 +133,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="wallets"]', // Free
     placement: 'left-start',
   },
-  {
+  12: {
     content: (
       <div>
         <p>The first step is to publish the transaction.</p>
@@ -144,7 +144,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="publish"]',
     placement: 'right-start',
   },
-  {
+  13: {
     content: (
       <div>
         <p>We need the giver's private key to sign the transaction.</p>
@@ -156,7 +156,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="publish"]',
     placement: 'right-start',
   },
-  {
+  14: {
     content: (
       <div>
         <p>Click <b>Copy Private Key</b>.</p>
@@ -165,7 +165,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="creatorPrivateKey"]',
     placement: 'left-start',
   },
-  {
+  15: {
     content: (
       <div>
         <p><b>Paste it into giver's private key</b> and click on <b>Sign with private Key</b>.</p>
@@ -174,7 +174,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="publish"]',
     placement: 'right-start',
   },
-  {
+  16: {
     content: (
       <div>
         <p>To see how a signature is specific for a transaction, you can try the following: change the amount , sign it again and watch the signature change.</p>
@@ -183,7 +183,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="publish"]',
     placement: 'right-start',
   },
-  {
+  17: {
     content: (
       <div>
         <p>You have already signed the transaction as AlePan, but the money is not yours yet</p>
@@ -194,7 +194,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="publish"]',
     placement: 'right-start',
   },
-  {
+  18: {
     content: (
       <div>
         <p>OK, once the transaction is published, how does it get included in the blockchain?</p>
@@ -204,7 +204,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="notIncludedYet"]',
     placement: 'right-start',
   },
-  {
+  19: {
     content: (
       <div>
         <p>So they just include the pending transactions block in the chain?</p>
@@ -214,7 +214,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="notIncludedYet"]',
     placement: 'right-start',
   },
-  {
+  20: {
     content: (
       <div>
         <p>Notice how every block on the blockchain has curious number called a <b>"hash"</b> </p>
@@ -223,7 +223,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="blockchain"]',
     placement: 'right-start',
   },
-  {
+  21: {
     content: (
       <div>
         <p>What is a block hash?</p>
@@ -234,7 +234,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="block"]',
     placement: 'right-start',
   },
-  {
+  22: {
     content: (
       <div>
         <p> Go ahead and click <b>Hack the Chain</b>.</p>
@@ -243,7 +243,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="toggleHackTheChain"]',
     placement: 'right-start',
   },
-  {
+  23: {
     content: (
       <div>
         <p>Instead of user aliases, you will see user addresses. Blochains usually store user addresses, in this case we show the aliases to make it more readable.</p>
@@ -253,7 +253,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="block"]',
     placement: 'right-start',
   },
-  {
+  24: {
     content: (
       <div>
         <p>All that the miner does is try to guess different numbers to make that <b>hash</b> start with two zeros (or more). </p><p> How? </p><p>He just tries different numbers in a place specifically meant for that, called the <b>"nonce"</b> until the block <b>hash</b> starts with '00'.</p>
@@ -262,7 +262,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="block"]',
     placement: 'right-start',
   },
-  {
+  25: {
     content: (
       <div>
         <p>You can try it yourself by randomly changing the nonce until the hash starts with '00' or by clicking <b>Find Nonce</b> to make the computer search it for you. That is what mining is all about, blindly changing the <b>nonce</b> until the hash starts with an established amount of zeros.</p>
@@ -272,7 +272,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="block"]',
     placement: 'right-start',
   },
-  {
+  26: {
     content: (
       <div>
         <p>Millions are spent trying to find the right nonce for each new block. </p><p> Why work so hard? </p><p> The one who finds the right nonce gets the privilege of creating a new coin for himself.</p>
@@ -281,7 +281,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="block"]', // free
     placement: 'right-start',
   },
-  {
+  27: {
     content: (
       <div>
         <p>Let's go <b>Back to the Unedited Chain</b> .</p>
@@ -290,7 +290,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="toggleHackTheChain"]',
     placement: 'right-start',
   },
-  {
+  28: {
     content: (
       <div>
         <p>As you can see, the first transaction of every block is a 'mined' coin. No one gives it, it was created.</p>
@@ -299,7 +299,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="blockchain"]',
     placement: 'right-start',
   },
-  {
+  29: {
     content: (
       <div>
         <p>We are going to watch the miner grabbing the published transactions, packing them in a block and trying different numbers in the nonce until the hash starts with '00'.</p>
@@ -310,7 +310,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="miningPlusBlockchain"]',
     placement: 'right-start',
   },
-  {
+  30: {
     content: (
       <div>
         <p>Did it happen too fast? </p><p>Click <b>Start Mining</b> again to see the generation of a new coin. If there are no transactions to be included the miner will just generate a new block with the creation of his new coin.</p>
@@ -320,7 +320,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="miningPlusBlockchain"]',
     placement: 'right-start',
   },
-  {
+  31: {
     content: (
       <div>
         <p>That is it. That is what needs to happen for you to have some sweet coin.</p>
@@ -330,7 +330,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="blockchain"]',
     placement: 'right-start',
   },
-  {
+  32: {
     content: (
       <div>
         <p>How much everyone has can also be seen in the wallets, but the ground truth is always in the blockchain.</p>
@@ -339,7 +339,7 @@ export const stepsPre: Step[] = [
     target: '[data-tut="userWallet"]',
     placement: 'left-start',
   },
-  {
+  33: {
     content: (
       <div>
         <p>That is how far we are going to go with this tour, but there are a bunch of things you can explore by yourself.</p>
@@ -363,4 +363,6 @@ export const stepsPre: Step[] = [
     target: '[data-tut="userWallet"]', // free
     placement: 'left-start',
   },
-]
+}
+export const stepsPre: Step[] = Object.keys(stepsObj).sort((a, b) => parseInt(a, undefined) - parseInt(b, undefined))
+  .map(key => stepsObj[key])
