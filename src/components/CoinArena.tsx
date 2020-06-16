@@ -131,7 +131,7 @@ function CoinArena({} : {}) {
       <Tour
         mobileStep={general.mobileStep}
         mobileTourOpen={general.mobileTourOpen}
-        dispatch={functions.dispatch}
+        functions={functions}
         />
     </>
   )

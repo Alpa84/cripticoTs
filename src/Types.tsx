@@ -44,6 +44,7 @@ export type Action =
   | { type: 'backToUneditedChain'}
   | { type: 'changeKeyPair', keyPair: KeyPair}
   | { type: 'generateWallet'}
+  | { type: 'generateLazyWallet'}
   | { type: 'signTransaction'}
   | { type: 'changeNotification', on: boolean, area: keyof Notifications }
   | { type: 'changeGeneral', general: GeneralType}

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Joyride, { CallBackProps, EVENTS, STATUS, FloaterProps, Styles, Step, Placement } from 'react-joyride';
-import { stepsPre } from 'src/utils/steps';
-import { Dispatch, useState, useEffect } from 'react'
-import { Action } from 'src/Types';
+import { stepsPre, stepIndexToKey } from 'src/utils/steps';
+import { useState, useEffect } from 'react'
+import { Functions } from 'src/Types';
 import { isSmallScreen } from 'src/utils/misc';
 
 
@@ -26,14 +26,18 @@ export const tooltipStyles = {
 export interface Props {
   mobileStep: number
   mobileTourOpen: boolean
-  dispatch: Dispatch<Action>
+  functions: Functions
 }
 
-function Tour({ mobileStep, dispatch, mobileTourOpen }: Props) {
+function Tour({ mobileStep, functions, mobileTourOpen }: Props) {
   const [steps, setSteps] = useState<Step[]>([])
-
+  let dispatch = functions.dispatch
   let smallScreen = isSmallScreen()
 
+  const keyToActions = {
+    2: functions.loadingAndGenerateKeyPair,
+    4: () => functions.dispatch({ type: 'generateLazyWallet'}),
+  }
   useEffect( ()=> {
     const stepsAdapted: Step[] = stepsPre.map(step => {
       let placement = step.placement === 'bottom' ? 'bottom' : 'top'
@@ -52,6 +56,8 @@ function Tour({ mobileStep, dispatch, mobileTourOpen }: Props) {
       // NOTE: the folloing is to avoid a triggering it twice on an external change of step
       // using the get helpers prom may help too
       if(callbackProps.index === mobileStep) {
+        let key = stepIndexToKey(mobileStep)
+        if (action === 'next' && keyToActions[key]) { keyToActions[key]()}
         if (action === 'next') {
           dispatch({ type: 'changeMobileStep', step: mobileStep + 1 })
         } else if (action === 'prev') {

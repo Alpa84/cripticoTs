@@ -366,3 +366,7 @@ const stepsObj: {[index: number] : Step} = {
 }
 export const stepsPre: Step[] = Object.keys(stepsObj).sort((a, b) => parseInt(a, undefined) - parseInt(b, undefined))
   .map(key => stepsObj[key])
+
+export const stepIndexToKey =  (ind: number ) => {
+  return Object.keys(stepsObj).sort((a, b) => parseInt(a, undefined) - parseInt(b, undefined))[ind]
+}
