@@ -97,7 +97,7 @@ function CoinArena({} : {}) {
     await addDelay(3000)
     dispatch({ type: 'addMinedBlockToChain' })
     await addDelay(1000)
-    setStep(30)
+    setStep('30')
   }
   const loadingAndGenerateKeyPair = async() => {
     dispatch({ type: 'changeKeyPair', keyPair: {address:'generating...', privateKey: 'generating...' }})

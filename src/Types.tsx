@@ -11,7 +11,7 @@ export interface Functions {
   dispatch: Dispatch<Action>
   findNonce: (block: Block, blockIndex: number) => Promise<void>
   mine: ()=> void
-  setStep: (step: number) => void
+  setStep: (step: string) => void
   triggerTour: ()=> void
   setRef: (refName: string, ref: HTMLElement) => void
 }

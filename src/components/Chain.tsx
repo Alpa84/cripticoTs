@@ -17,12 +17,12 @@ function Chain({ general, functions }: Props) {
   let onHackChain: () => void
   if (general.editableChain) {
     onHackChain = () => {
-      functions.setStep(28)
+      functions.setStep('28')
       functions.dispatch({ type: 'toggleEditableChain' })
     }
   } else {
     onHackChain = () => {
-      functions.setStep(23)
+      functions.setStep('23')
       functions.dispatch({ type: 'toggleEditableChain' })
     }
   }

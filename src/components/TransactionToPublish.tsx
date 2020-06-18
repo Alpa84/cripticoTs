@@ -101,7 +101,7 @@ function TransactionToPublish({ general, functions }: Props) {
         className="btn btn-primary"
         onClick={() => {
           functions.dispatch({ type: 'signTransaction' })
-          functions.setStep(16)
+          functions.setStep('16')
         }}
       >Sign with private Key</button>
       {!signEnabled &&
@@ -120,7 +120,7 @@ function TransactionToPublish({ general, functions }: Props) {
           functions.dispatch({ type: 'publishTransaction' })
           functions.showNotification('transactionPublished')
           // NOTE: the following is to give the user time to see something is changed
-          setTimeout(() => (functions.setStep(18)), 1000)
+          setTimeout(() => (functions.setStep('18')), 1000)
         } }
         >Publish Transaction</button>
       {!publishEnabled &&

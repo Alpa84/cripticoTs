@@ -35,8 +35,8 @@ function Tour({ mobileStep, functions, mobileTourOpen }: Props) {
   let smallScreen = isSmallScreen()
 
   const keyToActions = {
-    2: functions.loadingAndGenerateKeyPair,
-    4: () => functions.dispatch({ type: 'generateLazyWallet'}),
+    '2': functions.loadingAndGenerateKeyPair,
+    '4': () => functions.dispatch({ type: 'generateLazyWallet'}),
   }
   useEffect( ()=> {
     const stepsAdapted: Step[] = stepsPre.map(step => {
