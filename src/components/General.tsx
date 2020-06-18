@@ -67,12 +67,10 @@ function General({ general, functions }: Props) {
             <div className="section">
               <TransactionToPublish general={general} functions={functions} />
             </div>
-            { general.pendingTransactions.length >0  && (
-                <div className="section" data-tut='notIncludedYet'>
-                <h2>Published Transactions not yet included in the Blockchain</h2>
-                <PendingTransactions general={general} />
-              </div>
-            )}
+            <div className="section" data-tut='notIncludedYet'>
+              <h2>Published Transactions not yet included in the Blockchain</h2>
+              <PendingTransactions general={general} />
+            </div>
             <div data-tut='miningPlusBlockchain'>
               <div data-tut='mining'>
                 <div className='section'>

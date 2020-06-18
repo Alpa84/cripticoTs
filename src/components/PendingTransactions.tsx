@@ -12,6 +12,15 @@ function PendingTransactions({ general }: Props) {
       <div className='card-body'>
         <table className='table inside fixedTable'>
           <tbody>
+            {general.pendingTransactions.length === 0  && (
+              <tr>
+                <td scope="row">
+                  <div>
+                    No pending transactions
+                  </div>
+                </td>
+              </tr>
+            )}
             {
               general.pendingTransactions.map((transaction, transIndex) => (
                 <tr key={transIndex}>
