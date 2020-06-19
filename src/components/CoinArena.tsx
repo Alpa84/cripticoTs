@@ -9,7 +9,7 @@ import { reducerAndLog } from 'src/utils/reducer'
 import { addDelay } from 'src/utils/misc'
 import { generateKeyPair } from 'src/utils/rsa'
 import Tour from './Tour'
-import { stepsPre } from 'src/utils/steps'
+import { stepsPre, stepKeyToIndex } from 'src/utils/steps'
 
 const DefaultNotificationDuration = 4000
 export let emptyTransactionToPublish = { gives: '', receives: '', amount: null, signature: '', secretKey: '' }
@@ -40,9 +40,10 @@ function CoinArena({} : {}) {
   const setStepMobile = async(step: number) => {
     dispatch({ type: 'changeMobileStep', step })
   }
-  const setStep = (step: number) => {
-    if (general.mobileTourOpen && general.mobileStep === step - 1) {
-      setStepMobile(step)
+  const setStep = (step: string) => {
+    let stepIndex = stepKeyToIndex(step)
+    if (general.mobileTourOpen && general.mobileStep === stepIndex - 1) {
+      setStepMobile(stepIndex)
     }
   }
 

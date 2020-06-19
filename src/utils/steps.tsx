@@ -23,7 +23,6 @@ const stepsObj: {[index: number] : Step} = {
         <li>make a transaction,</li>
         <li>publish it,</li>
         <li>do some mining,</li>
-        <li>explore how the blockchain works.</li>
       </ul>
     </div>
     ),
@@ -217,56 +216,9 @@ const stepsObj: {[index: number] : Step} = {
   '20': {
     content: (
       <div>
-        <p>Notice how every block on the blockchain has curious number called a <b>"hash"</b> </p>
-      </div>
-    ),
-    target: '[data-tut="blockchain"]',
-    placement: 'right-start',
-  },
-  '21': {
-    content: (
-      <div>
-        <p>What is a block hash?</p>
-        <p>You take all the block data and you produce a number that is unique for that block. </p>
-        <p>Let's put that to the test</p>
-      </div>
-    ),
-    target: '[data-tut="block"]',
-    placement: 'right-start',
-  },
-  '22': {
-    content: (
-      <div>
-        <p> Go ahead and click <b>Hack the Chain</b>.</p>
-      </div>
-    ),
-    target: '[data-tut="toggleHackTheChain"]',
-    placement: 'right-start',
-  },
-  '23': {
-    content: (
-      <div>
-        <p>Instead of user aliases, you will see user addresses. Blochains usually store user addresses, in this case we show the aliases to make it more readable.</p>
-        <p>Change any field on the block and watch the <b>hash</b> change as you change the data. For the moment, never mind the warnings you are going to see.</p>
-      </div>
-    ),
-    target: '[data-tut="block"]',
-    placement: 'right-start',
-  },
-  '24': {
-    content: (
-      <div>
-        <p>All that the miner does is try to guess different numbers to make that <b>hash</b> start with two zeros (or more). </p><p> How? </p><p>He just tries different numbers in a place specifically meant for that, called the <b>"nonce"</b> until the block <b>hash</b> starts with '00'.</p>
-      </div>
-    ),
-    target: '[data-tut="block"]',
-    placement: 'right-start',
-  },
-  '25': {
-    content: (
-      <div>
-        <p>You can try it yourself by randomly changing the nonce until the hash starts with '00' or by clicking <b>Find Nonce</b> to make the computer search it for you. That is what mining is all about, blindly changing the <b>nonce</b> until the hash starts with an established amount of zeros.</p>
-        <p>Here it is a fairly simple task because we just need to make the hash start with two zeros. It gets exponentially harder as more zeros are required. In the Bitcoin chain the hash has to start with about 19 zeros.</p>
+        <p>To be included in the blockchain every block has to include a number called a 'nonce'.</p>
+        <p>By design that number is hard to figure out and unique for every block.</p>
+        <p>So the all a miner does, is try different nonces until one just clicks</p>
       </div>
     ),
     target: '[data-tut="block"]',
@@ -275,28 +227,12 @@ const stepsObj: {[index: number] : Step} = {
   '26': {
     content: (
       <div>
-        <p>Millions are spent trying to find the right nonce for each new block. </p><p> Why work so hard? </p><p> The one who finds the right nonce gets the privilege of creating a new coin for himself.</p>
+        <p>Millions are spent trying to find the right nonce for new blocks. </p><p> Why work so hard? </p><p> The one who finds the right nonce gets the privilege of creating a new coin for himself.</p>
+        <p>The first transaction of every block is a coin that the miner has generated for himself.</p>
+        <p>It is a 'mined' coin.</p>
       </div>
     ),
-    target: '[data-tut="block"]', // free
-    placement: 'right-start',
-  },
-  '27': {
-    content: (
-      <div>
-        <p>Let's go <b>Back to the Unedited Chain</b> .</p>
-      </div>
-    ),
-    target: '[data-tut="toggleHackTheChain"]',
-    placement: 'right-start',
-  },
-  '28': {
-    content: (
-      <div>
-        <p>As you can see, the first transaction of every block is a 'mined' coin. No one gives it, it was created.</p>
-      </div>
-    ),
-    target: '[data-tut="blockchain"]',
+    target: '[data-tut="block"]',
     placement: 'right-start',
   },
   '29': {
@@ -324,7 +260,7 @@ const stepsObj: {[index: number] : Step} = {
     content: (
       <div>
         <p>That is it. That is what needs to happen for you to have some sweet coin.</p>
-        <p>As you can see, the blockchain now says that AlePan gave you some amount of coin.</p>
+        <p>If you have followed the steps, you should see that the blockchain now says that AlePan gave you some amount of coin.</p>
       </div>
     ),
     target: '[data-tut="blockchain"]',
