@@ -24,14 +24,14 @@ export const tooltipStyles = {
 } as Styles
 
 export interface Props {
-  mobileStep: number
-  mobileTourOpen: boolean
+  introStep: number
+  introTourOpen: boolean
   functions: Functions
   stepsPre: Step[]
   tourName: TourName
 }
 
-function Tour({ mobileStep, functions, mobileTourOpen, stepsPre, tourName }: Props) {
+function Tour({ introStep, functions, introTourOpen, stepsPre, tourName }: Props) {
   const [steps, setSteps] = useState<Step[]>([])
   let dispatch = functions.dispatch
   let smallScreen = isSmallScreen()
@@ -57,13 +57,13 @@ function Tour({ mobileStep, functions, mobileTourOpen, stepsPre, tourName }: Pro
     if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].some(x => x === callbackProps.type)) {
       // NOTE: the folloing is to avoid a triggering it twice on an external change of step
       // using the get helpers prom may help too
-      if(callbackProps.index === mobileStep) {
-        let key = stepIndexToKey(mobileStep)
+      if(callbackProps.index === introStep) {
+        let key = stepIndexToKey(introStep)
         if (action === 'next' && keyToActions[key]) { keyToActions[key]()}
         if (action === 'next') {
-          dispatch({ type: 'changeStep', step: mobileStep + 1, tour: tourName })
+          dispatch({ type: 'changeStep', step: introStep + 1, tour: tourName })
         } else if (action === 'prev') {
-          dispatch({ type: 'changeStep', step: mobileStep - 1, tour: tourName })
+          dispatch({ type: 'changeStep', step: introStep - 1, tour: tourName })
         }
       }
       if (action === 'close') {
@@ -86,8 +86,8 @@ function Tour({ mobileStep, functions, mobileTourOpen, stepsPre, tourName }: Pro
       }
       styles={tooltipStyles}
       disableOverlayClose={true}
-      run={mobileTourOpen}
-      stepIndex={mobileStep}
+      run={introTourOpen}
+      stepIndex={introStep}
       callback={joyrideCallback}
       continuous={true}
       scrollToFirstStep={true}

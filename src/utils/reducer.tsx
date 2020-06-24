@@ -14,7 +14,7 @@ const reducer = (general: GeneralType, action: Action) => {
       return {...general, alias: action.alias}
     case 'changeStep':
       if (action.tour === TourName.Intro) {
-        return { ...general, mobileStep: action.step }
+        return { ...general, introStep: action.step }
       } else { // NOTE: action.tour === TourName.Chain
         return { ...general, chainStep: action.step }
       }
@@ -22,9 +22,9 @@ const reducer = (general: GeneralType, action: Action) => {
       return {...general, dirToAddMined: action.dir}
     case 'changeTourOpen':
       if (action.tour === TourName.Intro) {
-        return { ...general, mobileTourOpen: action.on, introTourOpen: false }
+        return { ...general, introTourOpen: action.on, chainTourOpen: false }
       } else { // NOTE: action.tour === TourName.Chain
-        return { ...general, introTourOpen: action.on, mobileTourOpen: false }
+        return { ...general, chainTourOpen: action.on, introTourOpen: false }
       }
     case 'changeGives':
       let clonedGives = _.cloneDeep(general)

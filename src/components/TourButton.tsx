@@ -11,9 +11,9 @@ export interface Props {
 
 function TourButton({ functions, tourName, general }: Props) {
   let tourTriggerText: string
-  if (general.mobileStep === 0) {
+  if (general.introStep === 0) {
     tourTriggerText = 'Join the Tour'
-  } else if (general.mobileStep === stepsPre.length - 1) {
+  } else if (general.introStep === stepsPre.length - 1) {
     tourTriggerText = 'Restart the Tour'
   } else {
     tourTriggerText = 'Resume the Tour'
@@ -21,7 +21,7 @@ function TourButton({ functions, tourName, general }: Props) {
   return (
     <button type="button" className="btn btn-primary"
       onClick={functions.triggerTour}
-      disabled={tourName === TourName.Intro ? general.mobileTourOpen : general.introTourOpen}
+      disabled={tourName === TourName.Intro ? general.introTourOpen : general.chainTourOpen}
     >
       {tourTriggerText}
     </button>

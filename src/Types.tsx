@@ -67,9 +67,9 @@ export interface TransactionToPublish {
 }
 export interface GeneralType {
   pendingTransactions: Transaction[]
-  mobileTourOpen: boolean
   introTourOpen: boolean
-  mobileStep: number
+  chainTourOpen: boolean
+  introStep: number
   chainStep: number
   chain: Block[]
   editableChain?: Block[]

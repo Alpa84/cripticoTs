@@ -15,10 +15,10 @@ const DefaultNotificationDuration = 4000
 export let emptyTransactionToPublish = { gives: '', receives: '', amount: null, signature: '', secretKey: '' }
 let emptyKeyPair = { address: '', privateKey: '' }
 export const defaultGeneral: GeneralType = {
-  mobileTourOpen: false,
   introTourOpen: false,
+  chainTourOpen: false,
   notifications: { walletGenerated: false, transactionPublished: false},
-  mobileStep: 0,
+  introStep: 0,
   chainStep: 0,
   alias: '',
   chain: DefaultChain,
@@ -39,21 +39,21 @@ function CoinArena({} : {}) {
   }, []) // used to fire dispatch just once on open
 
   let refList: { [name: string]: HTMLElement } = {}
-  const setStepMobile = async(step: number) => {
+  const setStepIntro = async(step: number) => {
     dispatch({ type: 'changeStep', step, tour: TourName.Intro })
   }
   const setStep = (step: string) => {
     let stepIndex = stepKeyToIndex(step)
-    if (general.mobileTourOpen && general.mobileStep === stepIndex - 1) {
-      setStepMobile(stepIndex)
+    if (general.introTourOpen && general.introStep === stepIndex - 1) {
+      setStepIntro(stepIndex)
     }
   }
 
   const triggerTour = () => {
-    if (general.mobileStep === stepsPre.length -1){
-      setStepMobile(0)
+    if (general.introStep === stepsPre.length -1){
+      setStepIntro(0)
     } else {
-      setStepMobile(general.mobileStep)
+      setStepIntro(general.introStep)
     }
     functions.dispatch({ type: 'changeTourOpen', on: true, tour: TourName.Intro })
   }
@@ -108,7 +108,7 @@ function CoinArena({} : {}) {
     dispatch({ type: 'changeKeyPair', keyPair })
   }
   const showNotification: Functions["showNotification"] = (area, milliseconds) => {
-    if (! general.mobileTourOpen) {
+    if (! general.introTourOpen) {
       dispatch({ type: 'changeNotification', area, on: true})
       setTimeout( ()=> {
         dispatch({type:'changeNotification', area, on:false})
@@ -131,8 +131,8 @@ function CoinArena({} : {}) {
         general={general}
         functions={functions}/>
       <Tour
-        mobileStep={general.mobileStep}
-        mobileTourOpen={general.mobileTourOpen}
+        introStep={general.introStep}
+        introTourOpen={general.introTourOpen}
         functions={functions}
         stepsPre={stepsPre}
         tourName={TourName.Intro}
