@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Joyride, { CallBackProps, EVENTS, STATUS, FloaterProps, Styles, Step, Placement } from 'react-joyride';
-import { stepsPre, stepIndexToKey } from 'src/utils/steps';
+import {  stepIndexToKey } from 'src/utils/steps';
 import { useState, useEffect } from 'react'
-import { Functions } from 'src/Types';
+import { Functions, TourName } from 'src/Types';
 import { isSmallScreen } from 'src/utils/misc';
 
 
@@ -27,9 +27,11 @@ export interface Props {
   mobileStep: number
   mobileTourOpen: boolean
   functions: Functions
+  stepsPre: Step[]
+  tourName: TourName
 }
 
-function Tour({ mobileStep, functions, mobileTourOpen }: Props) {
+function Tour({ mobileStep, functions, mobileTourOpen, stepsPre, tourName }: Props) {
   const [steps, setSteps] = useState<Step[]>([])
   let dispatch = functions.dispatch
   let smallScreen = isSmallScreen()
@@ -59,17 +61,17 @@ function Tour({ mobileStep, functions, mobileTourOpen }: Props) {
         let key = stepIndexToKey(mobileStep)
         if (action === 'next' && keyToActions[key]) { keyToActions[key]()}
         if (action === 'next') {
-          dispatch({ type: 'changeMobileStep', step: mobileStep + 1 })
+          dispatch({ type: 'changeStep', step: mobileStep + 1, tour: tourName })
         } else if (action === 'prev') {
-          dispatch({ type: 'changeMobileStep', step: mobileStep - 1 })
+          dispatch({ type: 'changeStep', step: mobileStep - 1, tour: tourName })
         }
       }
       if (action === 'close') {
-        dispatch({ type: 'changeMobileTourOpen', on: false })
+        dispatch({ type: 'changeTourOpen', on: false, tour: tourName })
       }
     }
     else if ([STATUS.FINISHED, STATUS.SKIPPED].some(x => x === callbackProps.type)) {
-      dispatch({ type: 'changeMobileTourOpen', on: false })
+      dispatch({ type: 'changeTourOpen', on: false, tour: tourName })
     }
   }
 

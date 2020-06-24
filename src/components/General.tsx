@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { GeneralType, Functions } from '../Types'
+import { GeneralType, Functions, TourName } from '../Types'
 import Chain from './Chain';
 import PendingTransactions from './PendingTransactions'
 import TransactionToPublish, { Empty } from './TransactionToPublish'
@@ -9,7 +9,7 @@ import Directory from './Wallets'
 import FixedBlock from './FixedBlock';
 import { startsWithZeros, hashBlock } from 'src/utils/blockchain';
 import Link from './Link';
-import { stepsPre } from 'src/utils/steps';
+import TourButton from './TourButton';
 
 export interface Props {
   general: GeneralType
@@ -31,14 +31,6 @@ function General({ general, functions }: Props) {
   } else if (general.pendingTransactions.length === 0) {
     miningHint = "there are no published transactions, the miner will just generate it's own coin"
   }
-  let tourTriggerText: string
-  if (general.mobileStep === 0) {
-    tourTriggerText = 'Join the Tour'
-  } else if (general.mobileStep === stepsPre.length -1) {
-    tourTriggerText = 'Restart the Tour'
-  } else {
-    tourTriggerText = 'Resume the Tour'
-  }
 
   return (
     <div id='General' className="General">
@@ -51,12 +43,7 @@ function General({ general, functions }: Props) {
                 An interactive demo of a crypto currency. (Including blockchain, digital signatures and more.)
               </h3>
             </div>
-            <button type="button" className="btn btn-primary"
-              onClick={functions.triggerTour}
-              disabled={general.mobileTourOpen}
-            >
-              {tourTriggerText}
-            </button>
+            <TourButton general={general} functions={functions} tourName={TourName.Intro}/>
           </div>
         </div>
         <div className="row">

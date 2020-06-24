@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import { useReducer } from 'react'
 import { DefaultChain, DefaultWallets } from '../utils/defaultChain'
-import { GeneralType, Functions, Block } from '../Types'
+import { GeneralType, Functions, Block, TourName } from '../Types'
 import { hashBlockWithoutNonce, startsWithZeros, validateTransactions } from '../utils/blockchain'
 import General from './General'
 import { reducerAndLog } from 'src/utils/reducer'
@@ -16,8 +16,10 @@ export let emptyTransactionToPublish = { gives: '', receives: '', amount: null, 
 let emptyKeyPair = { address: '', privateKey: '' }
 export const defaultGeneral: GeneralType = {
   mobileTourOpen: false,
+  introTourOpen: false,
   notifications: { walletGenerated: false, transactionPublished: false},
   mobileStep: 0,
+  chainStep: 0,
   alias: '',
   chain: DefaultChain,
   dirToAddMined: '',
@@ -32,13 +34,13 @@ function CoinArena({} : {}) {
 
   React.useEffect(() => {
     setTimeout(() => {
-      functions.dispatch({ type: 'changeMobileTourOpen', on: true })
+      functions.dispatch({ type: 'changeTourOpen', on: true, tour: TourName.Intro })
     }, 1000)
   }, []) // used to fire dispatch just once on open
 
   let refList: { [name: string]: HTMLElement } = {}
   const setStepMobile = async(step: number) => {
-    dispatch({ type: 'changeMobileStep', step })
+    dispatch({ type: 'changeStep', step, tour: TourName.Intro })
   }
   const setStep = (step: string) => {
     let stepIndex = stepKeyToIndex(step)
@@ -50,11 +52,10 @@ function CoinArena({} : {}) {
   const triggerTour = () => {
     if (general.mobileStep === stepsPre.length -1){
       setStepMobile(0)
-      functions.dispatch({ type: 'changeMobileTourOpen', on: true })
     } else {
       setStepMobile(general.mobileStep)
-      functions.dispatch({ type: 'changeMobileTourOpen', on: true })
     }
+    functions.dispatch({ type: 'changeTourOpen', on: true, tour: TourName.Intro })
   }
 
   const setRef = (refName: string, ref: HTMLElement) => {
@@ -133,6 +134,8 @@ function CoinArena({} : {}) {
         mobileStep={general.mobileStep}
         mobileTourOpen={general.mobileTourOpen}
         functions={functions}
+        stepsPre={stepsPre}
+        tourName={TourName.Intro}
         />
     </>
   )

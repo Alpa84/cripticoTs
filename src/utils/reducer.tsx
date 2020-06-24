@@ -1,9 +1,10 @@
-import { GeneralType, Action, WalletDetails, Block, Transaction } from 'src/Types'
+import { GeneralType, Action, WalletDetails, Block, Transaction, TourName } from 'src/Types'
 import * as _ from 'lodash'
 import { DefaultEmptyTransaction, DefaultEmptyBlock, LazyPublicAddress, LazyAlias, LazyPrivateKey, DefaultWallets } from './defaultChain'
 import { hashBlock, createTransactionSignature } from './blockchain'
 import { logActionChange } from './misc'
 import { emptyTransactionToPublish } from 'src/components/CoinArena'
+
 
 let emptyKeyPair = { address: '', privateKey: '' }
 
@@ -11,12 +12,20 @@ const reducer = (general: GeneralType, action: Action) => {
   switch (action.type) {
     case 'changeAlias':
       return {...general, alias: action.alias}
-    case 'changeMobileStep':
-      return {...general, mobileStep: action.step}
+    case 'changeStep':
+      if (action.tour === TourName.Intro) {
+        return { ...general, mobileStep: action.step }
+      } else { // NOTE: action.tour === TourName.Chain
+        return { ...general, chainStep: action.step }
+      }
     case 'changeDirToAddMined':
       return {...general, dirToAddMined: action.dir}
-    case 'changeMobileTourOpen':
-      return {...general, mobileTourOpen: action.on}
+    case 'changeTourOpen':
+      if (action.tour === TourName.Intro) {
+        return { ...general, mobileTourOpen: action.on, introTourOpen: false }
+      } else { // NOTE: action.tour === TourName.Chain
+        return { ...general, introTourOpen: action.on, mobileTourOpen: false }
+      }
     case 'changeGives':
       let clonedGives = _.cloneDeep(general)
       clonedGives.transactionToPublish.gives = action.gives

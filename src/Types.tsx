@@ -15,14 +15,17 @@ export interface Functions {
   triggerTour: ()=> void
   setRef: (refName: string, ref: HTMLElement) => void
 }
-
+export enum TourName {
+  'Intro',
+  'Chain',
+}
 export type Action =
   | { type: 'changeAlias', alias: string}
-  | { type: 'changeMobileStep', step: number}
+  | { type: 'changeStep', step: number, tour: TourName}
   | { type: 'changeGives', gives: string}
   | { type: 'changeReceives', receives: string}
   | { type: 'changeDirToAddMined', dir: string}
-  | { type: 'changeMobileTourOpen', on: boolean}
+  | { type: 'changeTourOpen', on: boolean, tour: TourName}
   | { type: 'changeTransactionAmount', amount: number}
   | { type: 'changeTransactionSecretKey', secretKey: string}
   | { type: 'changeChainTGives', gives: string, blockIndex: number, index: number}
@@ -65,7 +68,9 @@ export interface TransactionToPublish {
 export interface GeneralType {
   pendingTransactions: Transaction[]
   mobileTourOpen: boolean
+  introTourOpen: boolean
   mobileStep: number
+  chainStep: number
   chain: Block[]
   editableChain?: Block[]
   signatureError?: string
@@ -77,6 +82,7 @@ export interface GeneralType {
   notifications: Notifications
   minedBlock?: Block
 }
+
 export interface Notifications {
   walletGenerated: boolean
   transactionPublished: boolean
@@ -142,7 +148,7 @@ export interface TransactionValidation {
   [transactionIndex: number]: SingleTransactionValidation
 }
 
-export interface SingleTransactionValidation{
+export interface SingleTransactionValidation {
   gives ?: string
   receives ?: string
   amount ?: string
