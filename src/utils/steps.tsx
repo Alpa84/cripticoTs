@@ -77,7 +77,9 @@ const stepsObj: {[index: number] : Step} = {
         <p>
           To own a coin you either have to generate one or have someone who has coins transfer you some. Every crypto coin out there had to be generated first.
     </p>
-        <p>It will be easier having someone transfer you. So, who has coins? That information is in the <b>Blockchain</b>.</p>
+        <p>It will be easier having someone transfer you. So, who has coins?</p>
+        <p>That information is in the <b>Blockchain</b>.</p>
+        <p>We are going to take a look at it next.</p>
       </div>
     ),
     target: '[data-tut="wallets"]', // free
@@ -107,7 +109,7 @@ const stepsObj: {[index: number] : Step} = {
     content: (
       <div>
         <p>So, this AlePan has some coins. Anyone with his private key could make a transaction in his name and steal his coins.</p>
-        <p>Let's take a look at the <b>wallets</b>.</p>
+        <p>Lets take a look at the <b>wallets</b>.</p>
       </div>
     ),
     target: '[data-tut="blockchain"]', // free
@@ -126,30 +128,27 @@ const stepsObj: {[index: number] : Step} = {
   '11': {
     content: (
       <div>
-        <p>Let's make a transaction from AlePan to your public address.</p>
+        <p>If we are going to steal some coins form AlePan we will need his private key .</p>
+        <p>Click <b>Copy Private Key</b>.</p>
       </div>
     ),
-    target: '[data-tut="wallets"]', // Free
+    target: '[data-tut="creatorPrivateKey"]',
     placement: 'left-start',
   },
   '12': {
     content: (
       <div>
-        <p>The first step is to publish the transaction.</p>
-        <p>Choose <b>giver</b> (AlePan), <b>receiver</b> (you) and the <b>amount</b> to transfer. Be careful to choose an amount of coin that AlePan does have, if you don't everybody will ignore the transaction because they know how much everyone has.</p>
-        <p>We will get the giver's private key on the next steps.</p>
+        <p>Now that we have AlePan's secret key, lets make a transaction from AlePan to your public address.</p>
       </div>
     ),
-    target: '[data-tut="publish"]',
+    target: '[data-tut="publish"]', // Free
     placement: 'right-start',
   },
   '13': {
     content: (
       <div>
-        <p>We need the giver's private key to sign the transaction.</p>
-        <p>Signing a transaction is producing a big number that is specific for that transaction, and can only be produced by using the giver's private key. </p>
-        <p>Anyone can check the signature and be sure that it was made by the owner of both the <b>Public Address</b> and the <b>Private Key</b>.</p>
-        <p>Hit <b>Next</b> to go to the wallets to get AlePan's private key.</p>
+        <p>The first step is to publish the transaction.</p>
+        <p>Choose <b>giver</b> (AlePan), <b>receiver</b> (you) and the <b>amount</b> to transfer. Be careful to choose an amount of coin that AlePan does have, if you don't everybody will ignore the transaction because they know how much everyone has.</p>
       </div>
     ),
     target: '[data-tut="publish"]',
@@ -158,16 +157,18 @@ const stepsObj: {[index: number] : Step} = {
   '14': {
     content: (
       <div>
-        <p>Click <b>Copy Private Key</b>.</p>
+        <p>We need the giver's private key to sign the transaction.</p>
+        <p>Signing a transaction is producing a big number that is specific for that transaction, and can only be produced by using the giver's private key. </p>
+        <p>Anyone can check the signature and be sure that it was made by the owner of both the <b>Public Address</b> and the <b>Private Key</b>.</p>
       </div>
     ),
-    target: '[data-tut="creatorPrivateKey"]',
-    placement: 'left-start',
+    target: '[data-tut="publish"]',
+    placement: 'right-start',
   },
   '15': {
     content: (
       <div>
-        <p><b>Paste it into giver's private key</b> and click on <b>Sign with private Key</b>.</p>
+        <p>Paste AlePan's key into the <b>giver's private key</b> and click on <b>Sign with private Key</b>.</p>
       </div>
     ),
     target: '[data-tut="publish"]',

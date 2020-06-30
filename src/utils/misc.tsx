@@ -2,7 +2,7 @@ import { GeneralType, LogChunk, InitialLog, ChronoLog, Action, StatusPure } from
 import * as axios from 'axios'
 import * as _ from 'lodash'
 
-const LogVersion = 3
+const LogVersion = 4
 const SmallScreenSize = 720
 const Check = '23847823h'
 

@@ -1,11 +1,13 @@
 import * as React from 'react'
 import { useState } from 'react'
+import { Functions } from 'src/Types'
 
 export interface Props {
   pKey : string
+  functions: Functions
 }
 
-function PrivateKey({ pKey }: Props) {
+function PrivateKey({ pKey, functions }: Props) {
   const [isCopied, setCopied] = useState(false)
   let textAreaRef = React.createRef<HTMLTextAreaElement>()
   const copyKeyToClipboard = () => {
@@ -14,6 +16,7 @@ function PrivateKey({ pKey }: Props) {
       document.execCommand('copy')
       setCopied(true)
     }
+    functions.setStep('12')
     setTimeout( ()=> {
       setCopied(false)
     }, 4000)

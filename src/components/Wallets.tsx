@@ -41,7 +41,7 @@ function Wallets({ general, functions }: Props) {
                     <div
                       data-tut={dir === CreatorPublicAddress ? 'creatorPrivateKey' : 'otherPrivateKey'}
                     >
-                      <PrivateKey  pKey={general.wallets[dir].privateKey}/>
+                      <PrivateKey  pKey={general.wallets[dir].privateKey} functions={functions}/>
                     </div>
                   </div>
                 </div>
