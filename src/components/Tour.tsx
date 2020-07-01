@@ -24,22 +24,19 @@ export const tooltipStyles = {
 } as Styles
 
 export interface Props {
-  introStep: number
-  introTourOpen: boolean
+  stepNumber: number
+  tourOpen: boolean
   functions: Functions
   stepsPre: Step[]
   tourName: TourName
+  keysToActions: {[key: string]: ()=> void}
 }
 
-function Tour({ introStep, functions, introTourOpen, stepsPre, tourName }: Props) {
+function Tour({ stepNumber, functions, tourOpen, stepsPre, tourName, keysToActions }: Props) {
   const [steps, setSteps] = useState<Step[]>([])
   let dispatch = functions.dispatch
   let smallScreen = isSmallScreen()
 
-  const keyToActions = {
-    '2': functions.loadingAndGenerateKeyPair,
-    '4': () => functions.dispatch({ type: 'generateLazyWallet'}),
-  }
   useEffect( ()=> {
     const stepsAdapted: Step[] = stepsPre.map(step => {
       let placement = step.placement === 'bottom' ? 'bottom' : 'top'
@@ -57,13 +54,13 @@ function Tour({ introStep, functions, introTourOpen, stepsPre, tourName }: Props
     if ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND].some(x => x === callbackProps.type)) {
       // NOTE: the folloing is to avoid a triggering it twice on an external change of step
       // using the get helpers prom may help too
-      if(callbackProps.index === introStep) {
-        let key = stepIndexToKey(introStep)
-        if (action === 'next' && keyToActions[key]) { keyToActions[key]()}
+      if(callbackProps.index === stepNumber) {
+        let key = stepIndexToKey(stepNumber)
+        if (action === 'next' && keysToActions[key]) { keysToActions[key]()}
         if (action === 'next') {
-          dispatch({ type: 'changeStep', step: introStep + 1, tour: tourName })
+          dispatch({ type: 'changeStep', step: stepNumber + 1, tour: tourName })
         } else if (action === 'prev') {
-          dispatch({ type: 'changeStep', step: introStep - 1, tour: tourName })
+          dispatch({ type: 'changeStep', step: stepNumber - 1, tour: tourName })
         }
       }
       if (action === 'close') {
@@ -86,8 +83,8 @@ function Tour({ introStep, functions, introTourOpen, stepsPre, tourName }: Props
       }
       styles={tooltipStyles}
       disableOverlayClose={true}
-      run={introTourOpen}
-      stepIndex={introStep}
+      run={tourOpen}
+      stepIndex={stepNumber}
       callback={joyrideCallback}
       continuous={true}
       scrollToFirstStep={true}

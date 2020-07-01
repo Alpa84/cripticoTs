@@ -10,6 +10,7 @@ import FixedBlock from './FixedBlock';
 import { startsWithZeros, hashBlock } from 'src/utils/blockchain';
 import Link from './Link';
 import TourButton from './TourButton';
+import { stepsPre } from 'src/utils/steps';
 
 export interface Props {
   general: GeneralType
@@ -43,7 +44,7 @@ function General({ general, functions }: Props) {
                 An interactive demo of a crypto currency. (Including blockchain, digital signatures and more.)
               </h3>
             </div>
-            <TourButton general={general} functions={functions} tourName={TourName.Intro}/>
+            <TourButton general={general} functions={functions} tourName={TourName.Intro} stepsLen={stepsPre.length}/>
           </div>
         </div>
         <div className="row">

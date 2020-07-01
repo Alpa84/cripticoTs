@@ -1,5 +1,6 @@
 import { BigInteger } from 'big-integer'
 import { Dispatch } from 'react'
+import { Step } from 'react-joyride'
 export interface Block  {
   previousBlockHash: string
   nonce: string
@@ -12,7 +13,7 @@ export interface Functions {
   findNonce: (block: Block, blockIndex: number) => Promise<void>
   mine: ()=> void
   setStep: (step: string) => void
-  triggerTour: ()=> void
+  triggerTour: (tourName: TourName)=> void
   setRef: (refName: string, ref: HTMLElement) => void
 }
 export enum TourName {
@@ -154,3 +155,5 @@ export interface SingleTransactionValidation {
   amount ?: string
   signature ?: string
 }
+
+export interface StepObj { [index: number] : Step }

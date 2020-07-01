@@ -2,8 +2,9 @@ import * as React from 'react'
 import Link from 'src/components/Link';
 import { Step, Styles } from 'react-joyride';
 import { tooltipStyles } from 'src/components/Tour';
+import { StepObj } from 'src/Types';
 
-const stepsObj: {[index: number] : Step} = {
+export const stepsObj: StepObj = {
  '0': {
     content: (
     <div>
@@ -307,6 +308,6 @@ export const stepsPre: Step[] = Object.keys(stepsObj).sort((a, b) => parseInt(a,
 export const stepIndexToKey =  (ind: number ) => {
   return Object.keys(stepsObj).sort((a, b) => parseInt(a, undefined) - parseInt(b, undefined))[ind]
 }
-export const stepKeyToIndex =  (key: string ) => {
-  return Object.keys(stepsObj).sort((a, b) => parseInt(a, undefined) - parseInt(b, undefined)).indexOf(key)
+export const stepKeyToIndex =  (key: string, tourStepsObj: StepObj) => {
+  return Object.keys(tourStepsObj).sort((a, b) => parseInt(a, undefined) - parseInt(b, undefined)).indexOf(key)
 }

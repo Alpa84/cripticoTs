@@ -9,7 +9,8 @@ import { reducerAndLog } from 'src/utils/reducer'
 import { addDelay } from 'src/utils/misc'
 import { generateKeyPair } from 'src/utils/rsa'
 import Tour from './Tour'
-import { stepsPre, stepKeyToIndex } from 'src/utils/steps'
+import { stepsPre, stepKeyToIndex, stepsObj } from 'src/utils/steps'
+import { chainStepsPre, chainStepsObj } from 'src/utils/chainSteps'
 
 const DefaultNotificationDuration = 4000
 export let emptyTransactionToPublish = { gives: '', receives: '', amount: null, signature: '', secretKey: '' }
@@ -39,23 +40,24 @@ function CoinArena({} : {}) {
   }, []) // used to fire dispatch just once on open
 
   let refList: { [name: string]: HTMLElement } = {}
-  const setStepIntro = async(step: number) => {
-    dispatch({ type: 'changeStep', step, tour: TourName.Intro })
-  }
-  const setStep = (step: string) => {
-    let stepIndex = stepKeyToIndex(step)
+
+  const setStep = (step: string, tourName?: TourName) => {
+    tourName = tourName ? tourName : TourName.Intro
+    let tourStepsObj = tourName === TourName.Intro ? stepsObj : chainStepsObj
+    let stepIndex = stepKeyToIndex(step, tourStepsObj)
     if (general.introTourOpen && general.introStep === stepIndex - 1) {
-      setStepIntro(stepIndex)
+      dispatch({ type: 'changeStep', step: stepIndex, tour: tourName })
     }
   }
 
-  const triggerTour = () => {
-    if (general.introStep === stepsPre.length -1){
-      setStepIntro(0)
+  const triggerTour = (tourName: TourName) => {
+    let step = tourName === TourName.Intro ? general.introStep : general.chainStep
+    let tourLen = tourName === TourName.Intro ? stepsPre.length : chainStepsPre.length
+    if (step === tourLen -1){
+      dispatch({ type: 'changeStep', step: 0, tour: tourName })
     } else {
-      setStepIntro(general.introStep)
+      dispatch({ type: 'changeStep', step, tour: tourName })
     }
-    functions.dispatch({ type: 'changeTourOpen', on: true, tour: TourName.Intro })
   }
 
   const setRef = (refName: string, ref: HTMLElement) => {
@@ -115,6 +117,12 @@ function CoinArena({} : {}) {
       }, milliseconds || DefaultNotificationDuration)
     }
   }
+  const IntroKeysToActions = {
+    '2': loadingAndGenerateKeyPair,
+    '4': () => dispatch({ type: 'generateLazyWallet' }),
+  }
+  const ChainKeysToActions = {}
+
   const functions: Functions = {
     loadingAndGenerateKeyPair,
     showNotification,
@@ -131,12 +139,21 @@ function CoinArena({} : {}) {
         general={general}
         functions={functions}/>
       <Tour
-        introStep={general.introStep}
-        introTourOpen={general.introTourOpen}
+        stepNumber={general.introStep}
+        tourOpen={general.introTourOpen}
         functions={functions}
         stepsPre={stepsPre}
         tourName={TourName.Intro}
-        />
+        keysToActions={IntroKeysToActions}
+      />
+      <Tour
+        stepNumber={general.chainStep}
+        tourOpen={general.chainTourOpen}
+        functions={functions}
+        stepsPre={chainStepsPre}
+        tourName={TourName.Chain}
+        keysToActions={ChainKeysToActions}
+      />
     </>
   )
 }
