@@ -7,13 +7,14 @@ export interface Props {
   general: GeneralType
   functions: Functions
   block: Block
+  blockIndex?: number
 }
 
-function FixedBlock({ general, functions, block }: Props) {
+function FixedBlock({ general, functions, block, blockIndex }: Props) {
   return (
     <table className="table fixedTable  inside chainTable">
       <tbody>
-        <tr>
+        <tr data-tut={blockIndex === general.chain.length - 2 ? 'second-last-hash': '' }>
           <th scope="row">Hash</th>
           <td><div className='longString'>{hashBlock(block)}</div></td>
         </tr>
@@ -41,7 +42,7 @@ function FixedBlock({ general, functions, block }: Props) {
             </table>
           </td>
         </tr>
-        <tr>
+        <tr data-tut={blockIndex === general.chain.length - 1 ? 'last-previous-hash' : ''}>
           <th scope="row">previous block hash</th>
           <td><div className='longString'>{block.previousBlockHash}</div></td>
         </tr>

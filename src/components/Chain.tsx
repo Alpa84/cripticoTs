@@ -117,7 +117,7 @@ function Chain({ general, functions }: Props) {
                         )}
                       </>
                     ) : (
-                      <FixedBlock general={general} functions={functions} block={block} />
+                      <FixedBlock general={general} functions={functions} block={block} blockIndex={index} />
                     )}
                   </div>
                 </div>
