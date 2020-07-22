@@ -1,13 +1,11 @@
 import * as React from 'react'
-import { GeneralType, Functions, TourName} from '../Types'
+import { GeneralType, Functions} from '../Types'
 import * as _ from 'lodash'
 import Input from './Input'
 import Transactions from './Transactions';
 import { checkValidBlock, hashBlock } from 'src/utils/blockchain';
 import FixedInput from './FixedInput';
 import FixedBlock from './FixedBlock';
-import TourButton from './TourButton';
-import { chainStepsPre } from 'src/utils/chainSteps';
 export interface Props {
   general: GeneralType
   functions: Functions
@@ -45,7 +43,6 @@ function Chain({ general, functions }: Props) {
         >
           { general.editableChain ? ('Back to Unedited Chain'):('Hack the Chain')}
         </button>
-        <TourButton general={general} functions={functions} tourName={TourName.Chain} stepsLen= {chainStepsPre.length} />
         {!general.editableChain && (
           <p>Alter the data to experience the blockchain security features.</p>
         )}
@@ -56,7 +53,7 @@ function Chain({ general, functions }: Props) {
           onClick={()=> functions.dispatch({type: 'addBlock'})}
           className="btn btn-secondary">Add Block</button>
       )}
-      <div onDoubleClick={ toggleIfNonEditable}>
+      <div onDoubleClick={ toggleIfNonEditable} data-tut='chain'>
         {
           chain.map((block, index) => {
             let blockValidation = checkValidBlock(block, index, chain)

@@ -11,6 +11,7 @@ import { startsWithZeros, hashBlock } from 'src/utils/blockchain';
 import Link from './Link';
 import TourButton from './TourButton';
 import { stepsPre } from 'src/utils/steps';
+import { chainStepsPre } from 'src/utils/chainSteps';
 
 export interface Props {
   general: GeneralType
@@ -92,7 +93,9 @@ function General({ general, functions }: Props) {
               </div>
               <div data-tut="blockchain">
             <div className='section'>
-              <h2>Blockchain</h2>
+              <h2>Blockchain{' '}
+                <TourButton general={general} functions={functions} tourName={TourName.Chain} stepsLen={chainStepsPre.length} />
+              </h2>
               <p>Holds the ground truth about every transaction.</p>
               <div ref={(ref) => { if (ref) { functions.setRef('tryingNonces', ref) } }} >
                 { general.minedBlock && (
