@@ -15,7 +15,7 @@
     "node-sass": "^4.14.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-joyride": "^2.2.1",
+    "react-joyride": "github:alpa84/react-joyride",
     "react-scripts-ts": "3.1.0",
     "reactour": "^1.16.3",
     "serve": "^10.1.1",
@@ -39,10 +39,13 @@
     "@types/body-scroll-lock": "^2.6.1",
     "@types/md5": "^2.1.33",
     "@types/node": "^10.12.18",
-    "@types/react": "16.9.23",
-    "@types/react-dom": "^16.0.11",
+    "@types/react": "^16.9.43",
+    "@types/react-dom": "^16.9.8",
     "cypress": "^3.8.2",
     "gh-pages": "^2.2.0",
     "typescript": "^3.2.2"
+  },
+  "resolutions": {
+    "@types/react": "^16.9.43"
   }
 }
