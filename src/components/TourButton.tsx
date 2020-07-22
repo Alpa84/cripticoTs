@@ -12,12 +12,13 @@ export interface Props {
 function TourButton({ functions, tourName, general, stepsLen}: Props) {
   let tourTriggerText: string
   let step = tourName === TourName.Intro ? general.introStep : general.chainStep
+  let publicTourName = tourName === TourName.Chain ? 'Blockchain': TourName[tourName]
   if (step === 0) {
-    tourTriggerText = `Join the ${TourName[tourName]} Tour`
+    tourTriggerText = `Join the ${publicTourName} Tour`
   } else if (step === stepsLen - 1) {
-    tourTriggerText = `Restart the ${TourName[tourName]} Tour`
+    tourTriggerText = `Restart the ${publicTourName} Tour`
   } else {
-    tourTriggerText = `Resume the ${TourName[tourName]} Tour`
+    tourTriggerText = `Resume the ${publicTourName} Tour`
   }
   return (
     <button type="button" className="btn btn-primary"
