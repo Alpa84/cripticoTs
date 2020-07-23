@@ -18,15 +18,15 @@ function Transactions({ general, functions, blockIndex, validations }: Props) {
           <span >{validations.general}</span>
         </div>
       )}
+        <li className="list-group-item">
+          <button
+            type="button"
+            onClick={() => functions.dispatch({ type: 'addTransaction', blockIndex })}
+            className="btn btn-primary ">Add Transaction</button>
+        </li>
         {
           transactions.map((transaction, transIndex) => (
             <li className="list-group-item" key={transIndex}>
-              { transIndex === transactions.length -1 && (
-                <button
-                  type="button"
-                  onClick={() => functions.dispatch({ type: 'addTransaction', blockIndex })}
-                  className="btn btn-primary ">Add Transaction</button>
-              )}
               <div
                 className='transactionGeneric'
                 data-tut={transIndex === 0 && blockIndex === 0  ? 'transaction' : ''}
