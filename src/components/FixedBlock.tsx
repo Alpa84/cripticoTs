@@ -33,7 +33,10 @@ function FixedBlock({ general, functions, block, blockIndex }: Props) {
                       <td>
                         <FixedTransaction
                           general={general}
-                          transaction={transaction} />
+                          transaction={transaction}
+                          blockIndex={blockIndex}
+                          transactionIndex={tIndex}
+                        />
                       </td>
                     </tr>
                   )

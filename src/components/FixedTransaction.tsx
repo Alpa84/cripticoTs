@@ -2,14 +2,19 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import { GeneralType, Transaction } from '../Types'
 import { prefferName } from 'src/utils/misc'
+import { RightArrowPath } from 'src/utils/svgPaths'
 export interface Props {
   general: GeneralType
   transaction: Transaction
+  blockIndex?: number
+  transactionIndex?: number
 }
 
-function FixedTransaction({ general, transaction }: Props) {
+function FixedTransaction({ general, transaction, blockIndex, transactionIndex }: Props) {
   return (
-    <div>
+    <div data-tut={
+      (blockIndex === 1 && transactionIndex === 0 ) ? 'second-mined' : ''
+    }>
       {prefferName(transaction.gives, general)}
       {'  '}
       <svg version="1.1" className="arrow" x="0px" y="0px" width="18px" height="18px"
