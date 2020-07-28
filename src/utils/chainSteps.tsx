@@ -55,7 +55,7 @@ export const chainStepsObj: { [index: number]: Step } = {
   '5': {
     content: (
       <div>
-        <p>Now, all you have to do is include the hash of that block in the next block like this.</p>
+        <p>Now, all you have to do is include the <b>hash</b> of that block in the next block like this.</p>
         <p>That way you make a link between the blocks. That is why it is called a blockchain.</p>
       </div>
     ),
@@ -65,9 +65,9 @@ export const chainStepsObj: { [index: number]: Step } = {
   '6': {
     content: (
       <div>
-        <p>Now comes the brilliant part. you make it a rule that the only valid chain is the longest one.</p>
+        <p>Now comes the brilliant part. You make it a rule that the <b>only valid chain is the longest one.</b></p>
         <p>The easiest way to create the longest chain is using the longest chain in existence and adding one block.</p>
-        <p>The optimal strategy for anyone that wants to add a block is to keep the old chain and add a new block on top. That way the old data persists and new data is added.</p>
+        <p>The optimal strategy for anyone that wants to add a block is to keep the old chain and add a new block on top. <b>That way the old data persists and new data is added</b>.</p>
       </div>
     ),
     target: '[data-tut="chain"]',

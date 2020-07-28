@@ -18,7 +18,7 @@ function FixedBlock({ general, functions, block, blockIndex }: Props) {
           <th scope="row">Hash</th>
           <td><div className='longString'>{hashBlock(block)}</div></td>
         </tr>
-        <tr>
+        <tr data-tut={blockIndex === general.chain.length - 2 ? 'second-last-nonce' : ''}>
           <th scope="row">Nonce</th>
           <td><div className='longString'>{block.nonce}</div></td>
         </tr>
