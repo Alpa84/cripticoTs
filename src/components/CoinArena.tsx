@@ -9,10 +9,11 @@ import { reducerAndLog } from 'src/utils/reducer'
 import { addDelay } from 'src/utils/misc'
 import { generateKeyPair } from 'src/utils/rsa'
 import Tour from './Tour'
-import { stepsPre, stepKeyToIndex, stepsObj } from 'src/utils/steps'
+import { stepKeyToIndex, stepsObj, generateSteps } from 'src/utils/steps'
 import { chainStepsPre, chainStepsObj } from 'src/utils/chainSteps'
 
 const DefaultNotificationDuration = 4000
+const DelayFromIntroToChainTour = 300
 export let emptyTransactionToPublish = { gives: '', receives: '', amount: null, signature: '', secretKey: '' }
 let emptyKeyPair = { address: '', privateKey: '' }
 export const defaultGeneral: GeneralType = {
@@ -84,6 +85,12 @@ function CoinArena({} : {}) {
   const findNonce = async (block: Block, blockIndex: number) => {
     tryDifferentNonces(block, blockIndex)
   }
+  const introToChainDirect = () => {
+    dispatch({type: 'changeTourOpen', tour: TourName.Intro, on: false})
+    setTimeout( ()=> {
+      dispatch({ type: 'changeTourOpen', tour: TourName.Chain, on: true })
+    }, DelayFromIntroToChainTour)
+  }
   const mine = async () => {
     let blockWithoutNonce = validateTransactions(general.pendingTransactions, general.chain, general.dirToAddMined)
     dispatch({ type:'backToUneditedChain'})
@@ -125,6 +132,7 @@ function CoinArena({} : {}) {
 
   const functions: Functions = {
     loadingAndGenerateKeyPair,
+    introToChainDirect,
     showNotification,
     triggerTour,
     dispatch,
@@ -133,6 +141,7 @@ function CoinArena({} : {}) {
     setStep,
     setRef,
   }
+  let stepsPre =  generateSteps(functions)
   return  (
     <>
       <General

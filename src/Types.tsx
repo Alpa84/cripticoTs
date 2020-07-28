@@ -8,6 +8,7 @@ export interface Block  {
 }
 export interface Functions {
   loadingAndGenerateKeyPair: () => void
+  introToChainDirect: () => void
   showNotification: (area:keyof Notifications, milliseconds?: number) => void
   dispatch: Dispatch<Action>
   findNonce: (block: Block, blockIndex: number) => Promise<void>

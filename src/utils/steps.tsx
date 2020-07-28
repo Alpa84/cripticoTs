@@ -2,9 +2,16 @@ import * as React from 'react'
 import Link from 'src/components/Link';
 import { Step, Styles } from 'react-joyride';
 import { tooltipStyles } from 'src/components/Tour';
-import { StepObj } from 'src/Types';
+import { StepObj, Functions } from 'src/Types';
 
-export const stepsObj: StepObj = {
+export const generateSteps = (functions: Functions) => {
+  let stepsObject = stepsFunc(functions)
+  return Object.keys(stepsObject).sort((a, b) => parseInt(a, undefined) - parseInt(b, undefined))
+    .map(key => stepsObject[key])
+}
+
+export const stepsFunc = (functions: Functions) => {
+ return {
  '0': {
     content: (
     <div>
@@ -280,7 +287,12 @@ export const stepsObj: StepObj = {
   '33': {
     content: (
       <div>
-        <p>That is how far we are going to go with this tour, but there are a bunch of things you can explore by yourself.</p>
+        <p>That is how far we are going to go with this tour.</p>
+        <p>If you want to understand how the blockchain design works you can take the <b>Blockchain Tour</b></p>
+        <button
+          onClick={functions.introToChainDirect}
+          className="btn btn-primary">Take the Blockchain Tour</button>
+        <p>Also, there are a bunch of things you can explore by yourself.</p>
         <p>The <b>Blockchain</b> is fully editable.</p>
         <p>You can try modifying the chain info and reading the warnings that will appear to get a feel of the security measures implemented in the blockchain.</p>
         <p>Thanks for joining!</p>
@@ -301,6 +313,10 @@ export const stepsObj: StepObj = {
     target: '[data-tut="userWallet"]', // free
     placement: 'left-start',
   },
+ }
+}
+export const stepsObj: StepObj = {
+
 }
 export const stepsPre: Step[] = Object.keys(stepsObj).sort((a, b) => parseInt(a, undefined) - parseInt(b, undefined))
   .map(key => stepsObj[key])
