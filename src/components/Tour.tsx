@@ -56,7 +56,7 @@ function Tour({ stepNumber, functions, tourOpen, stepsPre, tourName, keysToActio
       // using the get helpers prom may help too
       if(callbackProps.index === stepNumber) {
         let key = stepIndexToKey(stepNumber)
-        if (action === 'next' && keysToActions[key]) { keysToActions[key]()}
+        if (action === 'next' && keysToActions[key]) {keysToActions[key]()}
         if (action === 'next') {
           dispatch({ type: 'changeStep', step: stepNumber + 1, tour: tourName })
         } else if (action === 'prev') {

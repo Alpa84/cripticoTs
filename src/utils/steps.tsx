@@ -1,8 +1,9 @@
 import * as React from 'react'
 import Link from 'src/components/Link';
-import { Step, Styles } from 'react-joyride';
+import { Styles } from 'react-joyride';
 import { tooltipStyles } from 'src/components/Tour';
-import { StepObj, Functions } from 'src/Types';
+import { Functions, TourName } from 'src/Types';
+import { chainStepsObj } from './chainSteps';
 
 export const generateSteps = (functions: Functions) => {
   let stepsObject = stepsFunc(functions)
@@ -315,15 +316,15 @@ export const stepsFunc = (functions: Functions) => {
   },
  }
 }
-export const stepsObj: StepObj = {
-
-}
-export const stepsPre: Step[] = Object.keys(stepsObj).sort((a, b) => parseInt(a, undefined) - parseInt(b, undefined))
-  .map(key => stepsObj[key])
+export const stepKeys: string[] = Object.keys(stepsFunc({} as Functions))
 
 export const stepIndexToKey =  (ind: number ) => {
-  return Object.keys(stepsObj).sort((a, b) => parseInt(a, undefined) - parseInt(b, undefined))[ind]
+  return stepKeys.sort((a, b) => parseInt(a, undefined) - parseInt(b, undefined))[ind]
 }
-export const stepKeyToIndex =  (key: string, tourStepsObj: StepObj) => {
-  return Object.keys(tourStepsObj).sort((a, b) => parseInt(a, undefined) - parseInt(b, undefined)).indexOf(key)
+export const stepKeyToIndex =  (key: string, tourName: TourName) => {
+  if(tourName === TourName.Chain){
+    return Object.keys(chainStepsObj).sort((a, b) => parseInt(a, undefined) - parseInt(b, undefined)).indexOf(key)
+  } else {
+    return stepKeys.sort((a, b) => parseInt(a, undefined) - parseInt(b, undefined)).indexOf(key)
+  }
 }

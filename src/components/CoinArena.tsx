@@ -9,8 +9,8 @@ import { reducerAndLog } from 'src/utils/reducer'
 import { addDelay } from 'src/utils/misc'
 import { generateKeyPair } from 'src/utils/rsa'
 import Tour from './Tour'
-import { stepKeyToIndex, stepsObj, generateSteps } from 'src/utils/steps'
-import { chainStepsPre, chainStepsObj } from 'src/utils/chainSteps'
+import { stepKeyToIndex, generateSteps } from 'src/utils/steps'
+import { chainStepsPre } from 'src/utils/chainSteps'
 
 const DefaultNotificationDuration = 4000
 const DelayFromIntroToChainTour = 300
@@ -44,8 +44,7 @@ function CoinArena({} : {}) {
 
   const setStep = (step: string, tourName?: TourName) => {
     tourName = tourName ? tourName : TourName.Intro
-    let tourStepsObj = tourName === TourName.Intro ? stepsObj : chainStepsObj
-    let stepIndex = stepKeyToIndex(step, tourStepsObj)
+    let stepIndex = stepKeyToIndex(step, tourName);
     if (general.introTourOpen && general.introStep === stepIndex - 1) {
       dispatch({ type: 'changeStep', step: stepIndex, tour: tourName })
     }
