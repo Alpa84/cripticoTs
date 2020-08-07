@@ -28,10 +28,10 @@ export const stepsFunc = (functions: Functions) => {
     <div>
       <p>In this tour we are going to: </p>
       <ul>
-        <li>steal some coins,</li>
-        <li>make a transaction,</li>
-        <li>publish it,</li>
-        <li>do some mining,</li>
+        <li>make a transaction</li>
+        <li>publish it</li>
+        <li>do some mining</li>
+        <li>steal some coins</li>
       </ul>
     </div>
     ),
