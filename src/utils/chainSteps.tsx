@@ -36,7 +36,7 @@ export const chainStepsObj: { [index: number]: Step } = {
   '3': {
     content: (
       <div>
-        <p>First you have to hash each block's data, that is, you take the block data and you produce a number from it.</p>
+        <p>First you have to <b>hash</b> each block's data, that is, you take the block data and you produce a number from it.</p>
         <p>The same data will always produce the same number.</p>
       </div>
     ),
@@ -46,7 +46,7 @@ export const chainStepsObj: { [index: number]: Step } = {
   '4': {
     content: (
       <div>
-        <p>This is the <b>hash</b> for this block</p>
+        <p>This is the <b>hash</b> for this block.</p>
       </div>
     ),
     target: '[data-tut="second-last-hash"]',
@@ -120,10 +120,42 @@ export const chainStepsObj: { [index: number]: Step } = {
     target: '[data-tut="second-last-nonce"]',
     placement: 'right-start',
   },
+  '12': {
+    content: (
+      <div>
+        <p>So it goes like this:</p>
+        <p>People publish their <b>transactions</b>.</p>
+        <p>The miners grab them and form a <b>block</b>.</p>
+        <p>They also include the creation of a new coin for their own.</p>
+        <p>And the race starts. They produce the <b>hash</b> for the <b>block</b> and change the <b>nonce</b> field until the <b>hash</b> starts with '00..'</p>
+        <p>The first to figure out the right <b>nonce</b>, publishes it to the other miners.</p>
+        <p>Then, the other miners give up their mining, add the new <b>block</b> to the chain, gather new <b>transactions</b> and start mining again.</p>
+      </div>
+    ),
+    target: '[data-tut="second-last-nonce"]',
+    placement: 'right-start',
+  },
+  '13': {
+    content: (
+      <div>
+        <p><b>What if Miner A does not give up mining after Miner B has published the newest block?</b></p>
+        <p>Miner A now would have to produce two blocks to produce the longest chain, while the others just one.</p>
+        <p><b>What if Miner A does get to produce two blocks and have the longest chain at the moment?</b></p>
+        <p>Every miner would then consider that chain the valid chain, and start trying to add a new block on top of that.</p>
+        <p><b>So, Miner B's block would be discarded?</b></p>
+        <p>Yes. It is easier for a block to be replaced when it's among the latest blocks. It is increasingly harder to replace a block that is further along the chain.</p>
+        <p>Once a block has several blocks on top of it, it is considered permanent.</p>
+      </div>
+    ),
+    target: '[data-tut="second-last-nonce"]',
+    placement: 'right-start',
+  },
   '15': {
     content: (
       <div>
-        <p>lasttttttttt</p>
+        <p>We are done with the Blockchain Tour!</p>
+        <p>There is also an <b>Intro Tour</b> at the top that covers digital signatures, transactions and a practical mining example.</p>
+        <p>Thanks for joining!</p>
       </div>
     ),
     styles: {
