@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { GeneralType, Functions } from '../Types'
+import { GeneralType, Functions, Block } from '../Types'
 import Chain from './Chain'
 import PendingTransactions from './PendingTransactions'
 import TransactionToPublish, { Empty } from './TransactionToPublish'
@@ -31,7 +31,9 @@ function General({ general, functions }: Props) {
     miningHint =
       "there are no published transactions, the miner will just generate it's own coin"
   }
-
+  const blockHashStartsWithZeros = (block: Block) => {
+    return hashBlock(block)
+  }
   return (
     <div id="General" className="General">
       <div className="container">
@@ -116,7 +118,7 @@ function General({ general, functions }: Props) {
                       <div className="card border-warning">
                         <div className="card-header">
                           {general.minedBlock &&
-                          startsWithZeros(hashBlock(general.minedBlock)) ? (
+                          blockHashStartsWithZeros(general.minedBlock) ? (
                             <h4 className="nonceFound">
                               Nonce found, adding block{' '}
                               {general.chain.length + 1} ...
