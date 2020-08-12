@@ -32,7 +32,8 @@ function General({ general, functions }: Props) {
       "there are no published transactions, the miner will just generate it's own coin"
   }
   const blockHashStartsWithZeros = (block: Block) => {
-    return hashBlock(block)
+    const hash =  hashBlock(block)
+    return startsWithZeros(hash)
   }
   return (
     <div id="General" className="General">
