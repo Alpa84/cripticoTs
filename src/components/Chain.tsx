@@ -84,7 +84,7 @@ function Chain({ general, functions }: Props) {
                           Remove Block
                         </button>
                         <FixedInput text="hash" value={hashBlock(block)} />
-                        {blockValidation && blockValidation.hash && (
+                        { blockValidation.hash && (
                           <div className="alert alert-danger">
                             <strong>Invalid Block </strong>
                             <span>{blockValidation.hash}</span>
@@ -128,7 +128,7 @@ function Chain({ general, functions }: Props) {
                             })
                           }
                         />
-                        {blockValidation && blockValidation.previousBlockHash && (
+                        {blockValidation.previousBlockHash && (
                           <div className="alert alert-danger">
                             <strong>Invalid Block </strong>
                             <span>{blockValidation.previousBlockHash}</span>
