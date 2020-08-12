@@ -1,5 +1,4 @@
 import { GeneralType } from 'src/Types'
-import * as _ from 'lodash'
 
 const SmallScreenSize = 720
 

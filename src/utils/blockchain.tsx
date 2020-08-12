@@ -121,7 +121,7 @@ function transactionsToStrings(transactions: Transaction[]) {
 
 function chainToTransactions(chain: Block[]) {
   let chainTransactions = [] as Transaction[]
-  chain.map((block, blockIndex) => {
+  chain.forEach((block, blockIndex) => {
     block.transactions.map((transaction, transactionIndex) => {
       chainTransactions.push(transaction)
     })

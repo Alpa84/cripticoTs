@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as _ from 'lodash'
 import { GeneralType, Functions, SingleTransactionValidation } from '../Types'
 import Input from './Input'
 import InputNumber from './InputNumber'

@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { GeneralType, Functions } from '../Types'
-import * as _ from 'lodash'
 import Input from './Input'
 import Transactions from './Transactions'
 import { checkValidBlock, hashBlock } from 'src/utils/blockchain'
@@ -13,15 +12,8 @@ export interface Props {
 
 function Chain({ general, functions }: Props) {
   let chain = general.editableChain ? general.editableChain : general.chain
-  let onHackChain: () => void
-  if (general.editableChain) {
-    onHackChain = () => {
-      functions.dispatch({ type: 'toggleEditableChain' })
-    }
-  } else {
-    onHackChain = () => {
-      functions.dispatch({ type: 'toggleEditableChain' })
-    }
+  const onHackChain = () => {
+    functions.dispatch({ type: 'toggleEditableChain' })
   }
   const toggleIfNonEditable = () => {
     if (!general.editableChain) {
@@ -92,7 +84,7 @@ function Chain({ general, functions }: Props) {
                           Remove Block
                         </button>
                         <FixedInput text="hash" value={hashBlock(block)} />
-                        {blockValidation.hash && (
+                        {blockValidation && blockValidation.hash && (
                           <div className="alert alert-danger">
                             <strong>Invalid Block </strong>
                             <span>{blockValidation.hash}</span>

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as _ from 'lodash'
 import { GeneralType, Transaction } from '../Types'
 import { prefferName } from 'src/utils/misc'
 import { RightArrowPath } from 'src/utils/svgPaths'
