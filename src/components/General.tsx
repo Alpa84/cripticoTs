@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { GeneralType, Functions, TourName } from '../Types'
+import { GeneralType, Functions } from '../Types'
 import Chain from './Chain';
 import PendingTransactions from './PendingTransactions'
 import TransactionToPublish, { Empty } from './TransactionToPublish'
@@ -9,9 +9,6 @@ import Directory from './Wallets'
 import FixedBlock from './FixedBlock';
 import { startsWithZeros, hashBlock } from 'src/utils/blockchain';
 import Link from './Link';
-import TourButton from './TourButton';
-import { stepKeys } from 'src/utils/steps'
-import { chainStepsPre } from 'src/utils/chainSteps';
 
 export interface Props {
   general: GeneralType
@@ -45,7 +42,6 @@ function General({ general, functions }: Props) {
                 An interactive demo of a crypto currency. (Including blockchain, digital signatures and more.)
               </h3>
             </div>
-            <TourButton general={general} functions={functions} tourName={TourName.Intro} stepsLen={stepKeys.length}/>
           </div>
         </div>
         <div className="row">
@@ -94,7 +90,6 @@ function General({ general, functions }: Props) {
               <div data-tut="blockchain">
             <div className='section'>
               <h2>Blockchain{' '}
-                <TourButton general={general} functions={functions} tourName={TourName.Chain} stepsLen={chainStepsPre.length} />
               </h2>
               <p>Holds the ground truth about every transaction.</p>
               <div ref={(ref) => { if (ref) { functions.setRef('tryingNonces', ref) } }} >

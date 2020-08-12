@@ -1,31 +1,18 @@
-import { GeneralType, Action, WalletDetails, Block, Transaction, TourName } from 'src/Types'
+import { GeneralType, Action, WalletDetails, Block, Transaction } from 'src/Types'
 import * as _ from 'lodash'
-import { DefaultEmptyTransaction, DefaultEmptyBlock, LazyPublicAddress, LazyAlias, LazyPrivateKey, DefaultWallets } from './defaultChain'
+import { DefaultEmptyTransaction, DefaultEmptyBlock } from './defaultChain'
 import { hashBlock, createTransactionSignature } from './blockchain'
-import { logActionChange } from './misc'
 import { emptyTransactionToPublish } from 'src/components/CoinArena'
 
 
 let emptyKeyPair = { address: '', privateKey: '' }
 
-const reducer = (general: GeneralType, action: Action) => {
+export const reducer = (general: GeneralType, action: Action) => {
   switch (action.type) {
     case 'changeAlias':
       return {...general, alias: action.alias}
-    case 'changeStep':
-      if (action.tour === TourName.Intro) {
-        return { ...general, introStep: action.step, introTourOpen: true, chainTourOpen: false}
-      } else { // NOTE: action.tour === TourName.Chain
-        return { ...general, chainStep: action.step, chainTourOpen: true, introTourOpen: false }
-      }
     case 'changeDirToAddMined':
       return {...general, dirToAddMined: action.dir}
-    case 'changeTourOpen':
-      if (action.tour === TourName.Intro) {
-        return { ...general, introTourOpen: action.on }
-      } else { // NOTE: action.tour === TourName.Chain
-        return { ...general, chainTourOpen: action.on }
-      }
     case 'changeGives':
       let clonedGives = _.cloneDeep(general)
       clonedGives.transactionToPublish.gives = action.gives
@@ -162,21 +149,6 @@ const reducer = (general: GeneralType, action: Action) => {
       clonedWallet.keyPair = _.cloneDeep(emptyKeyPair)
       clonedWallet.alias = ''
       return clonedWallet
-    case 'generateLazyWallet':
-      let clonedLazyWallet = _.cloneDeep(general)
-      if (Object.keys(clonedLazyWallet.wallets).length > Object.keys(DefaultWallets).length) {
-        return clonedLazyWallet
-      }
-      let aliasEnsured = clonedLazyWallet.alias || LazyAlias
-      let addressEnsured = clonedLazyWallet.keyPair.address || LazyPublicAddress
-      let privateKeyEnsured = clonedLazyWallet.keyPair.privateKey || LazyPrivateKey
-      clonedLazyWallet.wallets[addressEnsured] = {
-        alias: aliasEnsured,
-        privateKey: privateKeyEnsured
-      }
-      clonedLazyWallet.keyPair = _.cloneDeep(emptyKeyPair)
-      clonedLazyWallet.alias = ''
-      return clonedLazyWallet
     case 'signTransaction':
       let clonedTransactionSign = _.cloneDeep(general)
       try {
@@ -201,9 +173,4 @@ const reducer = (general: GeneralType, action: Action) => {
       throw new Error();
 
   }
-}
-export const reducerAndLog = (general: GeneralType, action: Action) => {
-  let bypass = reducer(general, action)
-  logActionChange(action)
-  return bypass
 }

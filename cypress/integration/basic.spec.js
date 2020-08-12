@@ -5,7 +5,6 @@ const CreatorPrivateKey = '65537,32738739318480270880847344601765335773851669760
 describe('smoke test', function () {
     it('should generate keys', function () {
         cy.visit('http://localhost:3000/')
-        cy.get('.sc-AxhCb > svg').click() // close tour
         cy.get('#generateKeys').click()
         cy.get('#publicAddress').should('not.have.value', '')
         cy.get('#privateKey').should('not.have.value', '')

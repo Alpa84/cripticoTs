@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { logLinkOpened } from 'src/utils/misc'
 
 export interface Props {
   text: string
@@ -11,7 +10,6 @@ function Link({ text, href }: Props) {
     <a
       href={href}
       target="_blank"
-      onClick={() => logLinkOpened(href)}
     >{text}</a>
   )
 }

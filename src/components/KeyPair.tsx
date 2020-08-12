@@ -19,7 +19,6 @@ function KeyPair({ general, functions }: Props) {
   const handleGenerateClick = () => {
     functions.dispatch({ type: 'generateWallet' })
     functions.showNotification("walletGenerated")
-    functions.setStep('5')
   }
   return (
     <div data-tut="keyPair">
@@ -30,7 +29,6 @@ function KeyPair({ general, functions }: Props) {
         type='button'
         onClick={() => {
           functions.loadingAndGenerateKeyPair()
-          functions.setStep('3')
         }}
         className="btn btn-primary">Generate Public Address and Private Key</button>
       <div data-tut='onlyKeys'>

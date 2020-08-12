@@ -8,13 +8,10 @@ export interface Block  {
 }
 export interface Functions {
   loadingAndGenerateKeyPair: () => void
-  introToChainDirect: () => void
   showNotification: (area:keyof Notifications, milliseconds?: number) => void
   dispatch: Dispatch<Action>
   findNonce: (block: Block, blockIndex: number) => Promise<void>
   mine: ()=> void
-  setStep: (step: string) => void
-  triggerTour: (tourName: TourName)=> void
   setRef: (refName: string, ref: HTMLElement) => void
 }
 export enum TourName {
@@ -23,11 +20,9 @@ export enum TourName {
 }
 export type Action =
   | { type: 'changeAlias', alias: string}
-  | { type: 'changeStep', step: number, tour: TourName}
   | { type: 'changeGives', gives: string}
   | { type: 'changeReceives', receives: string}
   | { type: 'changeDirToAddMined', dir: string}
-  | { type: 'changeTourOpen', on: boolean, tour: TourName}
   | { type: 'changeTransactionAmount', amount: number}
   | { type: 'changeTransactionSecretKey', secretKey: string}
   | { type: 'changeChainTGives', gives: string, blockIndex: number, index: number}
@@ -49,7 +44,6 @@ export type Action =
   | { type: 'backToUneditedChain'}
   | { type: 'changeKeyPair', keyPair: KeyPair}
   | { type: 'generateWallet'}
-  | { type: 'generateLazyWallet'}
   | { type: 'signTransaction'}
   | { type: 'changeNotification', on: boolean, area: keyof Notifications }
   | { type: 'changeGeneral', general: GeneralType}
@@ -69,10 +63,6 @@ export interface TransactionToPublish {
 }
 export interface GeneralType {
   pendingTransactions: Transaction[]
-  introTourOpen: boolean
-  chainTourOpen: boolean
-  introStep: number
-  chainStep: number
   chain: Block[]
   editableChain?: Block[]
   signatureError?: string
@@ -89,38 +79,6 @@ export interface Notifications {
   walletGenerated: boolean
   transactionPublished: boolean
 }
-export enum EventE {
-  tourOpened= 'tourOpened',
-  tourClosed = 'tourClosed',
-}
-
-export interface StatusPure {
-  scrollYPosition: number
-  scrollXPosition: number
-  hidden: boolean
-}
-export interface ChronoLog {
-  tourStepChange?: number
-  event?: EventE,
-  status?: StatusPure
-  linkOpened?: string
-  action?: Action
-  timestamp: number
-}
-export interface InitialLog {
-  windowSize?: { innerHeight: number, innerWidth: number }
-  path: string,
-  ipData: string,
-  timestamp: number,
-  logVersion?: number,
-}
-export interface LogChunk {
-  sessionId : string
-  check: string
-  chronoLog?: ChronoLog[]
-  initialLog?: InitialLog
-}
-export type MasterLog = LogChunk[]
 
 export interface WalletDetails {
   alias: string,

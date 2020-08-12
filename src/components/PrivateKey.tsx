@@ -16,7 +16,6 @@ function PrivateKey({ pKey, functions }: Props) {
       document.execCommand('copy')
       setCopied(true)
     }
-    functions.setStep('12')
     setTimeout( ()=> {
       setCopied(false)
     }, 4000)
