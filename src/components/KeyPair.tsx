@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { KeyPair, Functions, GeneralType } from '../Types'
+import { Functions, GeneralType } from '../Types'
 import FixedInput from './FixedInput'
 export interface Props {
   general: GeneralType
