@@ -1,4 +1,4 @@
-import { GeneralType } from "src/Types"
+import { GeneralType } from 'src/Types'
 import * as _ from 'lodash'
 
 const SmallScreenSize = 720
@@ -7,7 +7,7 @@ export const prefferName = (dir: string, general: GeneralType) => {
   let name = general.wallets[dir]
   return name ? name.alias : dir
 }
-export let isSmallScreen = () =>(window.innerWidth < SmallScreenSize)
+export let isSmallScreen = () => window.innerWidth < SmallScreenSize
 export function addDelay(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }

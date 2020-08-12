@@ -1,18 +1,23 @@
-import { GeneralType, Action, WalletDetails, Block, Transaction } from 'src/Types'
+import {
+  GeneralType,
+  Action,
+  WalletDetails,
+  Block,
+  Transaction,
+} from 'src/Types'
 import * as _ from 'lodash'
 import { DefaultEmptyTransaction, DefaultEmptyBlock } from './defaultChain'
 import { hashBlock, createTransactionSignature } from './blockchain'
 import { emptyTransactionToPublish } from 'src/components/CoinArena'
-
 
 let emptyKeyPair = { address: '', privateKey: '' }
 
 export const reducer = (general: GeneralType, action: Action) => {
   switch (action.type) {
     case 'changeAlias':
-      return {...general, alias: action.alias}
+      return { ...general, alias: action.alias }
     case 'changeDirToAddMined':
-      return {...general, dirToAddMined: action.dir}
+      return { ...general, dirToAddMined: action.dir }
     case 'changeGives':
       let clonedGives = _.cloneDeep(general)
       clonedGives.transactionToPublish.gives = action.gives
@@ -27,36 +32,46 @@ export const reducer = (general: GeneralType, action: Action) => {
       return clonedTransactionAmount
     case 'changeTransactionSecretKey':
       let clonedTransactionSecretKey = _.cloneDeep(general)
-      clonedTransactionSecretKey.transactionToPublish.secretKey = action.secretKey
+      clonedTransactionSecretKey.transactionToPublish.secretKey =
+        action.secretKey
       return clonedTransactionSecretKey
     case 'changeChainTGives':
       let clonedChainTGives = _.cloneDeep(general)
       if (clonedChainTGives.editableChain) {
-        clonedChainTGives.editableChain[action.blockIndex].transactions[action.index].gives = action.gives
+        clonedChainTGives.editableChain[action.blockIndex].transactions[
+          action.index
+        ].gives = action.gives
       }
       return clonedChainTGives
     case 'changeChainTReceives':
       let clonedChainTReceives = _.cloneDeep(general)
       if (clonedChainTReceives.editableChain) {
-        clonedChainTReceives.editableChain[action.blockIndex].transactions[action.index].receives = action.receives
+        clonedChainTReceives.editableChain[action.blockIndex].transactions[
+          action.index
+        ].receives = action.receives
       }
       return clonedChainTReceives
     case 'changeChainTAmount':
       let clonedChainTAmount = _.cloneDeep(general)
       if (clonedChainTAmount.editableChain) {
-        clonedChainTAmount.editableChain[action.blockIndex].transactions[action.index].amount = action.amount
+        clonedChainTAmount.editableChain[action.blockIndex].transactions[
+          action.index
+        ].amount = action.amount
       }
       return clonedChainTAmount
     case 'changeChainTSignature':
       let clonedChainTSignature = _.cloneDeep(general)
       if (clonedChainTSignature.editableChain) {
-        clonedChainTSignature.editableChain[action.blockIndex].transactions[action.index].signature = action.signature
+        clonedChainTSignature.editableChain[action.blockIndex].transactions[
+          action.index
+        ].signature = action.signature
       }
       return clonedChainTSignature
     case 'changeChainPrevHash':
       let clonedChainPrevHash = _.cloneDeep(general)
       if (clonedChainPrevHash.editableChain) {
-        clonedChainPrevHash.editableChain[action.blockIndex].previousBlockHash = action.hash
+        clonedChainPrevHash.editableChain[action.blockIndex].previousBlockHash =
+          action.hash
       }
       return clonedChainPrevHash
     case 'changeChainNonce':
@@ -74,13 +89,17 @@ export const reducer = (general: GeneralType, action: Action) => {
     case 'removeTransaction':
       let clonedTransactionRemoved = _.cloneDeep(general)
       if (clonedTransactionRemoved.editableChain) {
-        clonedTransactionRemoved.editableChain[action.blockIndex].transactions.splice(action.index, 1)
+        clonedTransactionRemoved.editableChain[
+          action.blockIndex
+        ].transactions.splice(action.index, 1)
       }
       return clonedTransactionRemoved
     case 'addTransaction':
       let clonedTransactionAdded = _.cloneDeep(general)
       if (clonedTransactionAdded.editableChain) {
-        clonedTransactionAdded.editableChain[action.blockIndex].transactions.push(DefaultEmptyTransaction)
+        clonedTransactionAdded.editableChain[
+          action.blockIndex
+        ].transactions.push(DefaultEmptyTransaction)
       }
       return clonedTransactionAdded
     case 'addBlock':
@@ -117,14 +136,23 @@ export const reducer = (general: GeneralType, action: Action) => {
       let clonedPublished = _.cloneDeep(general)
       let tran = clonedPublished.transactionToPublish
       // Note: security check to ensure amount is not null
-      let isTransactionValid = tran.gives !== '' && tran.receives !== '' && tran.amount !== null && tran.signature !== '' && tran.secretKey !== ''
-      if (! isTransactionValid) { return clonedPublished }
+      let isTransactionValid =
+        tran.gives !== '' &&
+        tran.receives !== '' &&
+        tran.amount !== null &&
+        tran.signature !== '' &&
+        tran.secretKey !== ''
+      if (!isTransactionValid) {
+        return clonedPublished
+      }
       let toPublish = {
         ...clonedPublished.transactionToPublish,
-        amount: clonedPublished.transactionToPublish.amount as number
+        amount: clonedPublished.transactionToPublish.amount as number,
       }
       clonedPublished.pendingTransactions.push(toPublish)
-      clonedPublished.transactionToPublish = _.cloneDeep(emptyTransactionToPublish)
+      clonedPublished.transactionToPublish = _.cloneDeep(
+        emptyTransactionToPublish
+      )
       return clonedPublished
     case 'toggleEditableChain':
       let clonedToggledChain = _.cloneDeep(general)
@@ -144,7 +172,10 @@ export const reducer = (general: GeneralType, action: Action) => {
       return { ...general, keyPair: action.keyPair }
     case 'generateWallet':
       let clonedWallet = _.cloneDeep(general)
-      let details: WalletDetails = { alias: clonedWallet.alias, privateKey: clonedWallet.keyPair.privateKey }
+      let details: WalletDetails = {
+        alias: clonedWallet.alias,
+        privateKey: clonedWallet.keyPair.privateKey,
+      }
       clonedWallet.wallets[clonedWallet.keyPair.address] = _.cloneDeep(details)
       clonedWallet.keyPair = _.cloneDeep(emptyKeyPair)
       clonedWallet.alias = ''
@@ -152,15 +183,22 @@ export const reducer = (general: GeneralType, action: Action) => {
     case 'signTransaction':
       let clonedTransactionSign = _.cloneDeep(general)
       try {
-        let lastBlockHash = hashBlock(_.last(clonedTransactionSign.chain) as Block)
+        let lastBlockHash = hashBlock(
+          _.last(clonedTransactionSign.chain) as Block
+        )
         // security check to ensure amount is not null
         if (clonedTransactionSign.transactionToPublish.amount !== null) {
-          let signature = createTransactionSignature(clonedTransactionSign.transactionToPublish as Transaction, lastBlockHash, clonedTransactionSign.transactionToPublish.secretKey)
+          let signature = createTransactionSignature(
+            clonedTransactionSign.transactionToPublish as Transaction,
+            lastBlockHash,
+            clonedTransactionSign.transactionToPublish.secretKey
+          )
           clonedTransactionSign.transactionToPublish.signature = signature
           delete clonedTransactionSign.signatureError
         }
       } catch (error) {
-        clonedTransactionSign.signatureError = 'There was an error generating the signature, please check the private key'
+        clonedTransactionSign.signatureError =
+          'There was an error generating the signature, please check the private key'
       }
       return clonedTransactionSign
     case 'changeNotification':
@@ -170,7 +208,6 @@ export const reducer = (general: GeneralType, action: Action) => {
     case 'changeGeneral':
       return _.cloneDeep(action.general)
     default:
-      throw new Error();
-
+      throw new Error()
   }
 }

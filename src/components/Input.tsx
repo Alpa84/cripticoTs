@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from 'react'
 
 export interface Props {
   text: string
@@ -12,10 +12,14 @@ function Input({ text, value, onChange }: Props) {
       <div className="input-group-prepend">
         <span className="input-group-text">{text}</span>
       </div>
-      <input type="text" className="form-control" value={value} onChange={onChange}/>
+      <input
+        type="text"
+        className="form-control"
+        value={value}
+        onChange={onChange}
+      />
     </div>
   )
 }
 
-export default Input;
-
+export default Input

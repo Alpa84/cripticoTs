@@ -3,8 +3,7 @@ import * as _ from 'lodash'
 import CoinArena from './components/CoinArena'
 
 function App() {
-
-  return  (
+  return (
     <>
       <CoinArena />
     </>

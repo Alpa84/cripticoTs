@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { GeneralType, Functions } from '../Types'
-import { calculateOwnerCoinsFromChain } from 'src/utils/blockchain';
-import { CreatorPublicAddress } from 'src/utils/defaultChain';
+import { calculateOwnerCoinsFromChain } from 'src/utils/blockchain'
+import { CreatorPublicAddress } from 'src/utils/defaultChain'
 import PrivateKey from './PrivateKey'
 
 export interface Props {
@@ -15,15 +15,19 @@ function Wallets({ general, functions }: Props) {
       <h2>Wallets</h2>
       <div className="panel panel-default">
         <div className="panel-body">
-          {
-            Object.keys(general.wallets).map((dir, index) => (
+          {Object.keys(general.wallets)
+            .map((dir, index) => (
               <div
                 key={'walletsTut' + index}
-                data-tut={index + 1 === Object.keys(general.wallets).length? 'userWallet': ''}
-                >
-                <div className='card'>
-                  <div className='card-body'>
-                    <h3 className='card-title'>{general.wallets[dir].alias}</h3>
+                data-tut={
+                  index + 1 === Object.keys(general.wallets).length
+                    ? 'userWallet'
+                    : ''
+                }
+              >
+                <div className="card">
+                  <div className="card-body">
+                    <h3 className="card-title">{general.wallets[dir].alias}</h3>
                     <table className="table fixedTable">
                       <tbody>
                         <tr>
@@ -34,24 +38,33 @@ function Wallets({ general, functions }: Props) {
                         </tr>
                         <tr>
                           <th scope="row">Public address</th>
-                          <td><div className='longString'>{dir}</div></td>
+                          <td>
+                            <div className="longString">{dir}</div>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
                     <div
-                      data-tut={dir === CreatorPublicAddress ? 'creatorPrivateKey' : 'otherPrivateKey'}
+                      data-tut={
+                        dir === CreatorPublicAddress
+                          ? 'creatorPrivateKey'
+                          : 'otherPrivateKey'
+                      }
                     >
-                      <PrivateKey  pKey={general.wallets[dir].privateKey} functions={functions}/>
+                      <PrivateKey
+                        pKey={general.wallets[dir].privateKey}
+                        functions={functions}
+                      />
                     </div>
                   </div>
                 </div>
               </div>
-            )).reverse()
-          }
+            ))
+            .reverse()}
         </div>
       </div>
     </div>
   )
 }
 
-export default Wallets;
+export default Wallets

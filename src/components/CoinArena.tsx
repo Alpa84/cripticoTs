@@ -3,19 +3,28 @@ import * as _ from 'lodash'
 import { useReducer } from 'react'
 import { DefaultChain, DefaultWallets } from '../utils/defaultChain'
 import { GeneralType, Functions, Block } from '../Types'
-import { hashBlockWithoutNonce, startsWithZeros, validateTransactions } from '../utils/blockchain'
+import {
+  hashBlockWithoutNonce,
+  startsWithZeros,
+  validateTransactions,
+} from '../utils/blockchain'
 import General from './General'
 import { reducer } from 'src/utils/reducer'
 import { addDelay } from 'src/utils/misc'
 import { generateKeyPair } from 'src/utils/rsa'
 
-
 const DefaultNotificationDuration = 4000
 
-export let emptyTransactionToPublish = { gives: '', receives: '', amount: null, signature: '', secretKey: '' }
+export let emptyTransactionToPublish = {
+  gives: '',
+  receives: '',
+  amount: null,
+  signature: '',
+  secretKey: '',
+}
 let emptyKeyPair = { address: '', privateKey: '' }
 export const defaultGeneral: GeneralType = {
-  notifications: { walletGenerated: false, transactionPublished: false},
+  notifications: { walletGenerated: false, transactionPublished: false },
   alias: '',
   chain: DefaultChain,
   dirToAddMined: '',
@@ -25,7 +34,7 @@ export const defaultGeneral: GeneralType = {
   wallets: DefaultWallets,
 }
 
-function CoinArena({} : {}) {
+function CoinArena({}: {}) {
   const [general, dispatch] = useReducer(reducer, defaultGeneral)
 
   let refList: { [name: string]: HTMLElement } = {}
@@ -36,10 +45,15 @@ function CoinArena({} : {}) {
   const tryDifferentNonces = async (block: Block, blockIndex: number) => {
     let nonce = 0
     while (true) {
-      if (blockIndex === -1) { // means we are changing the mined block
+      if (blockIndex === -1) {
+        // means we are changing the mined block
         dispatch({ type: 'changeMinedBlockNonce', nonce: nonce.toString() })
       } else {
-        dispatch({type: 'changeBlockNonce', blockIndex, nonce:nonce.toString() })
+        dispatch({
+          type: 'changeBlockNonce',
+          blockIndex,
+          nonce: nonce.toString(),
+        })
       }
       let result = hashBlockWithoutNonce(block, nonce)
       let doesStart = startsWithZeros(result)
@@ -55,9 +69,13 @@ function CoinArena({} : {}) {
     tryDifferentNonces(block, blockIndex)
   }
   const mine = async () => {
-    let blockWithoutNonce = validateTransactions(general.pendingTransactions, general.chain, general.dirToAddMined)
-    dispatch({ type:'backToUneditedChain'})
-    dispatch({type:'changeMinedBlock', block: blockWithoutNonce})
+    let blockWithoutNonce = validateTransactions(
+      general.pendingTransactions,
+      general.chain,
+      general.dirToAddMined
+    )
+    dispatch({ type: 'backToUneditedChain' })
+    dispatch({ type: 'changeMinedBlock', block: blockWithoutNonce })
     general.minedBlock = blockWithoutNonce
     await addDelay(500)
     if (refList.tryingNonces) {
@@ -72,16 +90,22 @@ function CoinArena({} : {}) {
     dispatch({ type: 'addMinedBlockToChain' })
     await addDelay(1000)
   }
-  const loadingAndGenerateKeyPair = async() => {
-    dispatch({ type: 'changeKeyPair', keyPair: {address:'generating...', privateKey: 'generating...' }})
+  const loadingAndGenerateKeyPair = async () => {
+    dispatch({
+      type: 'changeKeyPair',
+      keyPair: { address: 'generating...', privateKey: 'generating...' },
+    })
     await addDelay(100)
-    let keyPair =  await generateKeyPair()
+    let keyPair = await generateKeyPair()
     dispatch({ type: 'changeKeyPair', keyPair })
   }
-  const showNotification: Functions["showNotification"] = (area, milliseconds) => {
-    dispatch({ type: 'changeNotification', area, on: true})
-    setTimeout( ()=> {
-      dispatch({type:'changeNotification', area, on:false})
+  const showNotification: Functions['showNotification'] = (
+    area,
+    milliseconds
+  ) => {
+    dispatch({ type: 'changeNotification', area, on: true })
+    setTimeout(() => {
+      dispatch({ type: 'changeNotification', area, on: false })
     }, milliseconds || DefaultNotificationDuration)
   }
 
@@ -93,11 +117,9 @@ function CoinArena({} : {}) {
     mine,
     setRef,
   }
-  return  (
+  return (
     <>
-      <General
-        general={general}
-        functions={functions}/>
+      <General general={general} functions={functions} />
     </>
   )
 }

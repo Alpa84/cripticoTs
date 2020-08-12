@@ -7,12 +7,10 @@ export interface Props {
 
 function Link({ text, href }: Props) {
   return (
-    <a
-      href={href}
-      target="_blank"
-    >{text}</a>
+    <a href={href} target="_blank">
+      {text}
+    </a>
   )
 }
 
-export default Link;
-
+export default Link
