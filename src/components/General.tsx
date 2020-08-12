@@ -118,8 +118,7 @@ function General({ general, functions }: Props) {
                     {general.minedBlock && (
                       <div className="card border-warning">
                         <div className="card-header">
-                          {general.minedBlock &&
-                          blockHashStartsWithZeros(general.minedBlock) ? (
+                          { blockHashStartsWithZeros(general.minedBlock) ? (
                             <h4 className="nonceFound">
                               Nonce found, adding block{' '}
                               {general.chain.length + 1} ...

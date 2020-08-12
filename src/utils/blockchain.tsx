@@ -193,9 +193,8 @@ async function calculateNonce(
 
   while (keepLooking) {
     if (chain) {
-      keepLooking =
-        blockWithoutNonce.previousBlockHash ===
-        hashBlock(existingChain[existingChain.length - 1])
+      let blockHash = hashBlock(existingChain[existingChain.length - 1])
+      keepLooking =  blockWithoutNonce.previousBlockHash === blockHash
       if (!keepLooking) {
         alert(
           'somebody added a new block to the blockchain before we could find our nonce and ad the block ourselves'
