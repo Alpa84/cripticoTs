@@ -2,7 +2,7 @@ import * as React from 'react'
 import { GeneralType, Functions } from '../Types'
 import Input from './Input'
 import Transactions from './Transactions'
-import { checkValidBlock, hashBlock } from 'src/utils/blockchain'
+import { checkValidBlock, hashBlock } from '../utils/blockchain'
 import FixedInput from './FixedInput'
 import FixedBlock from './FixedBlock'
 export interface Props {

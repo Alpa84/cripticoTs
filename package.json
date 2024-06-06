@@ -1,53 +1,60 @@
 {
-  "name": "criptico",
+  "name": "cryptic",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://alpa84.github.io/coinStaging",
   "dependencies": {
-    "@types/lodash": "^4.14.119",
-    "@types/reactour": "^1.13.1",
-    "axios": "^0.18.1",
-    "big-integer": "^1.6.40",
-    "body-scroll-lock": "^3.0.1",
-    "bootstrap": "^4.4.1",
-    "lodash": "^4.17.11",
-    "md5": "^2.2.1",
-    "node-sass": "^4.14.0",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
-    "react-joyride": "github:alpa84/react-joyride",
-    "react-scripts-ts": "3.1.0",
-    "reactour": "^1.16.3",
-    "serve": "^10.1.1",
-    "styled-components": "^5.0.1"
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.98",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "axios": "^1.7.2",
+    "big-integer": "^1.6.52",
+    "body-scroll-lock": "^3.1.5",
+    "bootstrap": "^5.3.3",
+    "lodash": "^4.17.21",
+    "md5": "^2.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-joyride": "^2.8.2",
+    "react-scripts": "5.0.1",
+    "serve": "^14.2.3",
+    "styled-components": "^6.1.11",
+    "typescript": "^4.9.5",
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "build:css": "node-sass src/styles/sass/ -o src/styles/css/",
-    "watch:css": "npm run build:css && node-sass src/styles/sass/ -o src/styles/css/ --watch --recursive",
-    "start:js": "react-scripts-ts start",
-    "start": "npm run watch:css & npm run start:js",
-    "build": "npm run build:css &&  GENERATE_SOURCEMAP=false react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject",
-    "server_up": "serve -s build",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "blog": "cp -a build  /Users/poochi/ALE/Blog/ElBlog && rm -rf /Users/poochi/ALE/Blog/ElBlog/coin  && mv /Users/poochi/ALE/Blog/ElBlog/build /Users/poochi/ALE/Blog/ElBlog/coin",
-    "pub": "yarn build && npm run blog",
-    "blogStaging": "cp -a build  /Users/poochi/ALE/Blog/ElBlog && rm -rf /Users/poochi/ALE/Blog/ElBlog/coinStaging  && mv /Users/poochi/ALE/Blog/ElBlog/build /Users/poochi/ALE/Blog/ElBlog/coinStaging",
-    "staging": "yarn build && npm run blogStaging"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "devDependencies": {
     "@types/body-scroll-lock": "^2.6.1",
+    "@types/lodash": "^4.14.119",
     "@types/md5": "^2.1.33",
-    "@types/node": "^10.12.18",
-    "@types/react": "^16.9.43",
-    "@types/react-dom": "^16.9.8",
-    "cypress": "^3.8.2",
-    "gh-pages": "^2.2.0",
-    "typescript": "^3.2.2"
-  },
-  "resolutions": {
-    "@types/react": "^16.9.43"
+    "cypress": "^13.11.0",
+    "gh-pages": "^6.1.1",
+    "sass": "^1.77.4"
   }
 }

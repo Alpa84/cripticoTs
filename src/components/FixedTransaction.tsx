@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { GeneralType, Transaction } from '../Types'
-import { prefferName } from 'src/utils/misc'
-import { RightArrowPath } from 'src/utils/svgPaths'
+import { prefferName } from '../utils/misc'
+import { RightArrowPath } from '../utils/svgPaths'
 export interface Props {
   general: GeneralType
   transaction: Transaction

@@ -7,7 +7,7 @@ import TransactionToPublish, { Empty } from './TransactionToPublish'
 import KeyPair from './KeyPair'
 import Directory from './Wallets'
 import FixedBlock from './FixedBlock'
-import { startsWithZeros, hashBlock } from 'src/utils/blockchain'
+import { startsWithZeros, hashBlock } from '../utils/blockchain'
 import Link from './Link'
 
 export interface Props {

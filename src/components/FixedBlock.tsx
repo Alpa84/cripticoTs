@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { GeneralType, Functions, Block } from '../Types'
-import { hashBlock } from 'src/utils/blockchain'
+import { hashBlock } from '../utils/blockchain'
 import FixedTransaction from './FixedTransaction'
 
 export interface Props {

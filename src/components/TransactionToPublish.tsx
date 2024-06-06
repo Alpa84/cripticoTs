@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import { Functions, GeneralType } from '../Types'
 import FixedInput from './FixedInput'
-import { calculateOwnerCoinsFromChain } from 'src/utils/blockchain'
+import { calculateOwnerCoinsFromChain } from '../utils/blockchain'
 export interface Props {
   general: GeneralType
   functions: Functions

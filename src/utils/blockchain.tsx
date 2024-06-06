@@ -1,20 +1,21 @@
-import { Block, Transaction, InvalidBlockReason } from 'src/Types'
-import * as md5 from 'md5'
-import * as _ from 'lodash'
-import * as bigInt from 'big-integer'
+import { Block, Transaction, InvalidBlockReason } from '../Types'
+import md5 from 'md5'
+import _ from 'lodash'
+import bigInt from 'big-integer'
 import { RSA } from '../utils/rsa'
 import { addDelay } from './misc'
 
 const MinedAmount = 100
 
 function isInvalidChain(receivedChain: Block[]) {
-  for (let [blockIndex, block] of receivedChain.entries()) {
-    let reason = checkValidBlock(block, blockIndex, receivedChain)
+  for (let blockIndex = 0; blockIndex < receivedChain.length; blockIndex++) {
+    let block = receivedChain[blockIndex];
+    let reason = checkValidBlock(block, blockIndex, receivedChain);
     if (!reason.isValid) {
-      return { [blockIndex]: reason }
+      return { [blockIndex]: reason };
     }
   }
-  return false
+  return false;
 }
 const MinedTransactionNotPresent = () => ({
   transactions: {
@@ -52,39 +53,39 @@ const InsufficientFunds = (index: number, amount: number) => ({
 export function checkValidBlock(block: Block, blockIndex: number, receivedChain: Block[]): InvalidBlockReason {
   let chainUntilThisBlock = receivedChain.slice(0, blockIndex)
   let chainTransactions = chainToTransactions(chainUntilThisBlock)
-  let reviewedTransactions = []
+  let reviewedTransactions: Transaction[] = []
   if (blockIndex !== 0) {
     let hasPreviousBlockHash = block.previousBlockHash === hashBlock(receivedChain[blockIndex - 1])
     if (!hasPreviousBlockHash) {
       return { previousBlockHash: 'does not have the previous block hash' }
     }
   }
-  for (const [index, transaction] of block.transactions.entries()) {
+  block.transactions.forEach((transaction, index) => {
     if (index === 0) {
       if (transaction.gives !== 'mined') {
-        return MinedTransactionNotPresent()
+        return MinedTransactionNotPresent();
       }
       if (transaction.amount !== MinedAmount) {
-        return MinedTransactionWrongValue(transaction.amount)
+        return MinedTransactionWrongValue(transaction.amount);
       }
-      reviewedTransactions.push(transaction)
+      reviewedTransactions.push(transaction);
     } else {
-      let previousTransactions = [...chainTransactions, ...reviewedTransactions]
+      let previousTransactions = [...chainTransactions, ...reviewedTransactions];
       try {
-        let transactionSignatureValid = hasValidTransactionSignature(transaction, block.previousBlockHash)
+        let transactionSignatureValid = hasValidTransactionSignature(transaction, block.previousBlockHash);
         if (!transactionSignatureValid) {
-          return InvalidSignature(index)
+          return InvalidSignature(index);
         }
       } catch (error) {
-        return InvalidTransactionGeneral()
+        return InvalidTransactionGeneral();
       }
       if (checkIfGiverHasFunds(transaction, previousTransactions)) {
-        reviewedTransactions.push(transaction)
+        reviewedTransactions.push(transaction);
       } else {
-        return InsufficientFunds(index, transaction.amount)
+        return InsufficientFunds(index, transaction.amount);
       }
     }
-  }
+  })
   let hash = hashBlock(block)
   if (!startsWithZeros(hash)) {
     return { hash: 'the hash does not start with the required amount of zeros' }

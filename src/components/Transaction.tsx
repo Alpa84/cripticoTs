@@ -2,7 +2,7 @@ import * as React from 'react'
 import { GeneralType, Functions, SingleTransactionValidation } from '../Types'
 import Input from './Input'
 import InputNumber from './InputNumber'
-import { Mined } from 'src/utils/defaultChain'
+import { Mined } from '../utils/defaultChain'
 export interface Props {
   general: GeneralType
   blockIndex: number

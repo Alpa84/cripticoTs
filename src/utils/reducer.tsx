@@ -4,11 +4,11 @@ import {
   WalletDetails,
   Block,
   Transaction,
-} from 'src/Types'
+} from '../Types'
 import * as _ from 'lodash'
 import { DefaultEmptyTransaction, DefaultEmptyBlock } from './defaultChain'
 import { hashBlock, createTransactionSignature } from './blockchain'
-import { emptyTransactionToPublish } from 'src/components/CoinArena'
+import { emptyTransactionToPublish } from '../components/CoinArena'
 
 let emptyKeyPair = { address: '', privateKey: '' }
 

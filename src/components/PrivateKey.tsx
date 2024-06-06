@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useState } from 'react'
-import { Functions } from 'src/Types'
+import { Functions } from '../Types'
 
 export interface Props {
   pKey: string

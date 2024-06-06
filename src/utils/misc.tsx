@@ -1,4 +1,4 @@
-import { GeneralType } from 'src/Types'
+import { GeneralType } from '../Types'
 
 const SmallScreenSize = 720
 

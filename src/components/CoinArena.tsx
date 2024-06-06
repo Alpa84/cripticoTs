@@ -1,3 +1,4 @@
+
 import * as React from 'react'
 import * as _ from 'lodash'
 import { useReducer } from 'react'
@@ -9,9 +10,9 @@ import {
   validateTransactions,
 } from '../utils/blockchain'
 import General from './General'
-import { reducer } from 'src/utils/reducer'
-import { addDelay } from 'src/utils/misc'
-import { generateKeyPair } from 'src/utils/rsa'
+import { reducer } from '../utils/reducer'
+import { addDelay } from '../utils/misc'
+import { generateKeyPair } from '../utils/rsa'
 
 const DefaultNotificationDuration = 4000
 

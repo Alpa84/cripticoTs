@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { GeneralType, Functions } from '../Types'
-import { calculateOwnerCoinsFromChain } from 'src/utils/blockchain'
-import { CreatorPublicAddress } from 'src/utils/defaultChain'
+import { calculateOwnerCoinsFromChain } from '../utils/blockchain'
+import { CreatorPublicAddress } from '../utils/defaultChain'
 import PrivateKey from './PrivateKey'
 
 export interface Props {

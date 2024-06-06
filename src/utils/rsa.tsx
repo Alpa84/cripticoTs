@@ -1,6 +1,6 @@
 // straight from https://github.com/denysdovhan/rsa-labwork
 
-import * as bigInt from 'big-integer'
+import bigInt from 'big-integer'
 import { BigInteger } from 'big-integer'
 import { Keys, KeyPair } from '../Types'
 
